@@ -1,0 +1,68 @@
+.container{
+    background-color: var(--purple);
+    height: 100vh;
+    width: 90vh;
+
+    padding: 30px;
+}
+
+.textLogo {
+    font-size: 2.25rem;
+    font-weight: 600;
+}
+
+.login {
+    background-color: var(--white);
+    padding: 2.5rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 20px;
+    box-shadow: 4px 0px 6px rgba(0, 0, 0, 0.4);
+}
+
+.welcome {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.welcome p span:last-child {
+    color: var(--purple);
+}
+
+.welcome p:last-child p:last-child {
+    color: var(--purple);
+}
+
+.textLogin {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin: 1rem 0;
+}
+
+form {
+    margin: 10px;
+}
+
+form input {
+    border: 1px solid var(--gray-100);
+    border-radius: 9px;
+    padding: 1rem 8rem 1rem 1rem;
+    margin: 1rem 0;
+}
+
+form p a {
+    font-size: 0.80rem;
+    float: right;
+}
+
+form button {
+    background-color: var(--purple);
+    color: var(--white);
+    margin-top: 2rem;
+    padding: 1rem 11rem;
+    border-radius: 10px;
+    font-size: 1.15rem;
+}

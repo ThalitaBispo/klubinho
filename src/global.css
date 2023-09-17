@@ -1,0 +1,17 @@
+:root {
+    --white: #ffffff;
+    
+    --purple: #863BE5;
+
+    --gray-100: #CCCCCC;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body, button, input {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+}
