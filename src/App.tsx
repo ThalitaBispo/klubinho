@@ -1,9 +1,11 @@
-import { Login } from './components/Login'
+import { RouterLogin } from './components/Login/RoutesLogin';
 import './global.css';
 
 function App() {
 
-  return <Login />
+  return( 
+  <RouterLogin />
+  )
 }
 
 export default App

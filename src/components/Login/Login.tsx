@@ -1,14 +1,10 @@
+import { Link } from 'react-router-dom'
 import styles from './Login.module.css'
 
-
 export function Login() {
-    return (
-    <>
-        <div className={styles.container}>
-            <span className={styles.textLogo}>KLUBINHO</span>
-
-            <div className={styles.login}>
-                <div className={styles.welcome}>
+    return(
+        <>
+            <div className={styles.welcome}>
                     <p>
                         <span>Bem-vindo(a) ao </span>
                         <span>Klubinho</span>
@@ -16,7 +12,7 @@ export function Login() {
 
                     <p>
                         <p>Sem conta?</p>
-                        <p><a>cadastre-se</a></p>
+                        <p><Link to="/cadastro">cadastre-se</Link></p>
                     </p>
 
                 </div>
@@ -34,8 +30,6 @@ export function Login() {
 
                     <button type='submit'>Entrar</button>
                 </form>
-            </div>
-        </div> 
-    </>
+        </>
     )
-} 
+}
