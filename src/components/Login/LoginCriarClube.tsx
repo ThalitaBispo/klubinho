@@ -6,7 +6,7 @@ export function LoginCriarClube() {
             <div className={styles.welcome}>
                     <p>
                         <span>Bem-vindo(a) </span>
-                        <span>Usuário</span>
+                        <span className={styles.textDestaque} >Usuário</span>
                     </p>
 
                 </div>
@@ -22,8 +22,9 @@ export function LoginCriarClube() {
 
                     <p><a href='/entrarclube'>Buscar Clube Existente</a></p>
                     
-                    <button type='submit'>Criar Clube</button>
-                    
+                    <div className={styles.centerButton}>
+                        <button type='submit'>Criar Clube</button>
+                    </div>
                 </form>
         </>
     )

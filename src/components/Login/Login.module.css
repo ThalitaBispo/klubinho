@@ -31,21 +31,21 @@
     justify-content: space-between;
 }
 
-.textDestaque {
-    color: var(--purple);
-}
-
 .welcome {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-.welcome p span:last-child {
+/* .welcome p span:last-child {
     color: var(--purple);
 }
 
 .welcome p:last-child p:last-child {
+    color: var(--purple);
+} */
+
+.textDestaque {
     color: var(--purple);
 }
 
@@ -71,23 +71,46 @@ form p a {
     float: right;
 }
 
-form button {
+/* form button {
     background-color: var(--purple);
     color: var(--white);
-    margin-top: 2rem;
-    padding: 1rem 11rem;
+    padding: 0.5rem 30%;
     border-radius: 10px;
     font-size: 1.15rem;
+    width: auto; /* A largura será ajustável automaticamente 
+} */
+
+.centerButton {
+    text-align: center;
+    margin-top: 2rem;
 }
 
-.botao {
+.centerButton button {
+    display: block;
+    margin: 0 auto;
+    background-color: var(--purple);
+    color: var(--white);
+    padding: 0.5rem 30%;
+    border-radius: 10px;
+    font-size: 1.15rem;
+    width: 100%; /* A largura será ajustável automaticamente */
+}
+
+.centerButton a {
+    flex: 1;
+    margin: 0 1px;
+    text-align: center;
+    text-decoration: none; /* Remove a decoração de texto sublinhado */
+}
+
+/* .botao {
     background-color: var(--purple);
     color: var(--white);
     margin-top: 2rem;
     padding: 1rem 11rem;
     border-radius: 10px;
     font-size: 1.15rem;
-}
+} */
 
 .textCentral {
     font-size: 2.0rem;

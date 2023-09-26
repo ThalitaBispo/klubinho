@@ -35,7 +35,9 @@ export function LoginForm() {
                     <p>Informe sua senha</p>
                     <input type='text' placeholder='Nome'></input>                    
 
+                    <div className={styles.centerButton}>
                     <button type='submit'>Cadastrar</button>
+                    </div>
                 </form>
         </>
     )
