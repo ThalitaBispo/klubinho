@@ -1,9 +1,9 @@
 .container{
-    background-color: var(--purple);
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to right, var(--purple) 50%, white 50%);
     height: 100vh;
-    width: 90vh;
-
-    padding: 30px;
+    overflow: hidden;
 }
 
 .textLogo {
@@ -20,6 +20,19 @@
     transform: translate(-50%, -50%);
     border-radius: 20px;
     box-shadow: 4px 0px 6px rgba(0, 0, 0, 0.4);
+    max-height: 70%; /* Limita a altura à altura máxima da página */
+    max-width: 70%; /* Limita a largura à largura máxima da página */
+    overflow: auto; /* overflow: auto Adiciona uma barra de rolagem horizontal se necessário / hidden esconde o conteudo que ultrapassa*/
+}
+
+.conteudo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.textDestaque {
+    color: var(--purple);
 }
 
 .welcome {
@@ -65,4 +78,27 @@ form button {
     padding: 1rem 11rem;
     border-radius: 10px;
     font-size: 1.15rem;
+}
+
+.botao {
+    background-color: var(--purple);
+    color: var(--white);
+    margin-top: 2rem;
+    padding: 1rem 11rem;
+    border-radius: 10px;
+    font-size: 1.15rem;
+}
+
+.textCentral {
+    font-size: 2.0rem;
+    font-weight: 600;
+    margin: 1rem 0;
+    text-align: center;
+}
+
+.subtextCentral {
+    font-size: 1.3rem;
+    font-weight: 300;
+    margin: 1rem 0;
+    text-align: center;
 }

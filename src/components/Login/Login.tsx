@@ -27,8 +27,9 @@ export function Login() {
                     <input type='text' placeholder='senha'></input>
 
                     <p><a>Esqueceu a senha?</a></p>
-
+                    
                     <button type='submit'>Entrar</button>
+                    
                 </form>
         </>
     )
