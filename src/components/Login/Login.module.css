@@ -37,13 +37,9 @@
     justify-content: space-between;
 }
 
-/* .welcome p span:last-child {
-    color: var(--purple);
+.message {
+    margin-right: 20px; /* Adicione margem à direita para separar as mensagens */
 }
-
-.welcome p:last-child p:last-child {
-    color: var(--purple);
-} */
 
 .textDestaque {
     color: var(--purple);
@@ -55,30 +51,35 @@
     margin: 1rem 0;
 }
 
-form {
+.loginForm {
     margin: 10px;
 }
 
-form input {
+.loginForm input {
     border: 1px solid var(--gray-100);
     border-radius: 9px;
-    padding: 1rem 8rem 1rem 1rem;
-    margin: 1rem 0;
+    padding: 1rem 15rem 1rem 1rem;
+    margin: 1rem 1rem 1rem 0;
+    /* width: 100%; */
 }
 
-form p a {
+.loginForm p a {
     font-size: 0.80rem;
     float: right;
 }
 
-/* form button {
-    background-color: var(--purple);
-    color: var(--white);
-    padding: 0.5rem 30%;
-    border-radius: 10px;
-    font-size: 1.15rem;
-    width: auto; /* A largura será ajustável automaticamente 
-} */
+.inputDuplo {
+    flex: 1; /* Ocupa o mesmo espaço */
+    /* text-align: center; */
+    margin: 0 0.5rem 0 0; /* Espaçamento horizontal entre os elementos */
+    /* width: 50%; */
+    /* padding: 1rem 1rem 1rem 1rem;  */
+}
+
+.inputDuplo input {
+    padding: 1rem 1rem 1rem 1rem;
+    /* width: 50%; */
+}
 
 .centerButton {
     text-align: center;
@@ -93,7 +94,7 @@ form p a {
     padding: 0.5rem 30%;
     border-radius: 10px;
     font-size: 1.15rem;
-    width: 100%; /* A largura será ajustável automaticamente */
+    width: 100%; /* auto = A largura será ajustável automaticamente */
 }
 
 .centerButton a {
@@ -102,15 +103,6 @@ form p a {
     text-align: center;
     text-decoration: none; /* Remove a decoração de texto sublinhado */
 }
-
-/* .botao {
-    background-color: var(--purple);
-    color: var(--white);
-    margin-top: 2rem;
-    padding: 1rem 11rem;
-    border-radius: 10px;
-    font-size: 1.15rem;
-} */
 
 .textCentral {
     font-size: 2.0rem;
@@ -124,4 +116,27 @@ form p a {
     font-weight: 300;
     margin: 1rem 0;
     text-align: center;
+}
+
+
+
+/* Estilize a barra de rolagem */
+::-webkit-scrollbar {
+    width: 8px; /* Largura da barra de rolagem */
+}
+
+/* Estilize o botão de rolagem (o "polegar") */
+::-webkit-scrollbar-thumb {
+    background-color: var(--purple); /* Cor do polegar */
+    border-radius: 5px; /* Cantos arredondados do polegar */
+}
+
+/* Estilize a pista (a área ao redor do polegar) */
+::-webkit-scrollbar-track {
+    background-color: var(--gray-100); /* Cor da pista */
+}
+
+/* Estilize a seta de rolagem (opcional) */
+::-webkit-scrollbar-button {
+    background-color: var(--purple); /* Cor da seta de rolagem */
 }

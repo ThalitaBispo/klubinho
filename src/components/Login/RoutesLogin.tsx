@@ -13,20 +13,20 @@ export function RouterLogin() {
             <div className={styles.container}>
                 <span className={styles.textLogo}>KLUBINHO</span>
 
-                    <div className={styles.login}>
-                        <BrowserRouter>
-                            <main>
-                                <Routes>
-                                    <Route path="/" element={<Login />} />
-                                    <Route path="/cadastro" element={<LoginForm />} />
-                                    <Route path="/bemvindo" element={<LoginWelcome />} />
-                                    <Route path="/criarclube" element={<LoginCriarClube />} />
-                                    <Route path="/entrarclube" element={<LoginEntrarClube />} />
-                                    <Route path="/solicitacao" element={<LoginSolicitacao />} />
-                                </Routes>
-                            </main>
-                        </BrowserRouter>
-                    </div>
+                <div className={styles.login}>
+                    <BrowserRouter>
+                        <main>
+                            <Routes>
+                                <Route path="/" element={<Login />} />
+                                <Route path="/cadastro" element={<LoginForm />} />
+                                <Route path="/bemvindo" element={<LoginWelcome />} />
+                                <Route path="/criarclube" element={<LoginCriarClube />} />
+                                <Route path="/entrarclube" element={<LoginEntrarClube />} />
+                                <Route path="/solicitacao" element={<LoginSolicitacao />} />
+                            </Routes>
+                        </main>
+                    </BrowserRouter>
+                </div>
             </div> 
         </>
     )
