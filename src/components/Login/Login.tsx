@@ -7,12 +7,12 @@ export function Login() {
             <div className={styles.welcome}>
                     <p>
                         <span>Bem-vindo(a) ao </span>
-                        <span>Klubinho</span>
+                        <span className={styles.textDestaque}>Klubinho</span>
                     </p>
 
                     <p>
                         <p>Sem conta?</p>
-                        <p><Link to="/cadastro">cadastre-se</Link></p>
+                        <p className={styles.textDestaque}><Link to="/cadastro">Cadastre-se</Link></p>
                     </p>
 
                 </div>
@@ -27,8 +27,11 @@ export function Login() {
                     <input type='text' placeholder='senha'></input>
 
                     <p><a>Esqueceu a senha?</a></p>
-
-                    <button type='submit'>Entrar</button>
+                    
+                    <div className={styles.centerButton}>
+                        <button type='submit'>Entrar</button>
+                    </div>
+                    
                 </form>
         </>
     )
