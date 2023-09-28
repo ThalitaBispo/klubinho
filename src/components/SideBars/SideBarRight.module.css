@@ -1,0 +1,65 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .logo {
+    color: var(--purple);
+    font-size: 2rem;
+    font-weight: 600;
+    margin-top: 1rem;
+    margin-bottom: 4rem;
+  }
+  
+  .menu {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem; /* Espaçamento entre os itens do menu */
+  }
+
+  .menuItem {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* Espaçamento entre o ícone e o texto */
+  }
+  
+  .menuItem span:first-child {
+    font-size: 2rem;
+  }
+
+  .menuItem span:last-child {
+    font-size: 1rem;
+  }
+
+  .userProfile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 16rem;
+  }
+
+  .userProfileColumn {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .userProfile img {
+    border-radius: 300px;
+    width: 75px;
+  }
+
+  .userName {
+    margin: 0.75rem 0 0 1rem;
+  }
+
+  .userName span{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .userName span:last-child{
+    color: var(--gray-300);
+  }
