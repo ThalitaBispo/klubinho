@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import styles from './Login.module.css'
+// import { useState, useEffect } from 'react';
 
 export function Login() {
     return(
@@ -24,12 +25,12 @@ export function Login() {
                 <input type='text' placeholder='e-mail'></input>
 
                 <p>Entre com a sua senha</p>
-                <input type='text' placeholder='senha'></input>
+                <input type='password' placeholder='senha'></input>
 
                 <p><a>Esqueceu a senha?</a></p>
                 
                 <div className={styles.centerButton}>
-                    <button type='submit'>Entrar</button>
+                    <button type='submit' onClick={() => { window.location.href = `bemvindo`; }}>Entrar</button>
                 </div>
                 
             </form>
