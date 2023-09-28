@@ -17,8 +17,8 @@ export function LoginCriarClube() {
                     <p>Nome do Clube</p>
                     <input type='text' placeholder='Nome do Clube'></input>
 
-                    <p>Desrição</p>
-                    <input type='text' placeholder='Descrição'></input>
+                    <p>Endereço do Clube</p>
+                    <input type='text' placeholder='@klubinho'></input>
 
                     <p><a href='/entrarclube'>Buscar Clube Existente</a></p>
                     

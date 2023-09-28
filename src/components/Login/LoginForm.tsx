@@ -116,9 +116,7 @@ export function LoginForm() {
                 required/>                   
 
             <div className={styles.centerButton}>
-                <Link to='/bemvindo'>
                     <button type='submit'>Cadastrar</button>
-                </Link>
             </div>
         </form>
         </>
