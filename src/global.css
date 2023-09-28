@@ -3,8 +3,12 @@
     
     --purple: #863BE5;
 
+    --gray-20: #fcfafa;
     --gray-50: #f0f0f0;
+    --gray-75: #EBEEF0;
+    --gray-80: #f0f2f5;
     --gray-100: #CCCCCC;
+    --gray-300: #a6a4a4;
 }
 
 * {

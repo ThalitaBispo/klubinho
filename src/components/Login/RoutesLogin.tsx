@@ -1,9 +1,10 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
 import { LoginForm } from './LoginForm';
 import { Login } from './Login';
 import styles from './Login.module.css'
 
-export function RouterLogin() {
+export function RoutesLogin() {
     return(
         <>
             <div className={styles.container}>
