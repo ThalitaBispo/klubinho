@@ -1,7 +1,7 @@
 /* Estilo para a primeira parte */
 .divisao1 {
-    width: 22rem;
-    height: 90vh;
+    /*width: 22rem;
+    height: 90vh;*/
     border-right: 1px solid #000; /* Traço vertical */
     border-color: var(--gray-75);
     float: left;
@@ -9,8 +9,8 @@
 
 /* Estilo para a segunda parte */
 .divisao2 {
-    width: 64rem;
-    height: 90vh;
+   /* width: 64rem;
+    height: 90vh; */
     border-right: 1px solid #000; /* Traço vertical */
     border-color: var(--gray-75);
     float: left;
