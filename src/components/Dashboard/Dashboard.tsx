@@ -2,7 +2,12 @@ import styles from './Dashboard.module.css'
 
 export function Dashboard() {
     return (
+
         <>
+            <h1>Postagem</h1>
+        </>
+
+       /* <>
             <div className={styles.clubName}>
                 <span>Clube dos ++</span>
                 <span className="material-symbols-outlined">star</span>
@@ -78,6 +83,6 @@ export function Dashboard() {
                 </div>
             </div>
 
-        </>
+        </>*/
     )
 }
