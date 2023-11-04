@@ -2,89 +2,64 @@ import styles from './SideBarLeft.module.css'
 
 export function SideBarRight() {
     return(
-        /*<>
-            <div className={styles.container}>
-                
-                <span  className={styles.logo}>KLUBINHO</span>
-
-                <div className={styles.menu}>
-                    <div className={styles.menuItem}>
-                        <span className="material-symbols-outlined">home</span>
-                        <span>Home</span>
-                    </div>
-
-                    <div className={styles.menuItem}>
-                        <span className="material-symbols-outlined">voting_chip</span>
-                        <span>Enquete</span>
-                    </div>
-                    <div className={styles.menuItem}>
-                    <span className="material-symbols-outlined">article</span>
-                        <span>Reunião</span>
-                    </div>
-                    <div className={styles.menuItem}>
-                        <span className="material-symbols-outlined">person</span>
-                        <span>Perfil</span>
-                    </div>
-                    <div className={styles.menuItem}>
-                        <span className="material-symbols-outlined">menu_book</span>
-                        <span>Clube do livro</span>
-                    </div>
-                </div>
-            </div>
-
-            <div className={styles.userProfile}>
-                <div className={styles.userProfileColumn}>
-                    <img src="https://avatars.githubusercontent.com/u/88936386?v=4"/>
-                    <div className={styles.userName}>
-                        <span>André Nery</span>
-                        <span>Clube dos ++</span>
-                    </div>
-                </div>
-            </div>
-        </>*/
-
         <>
-            <div className='container mx-auto' style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-                <nav className="navbar navbar-expand-md navbar-light">
+            <div className='container mx-auto d-flex justify-content-center align-items-center'>
+                <nav className="navbar navbar-expand-md">
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
                         <span className="navbar-toggler-icon"></span>
                     </button>
+                    
                     <div className="collapse navbar-collapse" id="navbarNav">
                         <ul className={`navbar-nav flex-column ${styles.menu}`}>
                             <span  className={styles.logo}>KLUBINHO</span>
 
-                            <li className={`nav-item d-flex flex-row ${styles.menuItem}`}>
-                                <a className="nav-link" href="#">
-                                    <span className="material-symbols-outlined p-2">home</span>
+                            <li className={`nav-item ${styles.menuItem}`}>
+                                <a className="nav-link d-flex flex-row mb-2" href="#">
+                                    <span className="material-symbols-outlined">home</span>
                                     <span className='p-2'>Home</span>
                                 </a>
                             </li>
 
-                            <li className={`nav-item d-flex align-items-center ${styles.menuItem}`}>
-                                <a className="nav-link" href="#">
+                            <li className={`nav-item ${styles.menuItem}`}>
+                                <a className="nav-link d-flex flex-row mb-2" href="#">
                                     <span className="material-symbols-outlined">voting_chip</span>
-                                    <span>Enquete</span>
+                                    <span className='p-2'>Enquete</span>
                                 </a>
                             </li>
                             
-                            <li className={`nav-item d-flex align-items-center ${styles.menuItem}`}>
-                                <a className="nav-link" href="#">
+                            <li className={`nav-item ${styles.menuItem}`}>
+                                <a className="nav-link d-flex flex-row mb-2" href="#">
                                     <span className="material-symbols-outlined">article</span>
-                                    <span>Reunião</span>
+                                    <span className='p-2'>Reunião</span>
                                 </a>
                             </li>
 
-                            <li className={`nav-item d-flex align-items-center ${styles.menuItem}`}>
-                                <a className="nav-link" href="#">
+                            <li className={`nav-item ${styles.menuItem}`}>
+                                <a className="nav-link d-flex flex-row mb-2" href="#">
                                     <span className="material-symbols-outlined">person</span>
-                                    <span>Perfil</span>
+                                    <span className='p-2'>Perfil</span>
                                 </a>
                             </li>
 
-                            <li className={`nav-item d-flex align-items-center ${styles.menuItem}`}>
-                                <a className="nav-link" href="#">
+                            <li className={`nav-item d-flex ${styles.menuItem}`}>
+                                <a className="nav-link d-flex flex-row" href="#">
                                     <span className="material-symbols-outlined">menu_book</span>
-                                    <span>Clube do livro</span>
+                                    <span className='p-2'>Clube do livro</span>
+                                </a>
+                            </li>
+
+                            <li className={`nav-item d-flex ${styles.userProfile}`}>
+                                <a className="nav-link d-flex flex-row mt-4" href="#">
+                                    <img
+                                        src="https://avatars.githubusercontent.com/u/88936386?v=4"
+                                        alt="Imagem do perfil"
+                                        className="img-fluid rounded-circle align-self-start"
+                                        style={{ maxWidth: "70px"}}
+                                    />
+                                    <div className="mt-3" style={{marginLeft: '1rem'}}>
+                                        <div className="d-block">André Nery</div>
+                                        <div className="d-block">Clube dos ++</div>
+                                    </div>
                                 </a>
                             </li>
                         </ul>

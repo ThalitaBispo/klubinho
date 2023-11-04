@@ -1,6 +1,6 @@
 //import { RoutesLogin } from './components/Login/RoutesLogin';
 import { RoutesDashboard } from './components/Dashboard/RoutesDashboard';
-import './global.css';
+import './global.module.css';
 
 function App() {
 

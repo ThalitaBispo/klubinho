@@ -1,9 +1,9 @@
-.container {
+/*.container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;  
-}
+} */
 
 .search input {
     background-color: var(--gray-80);

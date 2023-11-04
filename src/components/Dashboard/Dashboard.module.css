@@ -1,145 +1,24 @@
-/* Estilo para a primeira parte */
-.divisao1 {
-    /*width: 22rem;
-    height: 90vh;*/
-    border-right: 1px solid #000; /* Traço vertical */
-    border-color: var(--gray-75);
-    float: left;
-}
-
-/* Estilo para a segunda parte */
-.divisao2 {
-   /* width: 64rem;
-    height: 90vh; */
-    border-right: 1px solid #000; /* Traço vertical */
-    border-color: var(--gray-75);
-    float: left;
-}
-
-/* Estilo para a terceira parte */
-.divisao3 {
-    flex: 1;
-    height: 90vh;
-}
-
-/* Limpar as flutuações para evitar problemas de layout */
-.clear {
-    clear: both;
-}
-
-.clubName {
-    margin: 1rem 1rem;
-    font-size: 1.5rem;
-}
-
-.clubName span:last-child {
-    float: right;
-    font-size: 2rem;
-    margin-right: 1rem;
-    color: var(--purple);
-}
-
-.post {
-    border-top: 8px solid var(--gray-75);
-    border-bottom: 8px solid var(--gray-75);
-
-    padding-top: 1rem;
-    display: flex;
-    align-items: flex-start;
-}
-
-/*.postArea {
-    display: flex;
-    align-items: flex-start;
-}*/
-
-img {
-    border-radius: 300px;
-    width: 75px;
-    margin-left: 1rem;
-}
-
-/*.textareaContainer {
-    margin-left: 1rem;
-  } */
-
-textarea {
-    width: 72vh;
+.textoArea {
+    background-color: #f8f9fa;
+    overflow: hidden; 
+    resize:none;
+    width: 40rem;
     border: none;
+  }
+  
+  .textoArea:focus {
     outline: none;
-    resize: none; /*tira o tamanho variado da textarea*/
-    padding: 1rem 1rem 0 1rem;
-    margin-top: 0.75rem;
-
-    font-size: 0.8rem;
-}
-
-  button {
+    background-color: #f8f9fa;
+  }
+  
+  .menu {
+    padding-left: 20rem;
+  }
+  
+  .buttonPurple {
     background-color: var(--purple);
-    
+    border-radius: 10px;
     color: var(--white);
-    font-size: 1rem;
-
-    border-radius: 100px;
     border: none;
-    padding: 1rem 1.5rem;
-  }
-
-  .buttonPost {
-    float: right;
-    margin-top: 6rem;
-  }
-
-  .publication {
-    background-color: var(--gray-20);
-    border-radius: 8px;
-    padding: 2.5rem;
-    margin: 1rem;
-
-    font-size: 0.9rem;
-
-    /*border-bottom: 1px solid var(--gray-50);*/
-  }
-
-  .publication + .publication {
-    margin-top: 0.5rem;
-  }
-
-  .publicationUser {
-    display: flex;
-    align-items: center;
-  }
-
-  .publicationUser span {
-    margin-left: 1rem;
-  }
-
-  .publicationUser span span:last-child {
-    color: var(--gray-300);
-  }
-
-  .publicationParagraph {
-    margin-left: 7.75rem;
-    
-  }
-
-  .iconsActoion {
-    display: flex;
-    align-items: center;
-  }
-
-  .iconsItem {
-    margin-top: 2rem;
-    display: flex;
-    align-items: center;
-
-    color: var(--gray-300);
-  }
-
-  .iconsItem span:first-child {
-    margin-left: 7.75rem;
-  }
-
-  .iconsItem span:last-child {
-    margin-left: 0.5rem;
-  }
+    padding: 0.5rem;
+}
