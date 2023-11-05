@@ -7,6 +7,7 @@ import { Dashboard } from './Dashboard';
 import { Enquete } from '../Enquete/Enquete';
 import styles from './Dashboard.module.css';
 import { Profile } from '../Profile/Profile';
+import { EditProfile } from '../Profile/EditProfile';
 
 //import { DashboardTest } from './Dashboardteste';
 
@@ -38,6 +39,7 @@ export function RoutesDashboard() {
                                         <Route path="/dashboard" element={<Dashboard />} />
                                         <Route path="/enquete" element={<Enquete />} />
                                         <Route path="/profile" element={<Profile />} />
+                                        <Route path="/editprofile" element={<EditProfile />} />
                                     </Routes>
                                 </main>
                             </BrowserRouter>

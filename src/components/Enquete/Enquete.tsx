@@ -22,7 +22,7 @@ export function Enquete() {
                             <div className="card-body">
                                 <h5 className="card-title" style={{ fontSize: '1rem' }}>Título do card</h5>
                                 <p className="card-text" style={{ fontSize: '0.9rem' }}>Um exemplo de texto rápido para construir o título do card.</p>
-                                <a href="#" className="btn btn-primary">Visitar</a>
+                                <a href="#" className="btn btn-primary" style={{ backgroundColor: 'var(--purple)' }}>Votar</a>
                             </div>
                         </div>
                     </div>
@@ -38,7 +38,7 @@ export function Enquete() {
                             <div className="card-body">
                                 <h5 className="card-title" style={{ fontSize: '1rem' }}>Título do card</h5>
                                 <p className="card-text" style={{ fontSize: '0.9rem' }}>Um exemplo de texto rápido para construir o título do card.</p>
-                                <a href="#" className="btn btn-primary">Visitar</a>
+                                <a href="#" className="btn btn-primary" style={{ backgroundColor: 'var(--purple)' }}>Votar</a>
                             </div>
                         </div>
                     </div>
@@ -54,7 +54,7 @@ export function Enquete() {
                             <div className="card-body">
                                 <h5 className="card-title" style={{ fontSize: '1rem' }}>Título do card</h5>
                                 <p className="card-text" style={{ fontSize: '0.9rem' }}>Um exemplo de texto rápido para construir o título do card.</p>
-                                <a href="#" className="btn btn-primary">Visitar</a>
+                                <a href="#" className="btn btn-primary" style={{ backgroundColor: 'var(--purple)' }}>Votar</a>
                             </div>
                         </div>
                     </div>
@@ -70,7 +70,7 @@ export function Enquete() {
                             <div className="card-body">
                                 <h5 className="card-title" style={{ fontSize: '1rem' }}>Título do card</h5>
                                 <p className="card-text" style={{ fontSize: '0.9rem' }}>Um exemplo de texto rápido para construir o título do card.</p>
-                                <a href="#" className="btn btn-primary">Visitar</a>
+                                <a href="#" className="btn btn-primary" style={{ backgroundColor: 'var(--purple)' }}>Votar</a>
                             </div>
                         </div>
                     </div>
@@ -86,7 +86,7 @@ export function Enquete() {
                             <div className="card-body">
                                 <h5 className="card-title" style={{ fontSize: '1rem' }}>Título do card</h5>
                                 <p className="card-text" style={{ fontSize: '0.9rem' }}>Um exemplo de texto rápido para construir o título do card.</p>
-                                <a href="#" className="btn btn-primary">Visitar</a>
+                                <a href="#" className="btn btn-primary" style={{ backgroundColor: 'var(--purple)' }}>Votar</a>
                             </div>
                         </div>
                     </div>
@@ -102,7 +102,7 @@ export function Enquete() {
                             <div className="card-body">
                                 <h5 className="card-title" style={{ fontSize: '1rem' }}>Título do card</h5>
                                 <p className="card-text" style={{ fontSize: '0.9rem' }}>Um exemplo de texto rápido para construir o título do card.</p>
-                                <a href="#" className="btn btn-primary">Visitar</a>
+                                <a href="#" className="btn btn-primary" style={{ backgroundColor: 'var(--purple)' }}>Votar</a>
                                 <span className="btn" style={{ border: '1px solid', borderRadius: '10px', 
                                     padding: '0.5rem', color: 'var(--white)', backgroundColor: 'var(--purple)' }}>
                                     25%
