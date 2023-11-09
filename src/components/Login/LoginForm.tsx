@@ -64,18 +64,7 @@ export function LoginForm() {
 
         {/* <form onSubmit={gravar} className={styles.loginForm}> */}
         <form onSubmit={gravar} className={styles.loginForm}>
-          <div className="form-group">
-            <label for = "inputEmail">Informe seu email</label>
-            <input 
-                name='email'
-                id ='inputEmail'
-                placeholder='E-mail' 
-                value={cadastro.email || ''}
-                className="form-control"
-                onChange={(e) => setCadastro({...cadastro, email:e.target.value})}
-                required/>
-          </div>
-          <div className="form-row">
+            <div className="row">
               <div className="col-md-6">
                 <div class="form-group">
                   <label for= "nameInput">Nome</label>
@@ -105,6 +94,17 @@ export function LoginForm() {
                       required/>
                 </div>
               </div>
+          </div>
+          <div className="form-group">
+            <label for = "inputEmail">Informe seu email</label>
+            <input 
+                name='email'
+                id ='inputEmail'
+                placeholder='E-mail' 
+                value={cadastro.email || ''}
+                className="form-control"
+                onChange={(e) => setCadastro({...cadastro, email:e.target.value})}
+                required/>
           </div>
           <div className="form-group">
             <label for="telInput">Telefone</label>
