@@ -29,7 +29,7 @@ export function Login() {
 
             <form action="" className={styles.loginForm}>
                 <div className="form-group">
-                    <label for='emailInput'>Entre com o seu e-mail</label>
+                    <label htmlFor='emailInput'>Entre com o seu e-mail</label>
                     <input 
                         type='text' 
                         id='emailInput' 
@@ -40,7 +40,7 @@ export function Login() {
                 </div>
                 
                 <div className="form-group">
-                    <label for='passInput'>Entre com a sua senha</label>
+                    <label htmlFor='passInput'>Entre com a sua senha</label>
                     <input 
                         type='password' 
                         id='passInput' 

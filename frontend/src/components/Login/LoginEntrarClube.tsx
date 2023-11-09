@@ -17,7 +17,7 @@ export function LoginEntrarClube() {
 
                 <form action="" className={styles.loginForm}>
                     <div className="form-group">
-                        <label for='clubeInput'>Digite o nome do clube</label>
+                        <label htmlFor='clubeInput'>Digite o nome do clube</label>
                         <input 
                             type='text' 
                             id='clubeInput'
@@ -27,7 +27,7 @@ export function LoginEntrarClube() {
                     </div>
                     
                     <div className="form-group">
-                        <label for='codeInput'>Digite o código do clube</label>
+                        <label htmlFor='codeInput'>Digite o código do clube</label>
                         <input 
                             type='text' 
                             id='codeInput'

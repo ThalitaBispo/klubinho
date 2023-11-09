@@ -15,7 +15,7 @@ export function LoginCriarClube() {
 
                 <form action="" className={styles.loginForm}>
                     <div className="form-group">
-                        <label for='clubeInput'>Nome do Clube</label>
+                        <label htmlFor='clubeInput'>Nome do Clube</label>
                         <input 
                             type='text' 
                             id='clubeInput'

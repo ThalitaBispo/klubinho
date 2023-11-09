@@ -66,8 +66,8 @@ export function LoginForm() {
         <form onSubmit={gravar} className={styles.loginForm}>
             <div className="row">
               <div className="col-md-6">
-                <div class="form-group">
-                  <label for= "nameInput">Nome</label>
+                <div className="form-group">
+                  <label htmlFor= "nameInput">Nome</label>
                   <input 
                       name='name'
                       type='text' 
@@ -81,8 +81,8 @@ export function LoginForm() {
               </div>
               
               <div className="col-md-6">
-                <div class="form-group">
-                  <label for="lastnameInput">Sobrenome</label>
+                <div className="form-group">
+                  <label htmlFor="lastnameInput">Sobrenome</label>
                   <input 
                       name='last_name'
                       type='text'
@@ -96,7 +96,7 @@ export function LoginForm() {
               </div>
           </div>
           <div className="form-group">
-            <label for = "inputEmail">Informe seu email</label>
+            <label htmlFor = "inputEmail">Informe seu email</label>
             <input 
                 name='email'
                 id ='inputEmail'
@@ -107,7 +107,7 @@ export function LoginForm() {
                 required/>
           </div>
           <div className="form-group">
-            <label for="telInput">Telefone</label>
+            <label htmlFor="telInput">Telefone</label>
             <input 
                 name='phone_number'
                 type='text'
@@ -119,7 +119,7 @@ export function LoginForm() {
                 required/>    
           </div>
           <div className="form-group">
-            <label for='passwordInput'>Informe sua senha</label>
+            <label htmlFor='passwordInput'>Informe sua senha</label>
             <input 
                 name='password'
                 type='password' 
