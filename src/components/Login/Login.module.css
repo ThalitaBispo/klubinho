@@ -1,9 +1,14 @@
 .container{
-    margin: 0;
-    padding: 0;
+    /* margin: 0;
+    padding: 0; */
     background: linear-gradient(to right, var(--purple) 50%, white 50%);
     height: 100vh;
     overflow: hidden;
+   
+    width: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
 }
 
 .textLogo {
@@ -13,7 +18,8 @@
 
 .login {
     background-color: var(--white);
-    padding: 2.5rem;
+    padding: 2rem;
+    margin: auto;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -22,19 +28,53 @@
     box-shadow: 4px 0px 6px rgba(0, 0, 0, 0.4);
     max-height: 70%; /* Limita a altura à altura máxima da página */
     max-width: 70%; /* Limita a largura à largura máxima da página */
+    min-width: 40%;
+    min-height: 40%;
     overflow: auto; /* overflow: auto Adiciona uma barra de rolagem horizontal se necessário / hidden esconde o conteudo que ultrapassa*/
 }
+
+  /* .login2 {
+    width: 500px;
+    height: 500px;
+    background-color: var(--white);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: auto;
+    max-width: 70%;
+    max-height: 80%;
+    overflow: auto;
+    padding: 1em 2em;
+    border-bottom: 2px solid #ccc;
+    border-radius: 20px;
+    box-shadow: 4px 0px 6px rgba(0, 0, 0, 0.4);
+    display: table;
+  }
+  
+  .conteudo2 {
+    display: table-cell;
+    vertical-align: middle;
+  } */
+
 
 .conteudo {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    font-size: 0.9rem;
+    /* margin-bottom: 0rem; */
+}
+
+.conteudo p{
+    margin-bottom: 0rem;
 }
 
 .welcome {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    font-size: 1rem;
 }
 
 .message {
@@ -46,20 +86,20 @@
 }
 
 .textLogin {
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: 600;
     margin: 1rem 0;
 }
 
 .loginForm {
-    margin: 10px;
+    /* margin: 10px; */
 }
 
 .loginForm input {
-    border: 1px solid var(--gray-100);
-    border-radius: 9px;
-    padding: 1rem 15rem 1rem 1rem;
-    margin: 1rem 1rem 1rem 0;
+    /* border: 1px solid var(--gray-100); */
+    /* border-radius: 9px; */
+    /* padding: 1rem 15rem 1rem 1rem; */
+    margin: 0.5rem 0.5rem 0.5rem 0;
     /* width: 100%; */
 }
 
@@ -83,7 +123,7 @@
 
 .centerButton {
     text-align: center;
-    margin-top: 2rem;
+    margin-top: 2.5rem;
 }
 
 .centerButton button {
@@ -91,17 +131,26 @@
     margin: 0 auto;
     background-color: var(--purple);
     color: var(--white);
-    padding: 0.5rem 30%;
     border-radius: 10px;
     font-size: 1.15rem;
     width: 100%; /* auto = A largura será ajustável automaticamente */
+    max-width: 300px;
 }
 
-.centerButton a {
-    flex: 1;
-    margin: 0 1px;
-    text-align: center;
-    text-decoration: none; /* Remove a decoração de texto sublinhado */
+.centerButton button:hover {
+    background-color: var(--darkpurple);
+    color: var(--white);
+}
+
+
+/* .btn-custom-purple {
+    background-color: var(--purple);
+    color: white; 
+} */
+
+.btn:hover {
+    background-color: purple; /* Change to your desired hover color */
+    color: white; /* Change the text color if needed */
 }
 
 .textCentral {
