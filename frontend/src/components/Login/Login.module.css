@@ -91,9 +91,10 @@
     margin: 1rem 0;
 }
 
+/*
 .loginForm {
-    /* margin: 10px; */
-}
+     margin: 10px; 
+}*/
 
 .loginForm input {
     /* border: 1px solid var(--gray-100); */

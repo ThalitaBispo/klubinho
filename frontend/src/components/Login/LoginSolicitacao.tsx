@@ -15,10 +15,7 @@ export function LoginSolicitacao() {
         <p className={styles.subtextCentral}>Aguarde um administrador liberar sua entrada </p>
 
         <div className={styles.centerButton}>
-            <a href="/">    
-                <button className={styles.botao} type='submit'>Entrar</button>
-            </a>
-           
+            <button className="btn btn-lg btn-block" type='submit' onClick={() => { window.location.href = `/`; } }>Entrar</button>                       
         </div>
         </>
     )
