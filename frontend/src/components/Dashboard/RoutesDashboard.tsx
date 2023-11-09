@@ -18,44 +18,46 @@ import { EditProfile } from '../Profile/EditProfile';
 export function RoutesDashboard() {
     return(
         <>
-            <div className="container-fluid">
-                <div className="row">
-                    
-                    <div className="col-md-3" style={{ position: 'sticky', top: 0, height: '100vh' }}>
-                        <SideBarRight />
-                    </div>
-                    
-                        <div className="col-md-5" style={{ maxHeight: '50%', overflowY: 'auto' }}>
-                            <div className="row">
-                                <div className="col-md-6 mt-4">
-                                    <b>Clube dos ++</b>
-                                </div>
-                                <div className={`col-md-6 mt-4 ${styles.menu}`}>
-                                    <a href="#" className="nav-link">
-                                    <span className="material-symbols-outlined">notifications</span>
-                                    </a>
-                                </div>
-                            </div>
-                            <hr style={{ borderTop: '2px solid gray' }} />
-                            <BrowserRouter>
-                                <main>
-                                    <Routes>
-                                        <Route path="/dashboard" element={<Dashboard />} />
-                                        <Route path="/dashboardexemple" element={<DashboardExemple />} />
-                                        <Route path="/enquete" element={<Enquete />} />
-                                        <Route path="/createenquete" element={<CreateEnquete />} />
-                                        <Route path="/profile" element={<Profile />} />
-                                        <Route path="/editprofile" element={<EditProfile />} />
-                                    </Routes>
-                                </main>
-                            </BrowserRouter>
+            <BrowserRouter>
+                <div className="container-fluid">
+                    <div className="row">
+                        
+                        <div className="col-md-3" style={{ position: 'sticky', top: 0, height: '100vh' }}>
+                            <SideBarRight />
                         </div>
-        
-                    <div className="col-md-4" style={{ position: 'sticky', top: 0, height: '100vh' }}>
-                        <SideBarLeft />
+                        
+                            <div className="col-md-5" style={{ maxHeight: '50%', overflowY: 'auto' }}>
+                                <div className="row">
+                                    <div className="col-md-6 mt-4">
+                                        <b>Clube dos ++</b>
+                                    </div>
+                                    <div className={`col-md-6 mt-4 ${styles.menu}`}>
+                                        <a href="#" className="nav-link">
+                                        <span className="material-symbols-outlined">notifications</span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <hr style={{ borderTop: '2px solid gray' }} />
+
+                                    <main>
+                                        <Routes>
+                                            <Route path="/dashboard" element={<Dashboard />} />
+                                            <Route path="/dashboardexemple" element={<DashboardExemple />} />
+                                            <Route path="/enquete" element={<Enquete />} />
+                                            <Route path="/createenquete" element={<CreateEnquete />} />
+                                            <Route path="/profile" element={<Profile />} />
+                                            <Route path="/editprofile" element={<EditProfile />} />
+                                        </Routes>
+                                    </main>
+                                
+                            </div>
+            
+                        <div className="col-md-4" style={{ position: 'sticky', top: 0, height: '100vh' }}>
+                            <SideBarLeft />
+                        </div>
                     </div>
                 </div>
-            </div>
+            </BrowserRouter>
         </>
     )
 }

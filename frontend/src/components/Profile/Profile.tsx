@@ -1,4 +1,4 @@
-
+import { Link } from 'react-router-dom'
 export function Profile() {
     return(
         <>
@@ -34,8 +34,8 @@ export function Profile() {
                         </span>
                     </p>
                     <p style={{ marginTop: '-0.6rem' }}>
-                    <span className="material-symbols-outlined" style={{ color: '#c2c2c2' }}>link</span>
-                    <a href="#" style={{ marginLeft: '0.5rem' }}>amazon.kindle/neryandre</a>
+                        <span className="material-symbols-outlined" style={{ color: '#c2c2c2' }}>link</span>
+                        <a href="#" style={{ marginLeft: '0.5rem' }}>amazon.kindle/neryandre</a>
                     </p>
                 </div>
 

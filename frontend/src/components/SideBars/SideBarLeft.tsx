@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import styles from './SideBarLeft.module.css'
 
 export function SideBarRight() {
@@ -14,10 +15,12 @@ export function SideBarRight() {
                             <span  className={styles.logo}>KLUBINHO</span>
 
                             <li className={`nav-item ${styles.menuItem}`}>
-                                <a className="nav-link d-flex flex-row mb-2" href="#">
-                                    <span className="material-symbols-outlined">home</span>
-                                    <span className='p-2'>Home</span>
-                                </a>
+                                <Link className='nav-link' to="/dashboard">
+                                    <a className="nav-link d-flex flex-row mb-2" href="#">
+                                        <span className="material-symbols-outlined">home</span>
+                                        <span className='p-2'>Home</span>
+                                    </a>
+                                </Link>
                             </li>
 
                             <li className={`nav-item ${styles.menuItem}`}>
@@ -33,13 +36,14 @@ export function SideBarRight() {
                                     <span className='p-2'>Reunião</span>
                                 </a>
                             </li>
-
+                            
                             <li className={`nav-item ${styles.menuItem}`}>
-                                <a className="nav-link d-flex flex-row mb-2" href="#">
+                                <Link className='nav-link' to="/profile">
                                     <span className="material-symbols-outlined">person</span>
                                     <span className='p-2'>Perfil</span>
-                                </a>
+                                </Link>
                             </li>
+                          
 
                             <li className={`nav-item d-flex ${styles.menuItem}`}>
                                 <a className="nav-link d-flex flex-row" href="#">
