@@ -16,16 +16,30 @@ export function LoginEntrarClube() {
                 </p>
 
                 <form action="" className={styles.loginForm}>
-                    <p>Digite o nome do clube</p>
-                    <input type='text' placeholder='Klubinho'></input>
-
-                    <p>Digite o código do clube</p>
-                    <input type='text' placeholder='Código'></input>
+                    <div className="form-group">
+                        <label for='clubeInput'>Digite o nome do clube</label>
+                        <input 
+                            type='text' 
+                            id='clubeInput'
+                            placeholder='Klubinho'
+                            className="form-control">
+                        </input>
+                    </div>
+                    
+                    <div className="form-group">
+                        <label for='codeInput'>Digite o código do clube</label>
+                        <input 
+                            type='text' 
+                            id='codeInput'
+                            placeholder='Código'
+                            className="form-control">
+                        </input>
+                    </div>
 
                     <p><a href='/criarclube'>Criar Novo Clube</a></p>
                     
                     <div className={styles.centerButton}>
-                        <button type='submit'>Entrar</button>
+                        <button type="submit" className="btn btn-lg btn-block">Entrar</button>
                     </div>
                 </form>
         </>

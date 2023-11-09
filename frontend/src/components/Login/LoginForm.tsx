@@ -14,8 +14,8 @@ export function LoginForm() {
     });
     const [status, setStatus] = useState('');
 
-  async function gravar(e) {
-    e.preventDefault();
+    async function gravar(e) {
+        e.preventDefault();
 
     const config = {
       headers: {
@@ -62,62 +62,78 @@ export function LoginForm() {
 
         <p className={styles.textLogin}>Cadastro</p>
 
+        {/* <form onSubmit={gravar} className={styles.loginForm}> */}
         <form onSubmit={gravar} className={styles.loginForm}>
-            <p>Informe seu email</p>
+            <div className="row">
+              <div className="col-md-6">
+                <div class="form-group">
+                  <label for= "nameInput">Nome</label>
+                  <input 
+                      name='name'
+                      type='text' 
+                      id='nameInput'
+                      placeholder='Nome' 
+                      value={cadastro.name || ''}
+                      className='form-control'
+                      onChange={(e) => setCadastro({...cadastro, name:e.target.value})}
+                      required/>
+                </div>
+              </div>
+              
+              <div className="col-md-6">
+                <div class="form-group">
+                  <label for="lastnameInput">Sobrenome</label>
+                  <input 
+                      name='last_name'
+                      type='text'
+                      id='lastnameInput' 
+                      placeholder='Sobrenome' 
+                      value={cadastro.last_name || ''}
+                      className="form-control"
+                      onChange={(e) => setCadastro({...cadastro, last_name:e.target.value})}
+                      required/>
+                </div>
+              </div>
+          </div>
+          <div className="form-group">
+            <label for = "inputEmail">Informe seu email</label>
             <input 
-                name='email' 
-                type='text' 
+                name='email'
+                id ='inputEmail'
                 placeholder='E-mail' 
                 value={cadastro.email || ''}
+                className="form-control"
                 onChange={(e) => setCadastro({...cadastro, email:e.target.value})}
                 required/>
-            
-
-            <div className={styles.conteudo}>
-                <div className={styles.inputDuplo}>
-                    <p>Nome</p>
-                    <input 
-                        name='name'
-                        type='text' 
-                        placeholder='Nome' 
-                        value={cadastro.name || ''}
-                        onChange={(e) => setCadastro({...cadastro, name:e.target.value})}
-                        required/>
-                </div>
-                
-                <div className={styles.inputDuplo}>
-                    <p>Sobrenome</p>
-                    <input 
-                        name='last_name'
-                        type='text' 
-                        placeholder='Sobrenome' 
-                        value={cadastro.last_name || ''}
-                        onChange={(e) => setCadastro({...cadastro, last_name:e.target.value})}
-                        required/>
-                </div>
-            </div>
-
-            <p>Telefone</p>
+          </div>
+          <div className="form-group">
+            <label for="telInput">Telefone</label>
             <input 
                 name='phone_number'
-                type='text' 
+                type='text'
+                id='telInput' 
                 placeholder='Nº de celular' 
                 value={cadastro.phone_number || ''}
+                className='form-control'
                 onChange={(e) => setCadastro({...cadastro, phone_number:e.target.value})}
                 required/>    
-
-            <p>Informe sua senha</p>
+          </div>
+          <div className="form-group">
+            <label for='passwordInput'>Informe sua senha</label>
             <input 
                 name='password'
                 type='password' 
-                placeholder='Senha' 
+                placeholder='Senha'
+                id='passwordInput'
                 value={cadastro.password || ''}
+                className='form-control'
                 onChange={(e) => setCadastro({...cadastro, password:e.target.value})}
-                required/>                   
+                required/>
+          </div>                   
 
-            <div className={styles.centerButton}>
-                    <button type='submit'>Cadastrar</button>
-            </div>
+          <div className={styles.centerButton}>
+            <button type="submit" className="btn btn-lg btn-block">Cadastrar</button>
+          </div>
         </form>
         </>
     )

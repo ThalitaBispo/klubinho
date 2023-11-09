@@ -6,14 +6,11 @@ export function LoginWelcome() {
 
         <p className={styles.textLogin}>Seja bem-vindo(a) Usuário ao <span className={styles.textDestaque}>Klubinho</span></p>
 
-        <div className={styles.centerButton}> 
-            <a href="/criarclube">    
-                <button type='submit'>Criar Clube</button>
-            </a>
-          
-            <a href="/entrarclube">
-                <button type='submit'>Participar de Clube</button>
-            </a>
+        <div className={styles.centerButton}>             
+            <button type="button" className="btn btn-lg btn-block" onClick={() => { window.location.href = `criarclube`; } }>Criar Clube</button>
+        </div>
+        <div className={styles.centerButton}>   
+            <button type="button" className="btn btn-lg btn-block" onClick={() => { window.location.href = `entrarclube`; } }>Participar de Clube</button>
         </div>
         </>
     )
