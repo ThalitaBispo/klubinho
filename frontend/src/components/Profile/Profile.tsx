@@ -17,10 +17,10 @@ export function Profile() {
                 style={{ maxWidth: "100px", marginTop: '-3.125rem', marginLeft: '2rem' }}
               />
 
-              <a href="#">
+              <Link to={"/editprofile"}>
                 <span className="material-symbols-outlined mt-2" style={{ color: 'var(--purple)', float: 'right', 
                 border: '1px solid var(--purple)', borderRadius: '10px', padding: '0.25rem', fontSize: '1.25rem' }}>edit</span>
-              </a>
+              </Link>
 
                 <div className="text-justify mt-4">
                     <p>
