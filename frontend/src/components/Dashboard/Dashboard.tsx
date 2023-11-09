@@ -19,14 +19,16 @@ export function Dashboard() {
       <div className="container">
         <div className="p-3 bg-light">
           <div className="col-md-6">
-            <textarea
-              className={`${styles.textoArea}`}
-              placeholder="No que você está pensando?"
-              rows={2}
-              maxLength = {300}
-              value={text}
-              onChange={handleInputChange}
-            />
+            <form>
+              <textarea
+                className={`${styles.textoArea}`}
+                placeholder="No que você está pensando?"
+                rows={2}
+                maxLength = {300}
+                value={text}
+                onChange={handleInputChange}
+              />
+            </form>
           </div>
           <div className="col-md-6 mt-4">
             <a href="#">

@@ -4,8 +4,12 @@ import { SideBarRight } from '../SideBars/SideBarLeft';
 import { SideBarLeft } from '../SideBars/SideBarRight';
 
 import { Dashboard } from './Dashboard';
-import { Enquete } from '../Enquete/Enquete';
+import { DashboardExemple } from './DashboardExemple';
 import styles from './Dashboard.module.css';
+
+import { Enquete } from '../Enquete/Enquete';
+import { CreateEnquete } from '../Enquete/CreateEnquete';
+
 import { Profile } from '../Profile/Profile';
 import { EditProfile } from '../Profile/EditProfile';
 
@@ -37,7 +41,9 @@ export function RoutesDashboard() {
                                 <main>
                                     <Routes>
                                         <Route path="/dashboard" element={<Dashboard />} />
+                                        <Route path="/dashboardexemple" element={<DashboardExemple />} />
                                         <Route path="/enquete" element={<Enquete />} />
+                                        <Route path="/createenquete" element={<CreateEnquete />} />
                                         <Route path="/profile" element={<Profile />} />
                                         <Route path="/editprofile" element={<EditProfile />} />
                                     </Routes>

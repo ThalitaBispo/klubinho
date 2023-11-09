@@ -5,8 +5,10 @@ export function Enquete() {
         <>
             <div className="container mt-4 mb-4">
                 <div className="row">
-                    <div className="col-md-6 mt-4">
-                        <b style={{ fontSize: '1.5rem' }}>Enquete</b>
+                    <div className="col-md-8 mt-4" style={{ fontSize: '1.5rem' }}>
+                        <b>Enquete</b>
+                        <b> - </b>
+                        <b>Livro da semana</b>
                     </div>
                 </div>
                 
