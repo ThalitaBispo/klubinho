@@ -1,0 +1,24 @@
+.textoArea {
+    background-color: #f8f9fa;
+    overflow: hidden; 
+    resize:none;
+    width: 40rem;
+    border: none;
+  }
+  
+  .textoArea:focus {
+    outline: none;
+    background-color: #f8f9fa;
+  }
+  
+  .menu {
+    padding-left: 20rem;
+  }
+  
+  .buttonPurple {
+    background-color: var(--purple);
+    border-radius: 10px;
+    color: var(--white);
+    border: none;
+    padding: 0.5rem;
+}
