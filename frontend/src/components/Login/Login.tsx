@@ -59,7 +59,7 @@ export function Login() {
 
             <p className={styles.textLogin}>Login</p>
 
-            <form action="" className={styles.loginForm}>
+            <form onSubmit={gravar} className={styles.loginForm}>
                 <div className="form-group">
                     <label htmlFor='emailInput'>Entre com o seu e-mail</label>
                     <input 
