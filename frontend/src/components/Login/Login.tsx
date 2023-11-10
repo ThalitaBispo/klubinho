@@ -67,6 +67,7 @@ export function Login() {
                         id='emailInput' 
                         placeholder='e-mail'
                         className="form-control"
+                        onChange={(e) => setLogin({...login, email:e.target.value})}
                         required>
                     </input>
                 </div>
@@ -78,6 +79,7 @@ export function Login() {
                         id='passInput' 
                         placeholder='senha'
                         className="form-control"
+                        onChange={(e) => setLogin({...login, password:e.target.value})}
                         required>
                     </input>
                 </div>
