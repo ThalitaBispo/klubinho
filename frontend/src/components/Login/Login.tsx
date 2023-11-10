@@ -5,7 +5,39 @@ import axios from 'axios';
 
 export function Login() {
 
+    const [login, setLogin] = useState({
+        email: '',
+        password: ''
+    })
+    const [status, setStatus] = useState('');
 
+    async function gravar(e) {
+        e.preventDefault();
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
+
+        try{
+            const response = await axios.post(
+                'http://127.0.0.1:8000/api/login',
+                {
+                    email: login.email,
+                    password: login.password
+                },
+                config
+            );
+            setStatus('Login feito com sucesso');
+            alert('Login feito com sucesso');
+            setLogin({});
+
+        } catch (error) {
+            setStatus('Falha: ${error}');
+            alert('Falha: ${error}');
+        }
+    }
 
 
 
