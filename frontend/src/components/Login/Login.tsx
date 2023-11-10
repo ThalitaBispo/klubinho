@@ -34,8 +34,8 @@ export function Login() {
             setLogin({});
 
         } catch (error) {
-            setStatus('Falha: ${error}');
-            alert('Falha: ${error}');
+            setStatus(`Falha: ${error}`);
+            alert(`Falha: ${error}`);        
         }
     }
 
@@ -86,7 +86,7 @@ export function Login() {
                 <p><a>Esqueceu a senha?</a></p>
                 
                 <div className={styles.centerButton}>
-                    <button type='submit' className="btn btn-lg btn-block" onClick={() => { window.location.href = `bemvindo`; } }>Entrar</button>
+                    <button type='submit' className="btn btn-lg btn-block">Entrar</button>
                 </div>
                 
             </form>
