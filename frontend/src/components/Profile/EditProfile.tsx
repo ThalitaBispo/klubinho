@@ -1,4 +1,4 @@
-
+import { Link } from 'react-router-dom'
 import styles from './EditProfile.module.css'
 
 export function EditProfile() {
@@ -74,6 +74,11 @@ export function EditProfile() {
                     </div>
             
                     <button type="submit" className="btn mt-4" style={{ backgroundColor: 'var(--purple)', color: 'var(--white' }}>Salvar</button>
+                    <Link to={"/profile"}>
+                        <button type="button" className="btn mt-4" style={{ backgroundColor: 'var(--purple)', color: 'var(--white', marginLeft: "1rem" }}>
+                            Voltar
+                        </button>
+                    </Link>
                 </form>
 
 
