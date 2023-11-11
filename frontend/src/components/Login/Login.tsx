@@ -37,7 +37,7 @@ export function Login() {
             Cookies.set('token', token, { expires: 7 });
 
             // Armazene o id do usuário no cookie
-            Cookies.set('userId', user.id.toString(), { expires: 7 });
+            Cookies.set('userId', user.id, { expires: 7 });
 
             setStatus('Login feito com sucesso');
             setLogin({}); 

@@ -1,6 +1,11 @@
 import styles from './Login.module.css'
 
 export function LoginCriarClube() {
+
+    
+
+
+
     return(
         <>
             <div className={styles.welcome}>
@@ -25,7 +30,7 @@ export function LoginCriarClube() {
                         </input>
                     </div>
                     <div className="form-group">
-                        <p>Endereço do Clube</p>
+                        <label htmlFor='endClube'>Endereço do Clube</label>
                         <input 
                             type='text' 
                             id='endClubeInput'

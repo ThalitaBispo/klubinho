@@ -1,7 +1,8 @@
-import { Link } from 'react-router-dom'
+import { Link , useNavigate } from 'react-router-dom'
 import styles from './Login.module.css'
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 export function LoginForm() {
 
@@ -13,6 +14,7 @@ export function LoginForm() {
         password: '', // Valor padrão para 'password'
     });
     const [status, setStatus] = useState('');
+    const navigate = useNavigate();
 
     async function gravar(e) {
         e.preventDefault();
@@ -36,9 +38,21 @@ export function LoginForm() {
         config
       );
 
-      setStatus('Usuário cadastrado com sucesso!');
+      
+
+      setStatus('cadastro realizado');
       alert('Usuário cadastrado com sucesso!');
       setCadastro({});
+
+      // Aqui você pode verificar se a resposta contém o item
+      const { user } = response.data;
+      console.log(user);
+
+      // Armazene o id do usuário no cookie
+      Cookies.set('user_Id', user.id, { expires: 7 });
+
+      // Redireciona para a página desejada
+      navigate('/bemvindo');
     } catch (error) {
       setStatus(`Falha: ${error}`);
       alert(`Falha: ${error}`);
