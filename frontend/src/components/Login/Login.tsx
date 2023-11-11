@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom'
-import styles from './Login.module.css'
+import { Link } from 'react-router-dom';
+import styles from './Login.module.css';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
@@ -40,18 +40,16 @@ export function Login() {
             Cookies.set('userId', user.id.toString(), { expires: 7 });
 
             setStatus('Login feito com sucesso');
-            alert('Login feito com sucesso');
-            setLogin({});
+            setLogin({}); 
+            
+            //Atualiza a pagina para o App.tsx verificar a presença do token
+            window.location.reload()
 
         } catch (error) {
             setStatus(`Falha: ${error}`);
-            alert(`Falha: ${error}`);        
+            alert(`Usuário ou senha inválidos.`);        
         }
     }
-
-
-
-
     
     return(
         <>
