@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import styles from './Login.module.css'
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 export function Login() {
 
@@ -29,6 +30,15 @@ export function Login() {
                 },
                 config
             );
+             // Aqui você pode verificar se a resposta contém o token
+            const { token, user } = response.data;
+
+            // Armazene o token no cookie
+            Cookies.set('token', token, { expires: 7 });
+
+            // Armazene o id do usuário no cookie
+            Cookies.set('userId', user.id.toString(), { expires: 7 });
+
             setStatus('Login feito com sucesso');
             alert('Login feito com sucesso');
             setLogin({});
