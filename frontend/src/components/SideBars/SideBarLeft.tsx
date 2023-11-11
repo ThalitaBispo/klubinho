@@ -42,19 +42,34 @@ export function SideBarRight() {
                                 </Link>
                             </li>
 
-                            <li className={`nav-item d-flex ${styles.userProfile}`}>
-                                <a className="nav-link d-flex flex-row mt-4" href="#">
-                                    <img
-                                        src="https://avatars.githubusercontent.com/u/88936386?v=4"
-                                        alt="Imagem do perfil"
-                                        className="img-fluid rounded-circle align-self-start"
-                                        style={{ maxWidth: "70px"}}
-                                    />
-                                    <div className="mt-3" style={{marginLeft: '1rem'}}>
-                                        <div className="d-block">André Nery</div>
-                                        <div className="d-block">Clube dos ++</div>
+                            <li className={`nav-item d-flex ${styles.userProfile} ${styles.hoverEffect}`}>
+                                <div className="dropdown">
+                                    <a
+                                    className="nav-link d-flex flex-row mt-4"
+                                    href="#"
+                                    role="button"
+                                    id="userDropdown"
+                                    data-toggle="dropdown"
+                                    aria-haspopup="true"
+                                    aria-expanded="false"
+                                    >
+                                        <img
+                                            src="https://avatars.githubusercontent.com/u/88936386?v=4"
+                                            alt="Imagem do perfil"
+                                            className="img-fluid rounded-circle align-self-start"
+                                            style={{ maxWidth: "70px" }}
+                                        />
+                                        <div className="mt-3" style={{ marginLeft: '1rem' }}>
+                                            <div className="d-block">André Nery</div>
+                                            <div className="d-block">Clube dos ++</div>
+                                        </div>
+                                    </a>
+                                    <div className="dropdown-menu" aria-labelledby="userDropdown">
+                                        <a className="dropdown-item" href="#">
+                                            Logout
+                                        </a>
                                     </div>
-                                </a>
+                                </div>
                             </li>
                         </ul>
                     </div>

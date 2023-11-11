@@ -4,7 +4,6 @@ import { SideBarRight } from '../SideBars/SideBarLeft';
 import { SideBarLeft } from '../SideBars/SideBarRight';
 
 import { Dashboard } from './Dashboard';
-import { DashboardExemple } from './DashboardExemple';
 import styles from './Dashboard.module.css';
 
 import { Enquete } from '../Enquete/Enquete';
@@ -17,8 +16,6 @@ import { ListEnquete } from '../Enquete/ListEnquete';
 import { Reunion } from '../Reunion/Reunion';
 import { CreateReunion } from '../Reunion/CreateReunion';
 import { EditReunion } from '../Reunion/EditReunion';
-
-//import { DashboardTest } from './Dashboardteste';
 
 export function RoutesDashboard() {
     return(
@@ -47,7 +44,6 @@ export function RoutesDashboard() {
                                     <main>
                                         <Routes>
                                             <Route path="/dashboard" element={<Dashboard />} />
-                                            <Route path="/dashboardexemple" element={<DashboardExemple />} />
                                             <Route path="/enquete" element={<Enquete />} />
                                             <Route path="/listenquete" element={<ListEnquete />} />
                                             <Route path="/createenquete" element={<CreateEnquete />} />
