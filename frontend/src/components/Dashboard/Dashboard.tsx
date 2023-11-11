@@ -37,12 +37,45 @@ export function Dashboard() {
         return <p>Carregando...</p>;
     }
 
+  //create
+  /*const [postagem, setPostagem] = useState({});
+  const [status, setStatus] = useState('');
+
+  async function gravar(e) {
+    e.preventDefault();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    try {
+      const response = await axios.post(
+        'http://127.0.0.1:8000/api/post/create',
+        {
+          user_id: postagem.user_id,
+          club_id: postagem.club_id,
+          content: postagem.content,
+        },
+        config
+      );
+
+      setStatus('Post cadastrado com sucesso!');
+      alert('Post cadastrado com sucesso!');
+      setPostagem({});
+    } catch (error) {
+      setStatus(`Falha: ${error}`);
+      alert(`Falha: ${error}`);
+    }
+  }*/
+
   return (
     <>
       <div className="container">
-        <div className="p-3 bg-light">
-          <div className="col-md-6">
-            <form>
+        <form>
+          <div className="p-3 bg-light">
+            <div className="col-md-6">
               <textarea
                 className={`${styles.textoArea}`}
                 placeholder="No que você está pensando?"
@@ -51,14 +84,22 @@ export function Dashboard() {
                 value={text}
                 onChange={handleInputChange}
               />
-            </form>
+            </div>
+            <div className='row'>
+              <div className="col-sm mt-4">
+                <label htmlFor="selecao-arquivo">
+                  <span className="material-symbols-outlined"style={{ color: 'var(--purple)', cursor: 'pointer' }}>image</span>
+                </label>
+                <input id='selecao-arquivo' style={{ display: 'none' }} type='file' />
+              </div>
+              <div className="col-sm-2 mt-4">
+                <a href="#">
+                    <button className={styles.buttonPurple}>Postar</button>
+                </a>
+              </div>
+            </div>
           </div>
-          <div className="col-md-6 mt-4">
-            <a href="#">
-                <button className={styles.buttonPurple}>Postar</button>
-            </a>
-          </div>
-        </div>
+        </form>
 
 
         {posts.map((post) => (
@@ -73,7 +114,7 @@ export function Dashboard() {
                 />
                 <div className="mt-2" style={{marginLeft: '1rem'}}>
                   <div>
-                    <span>Alex Sander Meneses Santos</span>
+                    <span>{post.name} {post.last_name}</span>
                     <span> . </span>
                     <span style={{ color: '#5b6b77' }}>15h</span>
                   </div>
@@ -99,11 +140,12 @@ export function Dashboard() {
                 <span style={{ marginLeft: '0.25rem' }}>20</span>
               </div>
             </div>
+            <hr style={{ borderTop: '1px solid gray', marginTop: '2rem' }} />
           </div>
 
-        ))}
+          
 
-          <hr style={{ borderTop: '1px solid gray', marginTop: '2rem' }} />
+        ))}
 
         </div>
     </>

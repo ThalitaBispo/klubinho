@@ -62,10 +62,10 @@ export function CreateEnquete() {
             <input type="text" className="form-control" id={`input${input.id + 1}`} name={`input${input.id + 1}`} placeholder="Descrição" value={""}/>
             
             <div className={`col-md-4`} style={{ backgroundColor: 'var(--purple)', borderRadius: '5px', color: '#fff', cursor: 'pointer', marginTop: '1rem',
-          padding: '0.25rem 1rem' }}>
-            <label htmlFor="selecao-arquivo">Selecione uma imagem</label>
-            <input id='selecao-arquivo' style={{ display: 'none' }} type='file' />
-        </div>
+                                                  padding: '0.25rem 1rem' }}>
+              <label htmlFor="selecao-arquivo">Selecione uma imagem</label>
+              <input id='selecao-arquivo' style={{ display: 'none' }} type='file' />
+          </div>
           
           </div>
         ))}
