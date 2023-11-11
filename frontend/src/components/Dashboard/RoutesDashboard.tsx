@@ -12,6 +12,11 @@ import { CreateEnquete } from '../Enquete/CreateEnquete';
 
 import { Profile } from '../Profile/Profile';
 import { EditProfile } from '../Profile/EditProfile';
+import { ListEnquete } from '../Enquete/ListEnquete';
+
+import { Reunion } from '../Reunion/Reunion';
+import { CreateReunion } from '../Reunion/CreateReunion';
+import { EditReunion } from '../Reunion/EditReunion';
 
 //import { DashboardTest } from './Dashboardteste';
 
@@ -44,7 +49,11 @@ export function RoutesDashboard() {
                                             <Route path="/dashboard" element={<Dashboard />} />
                                             <Route path="/dashboardexemple" element={<DashboardExemple />} />
                                             <Route path="/enquete" element={<Enquete />} />
+                                            <Route path="/listenquete" element={<ListEnquete />} />
                                             <Route path="/createenquete" element={<CreateEnquete />} />
+                                            <Route path="/reunion" element={<Reunion />} />
+                                            <Route path="/createreunion" element={<CreateReunion />} />
+                                            <Route path="/editreunion" element={<EditReunion />} />
                                             <Route path="/profile" element={<Profile />} />
                                             <Route path="/editprofile" element={<EditProfile />} />
                                         </Routes>

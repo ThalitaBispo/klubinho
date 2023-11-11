@@ -16,25 +16,23 @@ export function SideBarRight() {
 
                             <li className={`nav-item ${styles.menuItem}`}>
                                 <Link className='nav-link' to="/dashboard">
-                                    <a className="nav-link d-flex flex-row mb-2" href="#">
-                                        <span className="material-symbols-outlined">home</span>
-                                        <span className='p-2'>Home</span>
-                                    </a>
+                                    <span className="material-symbols-outlined">home</span>
+                                    <span className='p-2'>Home</span>
                                 </Link>
                             </li>
 
                             <li className={`nav-item ${styles.menuItem}`}>
-                                <a className="nav-link d-flex flex-row mb-2" href="#">
+                                <Link className='nav-link' to="/listenquete">
                                     <span className="material-symbols-outlined">voting_chip</span>
                                     <span className='p-2'>Enquete</span>
-                                </a>
+                                </Link>
                             </li>
                             
                             <li className={`nav-item ${styles.menuItem}`}>
-                                <a className="nav-link d-flex flex-row mb-2" href="#">
+                                <Link className='nav-link' to="/reunion">
                                     <span className="material-symbols-outlined">article</span>
                                     <span className='p-2'>Reunião</span>
-                                </a>
+                                </Link>
                             </li>
                             
                             <li className={`nav-item ${styles.menuItem}`}>
@@ -42,14 +40,6 @@ export function SideBarRight() {
                                     <span className="material-symbols-outlined">person</span>
                                     <span className='p-2'>Perfil</span>
                                 </Link>
-                            </li>
-                          
-
-                            <li className={`nav-item d-flex ${styles.menuItem}`}>
-                                <a className="nav-link d-flex flex-row" href="#">
-                                    <span className="material-symbols-outlined">menu_book</span>
-                                    <span className='p-2'>Clube do livro</span>
-                                </a>
                             </li>
 
                             <li className={`nav-item d-flex ${styles.userProfile}`}>

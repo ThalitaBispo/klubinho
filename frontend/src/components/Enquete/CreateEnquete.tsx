@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 export function CreateEnquete() {
   const [additionalInputs, setAdditionalInputs] = useState([]);
@@ -77,6 +78,12 @@ export function CreateEnquete() {
         )}
 
         <button type="submit" className="btn mt-4" style={{ backgroundColor: "var(--purple)", color: "var(--white)" }}> Salvar </button>
+
+        <Link to={"/listenquete"}>
+          <button type="button" className="btn mt-4" style={{ backgroundColor: 'var(--purple)', color: 'var(--white', marginLeft: "1rem" }}>
+            Voltar
+          </button>
+        </Link>
       </form>
     </div>
   );
