@@ -21,7 +21,7 @@ export function Login() {
         };
 
         try{
-            const response = await axios.get(
+            const response = await axios.post(
                 'http://127.0.0.1:8000/api/login',
                 {
                     email: login.email,
