@@ -44,7 +44,7 @@ export function LoginForm() {
       alert('Usuário cadastrado com sucesso!');
       setCadastro({});
 
-      // Aqui você pode verificar se a resposta contém o item
+      // Aqui você pode verificar se a resposta contém o id
       const { user } = response.data;
       console.log(user);
 

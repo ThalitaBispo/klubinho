@@ -1,8 +1,56 @@
-import styles from './Login.module.css'
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import Cookies from 'js-cookie';
+import styles from './Login.module.css';
 
 export function LoginCriarClube() {
 
+    const [cadastro, setCadastro] = useState({
+        name: '', // Valor padrão para 'name'
+        nick_club: '', // Valor padrão para 'last_name'
+    });
+    const [status, setStatus] = useState('');
+    const navigate = useNavigate();
+
+    // Recupere o id do usuário do cookie
     
+    const user_Id = Cookies.get('user_Id');
+    console.log('ID do usuário:', user_Id);
+
+    async function gravar(e) {
+        e.preventDefault();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    try {
+      const response = await axios.post(
+        'http://127.0.0.1:8000/api/club/register',
+        {
+          name: cadastro.name,
+          nick_club: cadastro.nick_club,
+          user_id: user_Id, // Adicione o userId ao corpo da solicitação
+        },
+        config
+      );
+      
+      console.log(response);
+
+      setStatus('clube criado');
+      alert('Clube criado com sucesso!');
+      setCadastro({});
+
+      // Redireciona para a página desejada
+      navigate('/');
+    } catch (error) {
+      setStatus(`Falha: ${error}`);
+      alert(`Falha: ${error}`);
+    }
+  }
 
 
 
@@ -18,16 +66,17 @@ export function LoginCriarClube() {
 
                 <p className={styles.textLogin}>Crie um Clube</p>
 
-                <form action="" className={styles.loginForm}>
+                <form onSubmit={gravar} className={styles.loginForm}>
                     <div className="form-group">
                         <label htmlFor='clubeInput'>Nome do Clube</label>
                         <input 
                             type='text' 
                             id='clubeInput'
                             placeholder='Nome do Clube'
-                            className="form-control"
-                            required>
-                        </input>
+                            value={cadastro.name || ''}
+                            className='form-control'
+                            onChange={(e) => setCadastro({...cadastro, name:e.target.value})}
+                      required/>                        
                     </div>
                     <div className="form-group">
                         <label htmlFor='endClube'>Endereço do Clube</label>
@@ -35,9 +84,10 @@ export function LoginCriarClube() {
                             type='text' 
                             id='endClubeInput'
                             placeholder='@klubinho'
-                            className="form-control"
-                            required>                        
-                        </input>
+                            value={cadastro.nick_club || ''}
+                            className='form-control'
+                            onChange={(e) => setCadastro({...cadastro, nick_club:e.target.value})}
+                            required/>                        
                     </div>
                     <p><a href='/entrarclube'>Buscar Clube Existente</a></p>
                     
