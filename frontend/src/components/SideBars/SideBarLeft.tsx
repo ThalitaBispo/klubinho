@@ -7,7 +7,7 @@ export function SideBarRight() {
     const navigate = useNavigate();
     const handleLogout = () => {
         // Remova os cookies quando o usuário faz logout
-        Cookies.remove('userId');
+        Cookies.remove('user_id');
         Cookies.remove('token');
         // navigate('/');
       };

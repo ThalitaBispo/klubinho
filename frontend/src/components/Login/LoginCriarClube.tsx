@@ -15,8 +15,8 @@ export function LoginCriarClube() {
 
     // Recupere o id do usuário do cookie
     
-    const user_Id = Cookies.get('user_Id');
-    console.log('ID do usuário:', user_Id);
+    const user_id = Cookies.get('user_id');
+    console.log('ID do usuário:', user_id);
 
     async function gravar(e) {
         e.preventDefault();
@@ -33,7 +33,7 @@ export function LoginCriarClube() {
         {
           name: cadastro.name,
           nick_club: cadastro.nick_club,
-          user_id: user_Id, // Adicione o userId ao corpo da solicitação
+          user_id: user_id, // Adicione o userId ao corpo da solicitação
         },
         config
       );

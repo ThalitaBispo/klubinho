@@ -49,7 +49,7 @@ export function LoginForm() {
       console.log(user);
 
       // Armazene o id do usuário no cookie
-      Cookies.set('user_Id', user.id, { expires: 7 });
+      Cookies.set('user_id', user.id, { expires: 7 });
 
       // Redireciona para a página desejada
       navigate('/bemvindo');

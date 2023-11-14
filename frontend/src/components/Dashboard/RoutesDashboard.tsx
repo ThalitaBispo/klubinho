@@ -43,7 +43,7 @@ export function RoutesDashboard() {
 
                                     <main>
                                         <Routes>
-                                            <Route path="/dashboard" element={<Dashboard />} />
+                                            <Route path="/" element={<Dashboard />} />
                                             <Route path="/enquete" element={<Enquete />} />
                                             <Route path="/listenquete" element={<ListEnquete />} />
                                             <Route path="/createenquete" element={<CreateEnquete />} />
