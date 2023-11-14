@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import React, { useState, useEffect } from 'react';
+import axios from "axios";
 
 import Select from 'react-select';
 
@@ -28,151 +29,119 @@ export function EditReunion() {
         </div>
     );
 
+    const [reunions, setReunions] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        async function Reunion() {
+        try {
+            const response = await axios.get('http://127.0.0.1:8000/api/reuniao/getAllReuniaoByClub/1');
+            setReunions(response.data);
+            setLoading(false);
+        } catch (error) {
+            console.error(error);
+        }
+        }
+
+        Reunion();
+    }, []);
+
+    if (loading) {
+        return <p>Carregando...</p>;
+    }
+
     return (
         <div className="container">
             <b style={{ fontSize: "1.5rem" }}>Editar reunião</b>
 
-            <form className="mt-4" style={{ marginBottom: "3rem" }}>
-                <div className="form-group mt-4">
-                    <label>Título</label>
-                    <input type="text" className="form-control" placeholder="Título" value={""} required/>
-                </div>
-
-                <div className="form-group mt-4">
-                    <label>Descrição</label>
-                    <textarea 
-                        className="form-control" 
-                        placeholder="Descrição" 
-                        rows={4} 
-                        maxLength={255}
-                        style={{ resize: 'none' }}
-                        required
-                    />
-                </div>
-
-                <div className="form-group mt-4">
-                    <label>Link</label>
-                    <input type="text" className="form-control" placeholder="Link" value={""} required/>
-                </div>
-
-                <div className="form-group mt-4">
-                    <div className="mt-2">
-                        <p>Participantes:</p>
-                    </div>
+            {reunions.map((reunion) => (
+                <form className="mt-4" style={{ marginBottom: "3rem" }}>
                 
-                    <Select
-                        isMulti
-                        options={options}
-                        value={selectedOptions}
-                        onChange={handleSelectChange}
-                        components={{ MultiValue: customMultiValue }}
-                        required
-                    />              
-                </div>
-
-                <div className="row mt-4">
-                    <div className="form-group col-md-6">
-                        <label htmlFor="inputData">Data</label>
-                        <input type="date" className="form-control" id="inputHora" placeholder="Data" required/>
+                    <div key={reunion.id} className="form-group mt-4">
+                        <label>Título</label>
+                        <input type="text" className="form-control" placeholder="Título" value={reunion.titulo} required/>
                     </div>
-                    <div className="form-group col-md-6">
-                        <label htmlFor="inputHora">Hora</label>
-                        <input type="time" className="form-control" id="inputHora" placeholder="Hora" required/>
+
+                    <div className="form-group mt-4">
+                        <label>Descrição</label>
+                        <textarea 
+                            className="form-control" 
+                            placeholder="Descrição" 
+                            rows={4} 
+                            maxLength={255}
+                            style={{ resize: 'none' }}
+                            value={reunion.descricao}
+                            required
+                        />
                     </div>
-                </div>
 
-                <div className="form-group mt-4 mb-4">
-                    <label>Comentário</label>
-                    <textarea 
-                        className="form-control" 
-                        placeholder="Comentário" 
-                        rows={4} 
-                        maxLength={255}
-                        style={{ resize: 'none' }}
-                        required
-                    />
-                </div>    
-
-                <b className="mt-4 mb-4" style={{ fontSize: "1.5rem" }}>Livro</b>
-
-                <div className="form-group mt-4">
-                    <label>Título</label>
-                    <input type="text" className="form-control" placeholder="Título" value={""} />
-                </div>
-
-                <div className="row mt-4">
-                    <div className="form-group col-md-6">
-                        <label>Autor</label>
-                        <input type="text" className="form-control" placeholder="Autor" />
+                    <div className="form-group mt-4">
+                        <label>Link</label>
+                        <input type="text" className="form-control" placeholder="Link" value={reunion.link} required/>
                     </div>
-                    <div className="form-group col-md-6">
-                        <label>Genêro</label>
-                        <input type="text" className="form-control" placeholder="Genêro"/>
+
+                    <div className="form-group mt-4">
+                        <div className="mt-2">
+                            <p>Participantes:</p>
+                        </div>
+                    
+                        <Select
+                            isMulti
+                            options={options}
+                            value={selectedOptions}
+                            onChange={handleSelectChange}
+                            components={{ MultiValue: customMultiValue }}
+                            required
+                        />              
                     </div>
-                </div>
 
-                <div className="form-group mt-4">
-                    <label>Curadoria</label>
-                    <select className="form-control">
-                        <option selected>Escolher ...</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                    </select>
-                </div>
-
-                <div className="form-group mt-4">
-                    <label>Descrição</label>
-                    <textarea 
-                        className="form-control" 
-                        placeholder="Descrição" 
-                        rows={4} 
-                        maxLength={255}
-                        style={{ resize: 'none' }}
-                    />
-                </div>
-
-                <div className="row mt-4">
-                    <div className="form-group col-md-6">
-                        <label>Número de páginas</label>
-                        <input type="number" className="form-control" placeholder="000" />
+                    <div className="row mt-4">
+                        <div className="form-group col-md-6">
+                            <label htmlFor="inputData">Data</label>
+                            <input type="date" className="form-control" id="inputHora" placeholder="Data" value={reunion.data_reuniao} required/>
+                        </div>
+                        <div className="form-group col-md-6">
+                            <label htmlFor="inputHora">Hora</label>
+                            <input type="time" className="form-control" id="inputHora" placeholder="Hora" value={reunion.hora_reuniao} required/>
+                        </div>
                     </div>
-                    <div className="form-group col-md-6">
-                        <label>Preço</label>
-                        <input type="price" className="form-control" placeholder="R$ 00,00" />
+
+                    <div className="form-group mt-4 mb-4">
+                        <label>Comentário</label>
+                        <textarea 
+                            className="form-control" 
+                            placeholder="Comentário" 
+                            rows={4} 
+                            maxLength={255}
+                            style={{ resize: 'none' }}
+                            value={" "}
+                            required
+                        />
+                    </div>    
+
+                    <div className="row mt-4">
+                        <div className="form-group col-md-6">
+                            <label>Livro</label>
+                            <input type="text" className="form-control" placeholder="Livro" value={reunion.livro} />
+                        </div>
+                        <div className="form-group col-md-6">
+                            <label>Autor</label>
+                            <input type="text" className="form-control" placeholder="Autor" value={reunion.autor} />
+                        </div>
                     </div>
-                </div>
 
-                <div className="row mt-4">
-                    <div className="form-group col-md-6">
-                        <label>Mês de referência</label>
-                        <input type="text" className="form-control" placeholder="Mês" />
+                    <div className="form-group mt-4">         
+                        <button type="submit" className="btn mt-4" style={{ backgroundColor: "var(--purple)", color: "var(--white)" }}> Salvar </button>
+
+                        <Link to={"/reunion"}>
+                            <button type="button" className="btn mt-4" style={{ backgroundColor: 'var(--purple)', color: 'var(--white', marginLeft: "1rem" }}>
+                                Voltar
+                            </button>
+                        </Link>
                     </div>
-                    <div className="form-group col-md-6">
-                        <label>Status</label>
-                        <select className="form-control">
-                            <option selected>Escolher ...</option>
-                            <option>Lido</option>
-                            <option>Leitura atual</option>
-                            <option>Em breve</option>
-                            <option>Em votação</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div className="form-group mt-4">         
-                    <button type="submit" className="btn mt-4" style={{ backgroundColor: "var(--purple)", color: "var(--white)" }}> Salvar </button>
-
-                    <Link to={"/reunion"}>
-                        <button type="button" className="btn mt-4" style={{ backgroundColor: 'var(--purple)', color: 'var(--white', marginLeft: "1rem" }}>
-                            Voltar
-                        </button>
-                    </Link>
-                </div>
-
-            </form>
+                </form>
+            ))}
         </div>
+        
     )
 }
