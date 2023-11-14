@@ -1,7 +1,17 @@
-import { Link } from 'react-router-dom'
-import styles from './SideBarLeft.module.css'
+import { Link , useNavigate } from 'react-router-dom';
+import styles from './SideBarLeft.module.css';
+import Cookies from 'js-cookie';
 
 export function SideBarRight() {
+
+    const navigate = useNavigate();
+    const handleLogout = () => {
+        // Remova os cookies quando o usuário faz logout
+        Cookies.remove('userId');
+        Cookies.remove('token');
+        // navigate('/');
+      };
+
     return(
         <>
             <div className='container mx-auto d-flex justify-content-center align-items-center'>
@@ -65,7 +75,7 @@ export function SideBarRight() {
                                         </div>
                                     </a>
                                     <div className="dropdown-menu" aria-labelledby="userDropdown">
-                                        <a className="dropdown-item" href="#">
+                                        <a className="dropdown-item" href="/" onClick={handleLogout}>
                                             Logout
                                         </a>
                                     </div>

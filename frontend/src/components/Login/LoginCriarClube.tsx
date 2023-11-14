@@ -52,8 +52,6 @@ export function LoginCriarClube() {
     }
   }
 
-
-
     return(
         <>
             <div className={styles.welcome}>
