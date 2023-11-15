@@ -21,8 +21,8 @@ export function Dashboard() {
       const response = await axios.post(
         'http://127.0.0.1:8000/api/post/create',
         {
-          user_id: postagem.user_id,
-          club_id: postagem.club_id,
+          user_id: 1,
+          club_id: 1,
           content: postagem.content,
         },
         config
@@ -51,21 +51,21 @@ export function Dashboard() {
     textarea.style.height = textarea.scrollHeight + 'px';
   };
 
-    const [posts, setPosts] = useState([]);
+    const [postagens, setPostagens] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        async function posts() {
+        async function postagens() {
         try {
             const response = await axios.get('http://127.0.0.1:8000/api/post/getAllPostByClub/1');
-            setPosts(response.data);
+            setPostagens(response.data);
             setLoading(false);
         } catch (error) {
             console.error(error);
         }
         }
 
-        posts();
+        postagens();
     }, []);
 
     if (loading) {
@@ -83,6 +83,7 @@ export function Dashboard() {
                 placeholder="No que você está pensando?"
                 rows={2}
                 maxLength = {300}
+                name='content'
                 value={text}
                 onChange={handleInputChange}
               />
@@ -103,8 +104,7 @@ export function Dashboard() {
           </div>
         </form>
 
-
-        {posts.map((post) => (
+        {postagens.map((post) => (
           <div style={{ margin: '1rem' }} key={post.id}>
             <div className='d-flex mt-2'>
               <a href="#" className="nav-link d-flex flex-row mt-4">
