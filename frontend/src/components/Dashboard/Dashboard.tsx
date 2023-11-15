@@ -7,8 +7,10 @@ export function Dashboard() {
   //create
   const [postagem, setPostagem] = useState({});
   const [status, setStatus] = useState('');
+  //const club_id = 1;
+  //const user_id = 1;
 
-  async function gravar(e) {
+  async function gravar(e: any) {
     e.preventDefault();
 
     const config = {
@@ -21,8 +23,8 @@ export function Dashboard() {
       const response = await axios.post(
         'http://127.0.0.1:8000/api/post/create',
         {
-          user_id: postagem.user_id,
-          club_id: postagem.club_id,
+          club_id: 1,
+          user_id: 1,
           content: postagem.content,
         },
         config
@@ -31,14 +33,14 @@ export function Dashboard() {
       setStatus('Post cadastrado com sucesso!');
       alert('Post cadastrado com sucesso!');
       setPostagem({});
+      setText('');
     } catch (error) {
       setStatus(`Falha: ${error}`);
       alert(`Falha: ${error}`);
     }
   }
 
-
-  //visualizar
+  //expandir textarea
   const [text, setText] = useState('');
 
   const handleInputChange = (e: any) => {
@@ -51,26 +53,23 @@ export function Dashboard() {
     textarea.style.height = textarea.scrollHeight + 'px';
   };
 
-    const [posts, setPosts] = useState([]);
+   //visualizar
+    const [postagens, setPostagens] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        async function posts() {
+        async function fetchPostagens() {
         try {
             const response = await axios.get('http://127.0.0.1:8000/api/post/getAllPostByClub/1');
-            setPosts(response.data);
+            setPostagens(response.data);
             setLoading(false);
         } catch (error) {
             console.error(error);
         }
         }
 
-        posts();
+        fetchPostagens();
     }, []);
-
-    if (loading) {
-        return <p>Carregando...</p>;
-    }
 
   return (
     <>
@@ -83,8 +82,12 @@ export function Dashboard() {
                 placeholder="No que você está pensando?"
                 rows={2}
                 maxLength = {300}
+                name='content'
                 value={text}
-                onChange={handleInputChange}
+                onChange={(e) => {
+                  handleInputChange(e);
+                  setPostagem({ ...postagem, content: e.target.value });
+                }}
               />
             </div>
             <div className='row'>
@@ -103,8 +106,7 @@ export function Dashboard() {
           </div>
         </form>
 
-
-        {posts.map((post) => (
+        {postagens.map((post) => (
           <div style={{ margin: '1rem' }} key={post.id}>
             <div className='d-flex mt-2'>
               <a href="#" className="nav-link d-flex flex-row mt-4">
