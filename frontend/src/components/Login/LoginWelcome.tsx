@@ -10,7 +10,7 @@ export function LoginWelcome() {
             <button type="button" className="btn btn-lg btn-block" onClick={() => { window.location.href = `criarclube`; } }>Criar Clube</button>
         </div>
         <div className={styles.centerButton}>   
-            <button type="button" className="btn btn-lg btn-block" onClick={() => { window.location.href = `entrarclube`; } }>Participar de Clube</button>
+            <button type="button" className="btn btn-lg btn-block" onClick={() => { window.location.href = `pesquisarclube`; } }>Participar de Clube</button>
         </div>
         </>
     )

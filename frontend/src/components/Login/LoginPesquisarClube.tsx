@@ -1,6 +1,6 @@
 import styles from './Login.module.css'
 
-export function LoginEntrarClube() {
+export function LoginPesquisarClube() {
     return(
         <>
             <div className={styles.welcome}>
@@ -36,10 +36,10 @@ export function LoginEntrarClube() {
                         </input>
                     </div>
 
-                    <p><a href='/bemvindo'>Voltar</a></p>
+                    <p><a href='/criarclube'>Criar Novo Clube</a></p>
                     
                     <div className={styles.centerButton}>
-                        <button type="submit" className="btn btn-lg btn-block">Entrar</button>
+                        <button type="submit" className="btn btn-lg btn-block">Pesquisar</button>
                     </div>
                 </form>
         </>

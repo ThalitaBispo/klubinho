@@ -4,6 +4,7 @@ import { Login } from './Login';
 import { LoginWelcome } from './LoginWelcome';
 import { LoginCriarClube } from './LoginCriarClube';
 import { LoginEntrarClube } from './LoginEntrarClube';
+import { LoginPesquisarClube } from './LoginPesquisarClube';
 import { LoginSolicitacao } from './LoginSolicitacao';
 import styles from './Login.module.css'
 
@@ -23,6 +24,7 @@ export function RoutesLogin() {
                                 <Route path="/criarclube" element={<LoginCriarClube />} />
                                 <Route path="/entrarclube" element={<LoginEntrarClube />} />
                                 <Route path="/solicitacao" element={<LoginSolicitacao />} />
+                                <Route path="/pesquisarclube" element={<LoginPesquisarClube />} />
                             </Routes>
                         </main>
                     </BrowserRouter>
