@@ -4,12 +4,28 @@ import axios from 'axios';
 import styles from './Dashboard.module.css';
 
 export function Dashboard() {
-  //create
   const [postagem, setPostagem] = useState({});
   const [status, setStatus] = useState('');
-  //const club_id = 1;
-  //const user_id = 1;
+  const [loadingPostagens, setLoadingPostagens] = useState(false);
+  const [text, setText] = useState('');
+  const [postagens, setPostagens] = useState([]);
 
+  //get
+  const fetchPostagens = async () => {
+    try {
+      const response = await axios.get('http://127.0.0.1:8000/api/post/getAllPostByClub/1');
+      setPostagens(response.data);
+      setLoadingPostagens(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchPostagens();
+  }, []);
+
+  //create
   async function gravar(e: any) {
     e.preventDefault();
 
@@ -31,18 +47,18 @@ export function Dashboard() {
       );
 
       setStatus('Post cadastrado com sucesso!');
-      alert('Post cadastrado com sucesso!');
       setPostagem({});
       setText('');
+
+      fetchPostagens();
+
     } catch (error) {
       setStatus(`Falha: ${error}`);
       alert(`Falha: ${error}`);
     }
   }
 
-  //expandir textarea
-  const [text, setText] = useState('');
-
+  //textarea
   const handleInputChange = (e: any) => {
     setText(e.target.value);
     autoExpand(e.target);
@@ -52,24 +68,6 @@ export function Dashboard() {
     textarea.style.height = 'auto';
     textarea.style.height = textarea.scrollHeight + 'px';
   };
-
-   //visualizar
-    const [postagens, setPostagens] = useState([]);
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        async function fetchPostagens() {
-        try {
-            const response = await axios.get('http://127.0.0.1:8000/api/post/getAllPostByClub/1');
-            setPostagens(response.data);
-            setLoading(false);
-        } catch (error) {
-            console.error(error);
-        }
-        }
-
-        fetchPostagens();
-    }, []);
 
   return (
     <>
@@ -81,8 +79,8 @@ export function Dashboard() {
                 className={`${styles.textoArea}`}
                 placeholder="No que você está pensando?"
                 rows={2}
-                maxLength = {300}
-                name='content'
+                maxLength={300}
+                name="content"
                 value={text}
                 onChange={(e) => {
                   handleInputChange(e);
@@ -90,68 +88,86 @@ export function Dashboard() {
                 }}
               />
             </div>
-            <div className='row'>
+            <div className="row">
               <div className="col-sm mt-4">
                 <label htmlFor="selecao-arquivo">
-                  <span className="material-symbols-outlined"style={{ color: 'var(--purple)', cursor: 'pointer' }}>image</span>
+                  <span
+                    className="material-symbols-outlined"
+                    style={{ color: 'var(--purple)', cursor: 'pointer' }}
+                  >
+                    image
+                  </span>
                 </label>
-                <input id='selecao-arquivo' style={{ display: 'none' }} type='file' />
+                <input id="selecao-arquivo" style={{ display: 'none' }} type="file" />
               </div>
               <div className="col-sm-2 mt-4">
                 <a href="#">
-                    <button type='submit' className={styles.buttonPurple}>Postar</button>
+                  <button type="submit" className={styles.buttonPurple}>
+                    Postar
+                  </button>
                 </a>
               </div>
             </div>
           </div>
         </form>
 
-        {postagens.map((post) => (
-          <div style={{ margin: '1rem' }} key={post.id}>
-            <div className='d-flex mt-2'>
-              <a href="#" className="nav-link d-flex flex-row mt-4">
-                <img
-                  src="https://avatars.githubusercontent.com/u/74025683?v=4"
-                  alt="Imagem do perfil"
-                  className="img-fluid rounded-circle align-self-start"
-                  style={{ maxWidth: "40px"}}
-                />
-                <div className="mt-2" style={{marginLeft: '1rem'}}>
-                  <div>
-                    <span>{post.name} {post.last_name}</span>
-                    <span> . </span>
-                    <span style={{ color: '#5b6b77' }}>15h</span>
+        {loadingPostagens ? (
+          <p>Carregando postagens...</p>
+        ) : (
+          postagens.map((post) => (
+            <div style={{ margin: '1rem' }} key={post.id}>
+              <div className="d-flex mt-2">
+                <a href="#" className="nav-link d-flex flex-row mt-4">
+                  <img
+                    src="https://avatars.githubusercontent.com/u/74025683?v=4"
+                    alt="Imagem do perfil"
+                    className="img-fluid rounded-circle align-self-start"
+                    style={{ maxWidth: '40px' }}
+                  />
+                  <div className="mt-2" style={{ marginLeft: '1rem' }}>
+                    <div>
+                      <span>
+                        {post.name} {post.last_name}
+                      </span>
+                      <span> . </span>
+                      <span style={{ color: '#5b6b77' }}>15h</span>
+                    </div>
                   </div>
-                </div>
-              </a>
-            </div>
-
-            <div style={{ padding: '0 3rem' }}>
-              <span className='text-justify' style={{ fontSize: '0.85rem', marginLeft: "0.5rem" }}>
-                {post.content}
-              </span>
-              <img 
-                src="https://i.pinimg.com/564x/2b/54/f5/2b54f5b75ca5b428bf6ffc98443f9086.jpg"
-                alt="Imagem do perfil"
-                className="img-fluid align-self-start mt-3"
-                style={{borderRadius: '10px', objectFit: 'cover', cursor: 'pointer'}}
-              />
-              <div style={{ display: 'flex', alignItems: 'center', marginTop: '10px', color: '#5b6b77' }}>
-                <span className="material-symbols-outlined">favorite</span>
-                <span style={{ marginLeft: '0.25rem' }}>12</span>
-
-                <span className="material-symbols-outlined" style={{ marginLeft: '2rem' }}>forum</span>
-                <span style={{ marginLeft: '0.25rem' }}>20</span>
+                </a>
               </div>
+
+              <div style={{ padding: '0 3rem' }}>
+                <span className="text-justify" style={{ fontSize: '0.85rem', marginLeft: '0.5rem' }}>
+                  {post.content}
+                </span>
+                <img
+                  src="https://i.pinimg.com/564x/2b/54/f5/2b54f5b75ca5b428bf6ffc98443f9086.jpg"
+                  alt="Imagem do perfil"
+                  className="img-fluid align-self-start mt-3"
+                  style={{ borderRadius: '10px', objectFit: 'cover', cursor: 'pointer' }}
+                />
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    marginTop: '10px',
+                    color: '#5b6b77',
+                  }}
+                >
+                  <span className="material-symbols-outlined">favorite</span>
+                  <span style={{ marginLeft: '0.25rem' }}>12</span>
+
+                  <span className="material-symbols-outlined" style={{ marginLeft: '2rem' }}>
+                    forum
+                  </span>
+                  <span style={{ marginLeft: '0.25rem' }}>20</span>
+                </div>
+              </div>
+              <hr style={{ borderTop: '1px solid gray', marginTop: '2rem' }} />
             </div>
-            <hr style={{ borderTop: '1px solid gray', marginTop: '2rem' }} />
-          </div>
-
-          
-
-        ))}
-
-        </div>
+          ))
+        )}
+      </div>
     </>
   );
 }
