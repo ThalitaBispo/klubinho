@@ -7,8 +7,10 @@ export function Dashboard() {
   //create
   const [postagem, setPostagem] = useState({});
   const [status, setStatus] = useState('');
+  //const club_id = 1;
+  //const user_id = 1;
 
-  async function gravar(e) {
+  async function gravar(e: any) {
     e.preventDefault();
 
     const config = {
@@ -21,8 +23,8 @@ export function Dashboard() {
       const response = await axios.post(
         'http://127.0.0.1:8000/api/post/create',
         {
-          user_id: 1,
           club_id: 1,
+          user_id: 1,
           content: postagem.content,
         },
         config
@@ -31,14 +33,14 @@ export function Dashboard() {
       setStatus('Post cadastrado com sucesso!');
       alert('Post cadastrado com sucesso!');
       setPostagem({});
+      setText('');
     } catch (error) {
       setStatus(`Falha: ${error}`);
       alert(`Falha: ${error}`);
     }
   }
 
-
-  //visualizar
+  //expandir textarea
   const [text, setText] = useState('');
 
   const handleInputChange = (e: any) => {
@@ -51,11 +53,12 @@ export function Dashboard() {
     textarea.style.height = textarea.scrollHeight + 'px';
   };
 
+   //visualizar
     const [postagens, setPostagens] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        async function postagens() {
+        async function fetchPostagens() {
         try {
             const response = await axios.get('http://127.0.0.1:8000/api/post/getAllPostByClub/1');
             setPostagens(response.data);
@@ -65,12 +68,8 @@ export function Dashboard() {
         }
         }
 
-        postagens();
+        fetchPostagens();
     }, []);
-
-    if (loading) {
-        return <p>Carregando...</p>;
-    }
 
   return (
     <>
@@ -85,7 +84,10 @@ export function Dashboard() {
                 maxLength = {300}
                 name='content'
                 value={text}
-                onChange={handleInputChange}
+                onChange={(e) => {
+                  handleInputChange(e);
+                  setPostagem({ ...postagem, content: e.target.value });
+                }}
               />
             </div>
             <div className='row'>
