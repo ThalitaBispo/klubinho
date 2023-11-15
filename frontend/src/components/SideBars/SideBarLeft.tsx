@@ -2,6 +2,9 @@ import { Link , useNavigate } from 'react-router-dom';
 import styles from './SideBarLeft.module.css';
 import Cookies from 'js-cookie';
 
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
 export function SideBarRight() {
 
     const navigate = useNavigate();
@@ -11,6 +14,25 @@ export function SideBarRight() {
         Cookies.remove('token');
         // navigate('/');
       };
+
+    //imagem
+    const [imagem, setImagem] = useState({});
+    const [loadingImagem, setLoadingImagem] = useState(true);
+    const user_id = Cookies.get('userId');
+
+    useEffect(() => {
+        async function Imagem() {
+        try {
+            const response = await axios.get('http://127.0.0.1:8000/api/user/getImage/2');
+            setImagem(response.data);
+            setLoadingImagem(false);
+        } catch (error) {
+            console.error(error);
+        }
+        }
+
+        Imagem();
+    }, []);
 
     return(
         <>
@@ -64,11 +86,12 @@ export function SideBarRight() {
                                     aria-expanded="false"
                                     >
                                         <img
-                                            src="https://avatars.githubusercontent.com/u/88936386?v=4"
+                                            src="http://127.0.0.1:8000/api/user/getImage/{id}"
                                             alt="Imagem do perfil"
                                             className="img-fluid rounded-circle align-self-start"
                                             style={{ maxWidth: "70px" }}
                                         />
+                                        
                                         <div className="mt-3" style={{ marginLeft: '1rem' }}>
                                             <div className="d-block">André Nery</div>
                                             <div className="d-block">Clube dos ++</div>
