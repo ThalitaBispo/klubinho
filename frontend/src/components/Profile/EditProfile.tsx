@@ -1,40 +1,64 @@
 import { Link } from 'react-router-dom'
 import styles from './EditProfile.module.css'
 
+import React, { useState, useEffect } from 'react';
+import axios from "axios";
+
 export function EditProfile() {
+
+    //edit
+    const [foto, setFoto] = useState({});
+    const [status, setStatus] = useState('');
+
+    async function gravar(e) {
+        e.preventDefault(); // cancela o submit
+        try {
+            const response = await axios.post(`http://127.0.0.1:8000/api/upload/1`, foto);
+            setStatus("Foto Atualizada");
+        } catch (erro) {
+            console.error(erro);
+            setStatus(`Falha: ${erro.message}`);
+        }
+    }
+
     return (
         <>
             <div className="container">
 
-                <img 
-                    src="https://i.pinimg.com/564x/7f/06/16/7f06166fd703e6549ae9baea4a5c7519.jpg"
-                    alt="Imagem"
-                    className="img-fluid mt-3"
-                    style={{ width: "800px", height: '300px', objectFit: 'cover'}}
-                />
-                
-                <div className={`col-md-6 ${styles.cameraIcon}`}>
-                    <label htmlFor="selecao-arquivo">
-                        <span className="material-symbols-outlined">photo_camera</span>
-                        <input id='selecao-arquivo' style={{ display: 'none' }} type='file' />
-                    </label>
-                </div>
-                
-                <img
-                    src="https://avatars.githubusercontent.com/u/88936386?v=4"
-                    alt="Imagem do perfil"
-                    className="img-fluid rounded-circle align-self-start"
-                    style={{ maxWidth: "100px", marginTop: '-7.125rem', marginLeft: '2rem' }}
-              />
+                <form onSubmit={gravar} style={{ marginBottom: "3rem" }}>
+                    <img 
+                        src="https://i.pinimg.com/564x/7f/06/16/7f06166fd703e6549ae9baea4a5c7519.jpg"
+                        alt="Imagem"
+                        className="img-fluid mt-3"
+                        style={{ width: "800px", height: '300px', objectFit: 'cover'}}
+                    />
+                    
+                    <div className={`col-md-6 ${styles.cameraIcon}`}>
+                        <label htmlFor="selecao-foto">
+                            <span className="material-symbols-outlined">photo_camera</span>
+                            <input id='selecao-foto' style={{ display: 'none' }} type='file' 
+                            />
+                        </label>
+                    </div>
+                    
+                    <img
+                        src="https://avatars.githubusercontent.com/u/88936386?v=4"
+                        alt="Imagem do perfil"
+                        className="img-fluid rounded-circle align-self-start"
+                        style={{ maxWidth: "100px", marginTop: '-7.125rem', marginLeft: '2rem' }}
+                    />
 
-                <div className={`col-md-6 ${styles.cameraIconProfile}`}>
-                    <label htmlFor="selecao-arquivo">
-                        <span className="material-symbols-outlined">photo_camera</span>
-                        <input id='selecao-arquivo' style={{ display: 'none' }} type='file' />
-                    </label>
-                </div>
+                    <div className={`col-md-6 ${styles.cameraIconProfile}`}>
+                        <label htmlFor="selecao-arquivo">
+                            <span className="material-symbols-outlined">photo_camera</span>
+                            <input id='selecao-arquivo' name='imagem' type='file' 
+                            value={foto.imagem || ''}
+                            onChange={(e) => setFoto({ ...foto, imagem: e.target.value })}
+                            />
+                        </label>
+                    </div>
 
-                <form style={{ marginBottom: "3rem" }}>
+                    
                     <div className="row">
                         <div className="form-group col-md-6">
                             <label>Nome</label>
@@ -80,7 +104,6 @@ export function EditProfile() {
                         </button>
                     </Link>
                 </form>
-
 
             </div>
         </>

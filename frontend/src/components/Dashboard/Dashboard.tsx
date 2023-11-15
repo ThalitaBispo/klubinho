@@ -4,6 +4,41 @@ import axios from 'axios';
 import styles from './Dashboard.module.css';
 
 export function Dashboard() {
+  //create
+  const [postagem, setPostagem] = useState({});
+  const [status, setStatus] = useState('');
+
+  async function gravar(e) {
+    e.preventDefault();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    try {
+      const response = await axios.post(
+        'http://127.0.0.1:8000/api/post/create',
+        {
+          user_id: postagem.user_id,
+          club_id: postagem.club_id,
+          content: postagem.content,
+        },
+        config
+      );
+
+      setStatus('Post cadastrado com sucesso!');
+      alert('Post cadastrado com sucesso!');
+      setPostagem({});
+    } catch (error) {
+      setStatus(`Falha: ${error}`);
+      alert(`Falha: ${error}`);
+    }
+  }
+
+
+  //visualizar
   const [text, setText] = useState('');
 
   const handleInputChange = (e: any) => {
@@ -37,43 +72,10 @@ export function Dashboard() {
         return <p>Carregando...</p>;
     }
 
-  //create
-  /*const [postagem, setPostagem] = useState({});
-  const [status, setStatus] = useState('');
-
-  async function gravar(e) {
-    e.preventDefault();
-
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-
-    try {
-      const response = await axios.post(
-        'http://127.0.0.1:8000/api/post/create',
-        {
-          user_id: postagem.user_id,
-          club_id: postagem.club_id,
-          content: postagem.content,
-        },
-        config
-      );
-
-      setStatus('Post cadastrado com sucesso!');
-      alert('Post cadastrado com sucesso!');
-      setPostagem({});
-    } catch (error) {
-      setStatus(`Falha: ${error}`);
-      alert(`Falha: ${error}`);
-    }
-  }*/
-
   return (
     <>
       <div className="container">
-        <form>
+        <form onSubmit={gravar}>
           <div className="p-3 bg-light">
             <div className="col-md-6">
               <textarea
@@ -94,7 +96,7 @@ export function Dashboard() {
               </div>
               <div className="col-sm-2 mt-4">
                 <a href="#">
-                    <button className={styles.buttonPurple}>Postar</button>
+                    <button type='submit' className={styles.buttonPurple}>Postar</button>
                 </a>
               </div>
             </div>

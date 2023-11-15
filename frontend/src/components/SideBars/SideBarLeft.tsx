@@ -25,7 +25,7 @@ export function SideBarRight() {
                             <span  className={styles.logo}>KLUBINHO</span>
 
                             <li className={`nav-item ${styles.menuItem}`}>
-                                <Link className='nav-link' to="/dashboard">
+                                <Link className='nav-link' to="/">
                                     <span className="material-symbols-outlined">home</span>
                                     <span className='p-2'>Home</span>
                                 </Link>

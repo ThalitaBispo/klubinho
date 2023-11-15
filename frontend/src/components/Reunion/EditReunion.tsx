@@ -28,27 +28,35 @@ export function EditReunion() {
         <span className="remove" onClick={() => removeOption(props.data)}>×</span>
         </div>
     );
-
-    const [reunions, setReunions] = useState([]);
-    const [loading, setLoading] = useState(true);
+    
+    //edit
+    //const { id } = useParams();
+    /*const [editveiculos, setEditVeiculos] = useState([]);
+    const [status, setStatus] = useState('');
 
     useEffect(() => {
-        async function Reunion() {
-        try {
-            const response = await axios.get('http://127.0.0.1:8000/api/reuniao/getAllReuniaoByClub/1');
-            setReunions(response.data);
-            setLoading(false);
-        } catch (error) {
-            console.error(error);
-        }
+        async function Veiculos() {
+            try {
+                const response = await axios.get(`http://127.0.0.1:8000/api/reuniao/getAllReuniaoByClub/1`);
+                setEditVeiculos(response.data);
+                //setLoading(false);
+            } catch (error) {
+                console.error(error);
+            }
         }
 
-        Reunion();
+        Veiculos();
     }, []);
 
-    if (loading) {
-        return <p>Carregando...</p>;
-    }
+    async function gravar(e) {
+        e.preventDefault(); // cancela o submit
+        try {
+            const response = await axios.put(`http://127.0.0.1:8000/api/veiculos/${id}`, editveiculos);
+            setStatus("Reunião Atualizada");
+        } catch (erro) {
+            setStatus(`Falha: ${erro}`);
+        }     
+    }*/       
 
     return (
         <div className="container">
