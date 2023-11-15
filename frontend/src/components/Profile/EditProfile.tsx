@@ -1,23 +1,37 @@
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react';
+import axios from "axios";
+import { AxiosError } from 'axios';
+
 import styles from './EditProfile.module.css'
 
-import React, { useState, useEffect } from 'react';
-import axios from "axios";
+import { Link } from 'react-router-dom';
 
 export function EditProfile() {
+    interface Foto {
+        imagem: File;
+    }
 
-    //edit
-    const [foto, setFoto] = useState({});
-    const [status, setStatus] = useState('');
+    const [foto, setFoto] = useState<Foto>({ imagem: new File([], '') });
+    const [status, setStatus] = useState<string>('');
 
-    async function gravar(e) {
+    async function gravar(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault(); // cancela o submit
         try {
-            const response = await axios.post(`http://127.0.0.1:8000/api/upload/1`, foto);
+            const formData = new FormData();
+            formData.append('imagem', foto.imagem);
+            await axios.post(`http://127.0.0.1:8000/api/upload/2`, formData);
             setStatus("Foto Atualizada");
-        } catch (erro) {
-            console.error(erro);
-            setStatus(`Falha: ${erro.message}`);
+        } catch (erro: unknown) {
+            if (erro instanceof Error) {
+                console.error(erro);
+                setStatus(`Falha: ${erro.message}`);
+            } else if (erro instanceof AxiosError) {
+                console.error(erro);
+                setStatus(`Falha: ${erro.response?.data?.message ?? 'Erro desconhecido'}`);
+            } else {
+                console.error(erro);
+                setStatus(`Falha: Erro desconhecido`);
+            }
         }
     }
 
@@ -52,8 +66,13 @@ export function EditProfile() {
                         <label htmlFor="selecao-arquivo">
                             <span className="material-symbols-outlined">photo_camera</span>
                             <input id='selecao-arquivo' name='imagem' type='file' 
-                            value={foto.imagem || ''}
-                            onChange={(e) => setFoto({ ...foto, imagem: e.target.value })}
+                            // value={foto.imagem.name || ''}
+                            onChange={(e) => {
+                                const selectedFile = e.target.files?.[0];
+                                if (selectedFile) {
+                                    setFoto({ ...foto, imagem: selectedFile });
+                                }
+                            }}
                             />
                         </label>
                     </div>
@@ -107,5 +126,5 @@ export function EditProfile() {
 
             </div>
         </>
-    )
+    );
 }
