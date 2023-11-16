@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from "axios";
 import { AxiosError } from 'axios';
+import Cookies from 'js-cookie';
 
 import styles from './EditProfile.module.css'
 
@@ -14,12 +15,14 @@ export function EditProfile() {
     const [foto, setFoto] = useState<Foto>({ imagem: new File([], '') });
     const [status, setStatus] = useState<string>('');
 
+    const user_id = Cookies.get('user_id');
+
     async function gravar(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault(); // cancela o submit
         try {
             const formData = new FormData();
             formData.append('imagem', foto.imagem);
-            await axios.post(`http://127.0.0.1:8000/api/upload/4`, formData);
+            await axios.post(`http://127.0.0.1:8000/api/upload/${user_id}}`, formData);
             setStatus("Foto Atualizada");
         } catch (erro: unknown) {
             if (erro instanceof Error) {
@@ -56,7 +59,7 @@ export function EditProfile() {
                     </div>
                     
                     <img
-                        src="https://avatars.githubusercontent.com/u/88936386?v=4"
+                        src={`http://127.0.0.1:8000/api/user/getImage/${user_id}`}
                         alt="Imagem do perfil"
                         className="img-fluid rounded-circle align-self-start"
                         style={{ maxWidth: "100px", marginTop: '-7.125rem', marginLeft: '2rem' }}

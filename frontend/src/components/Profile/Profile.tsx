@@ -1,5 +1,47 @@
 import { Link } from 'react-router-dom'
+import Cookies from 'js-cookie';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+
 export function Profile() {
+    
+    const [profile, setProfile] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [postagem, setPostagem] = useState({});
+    const [loadingPostagens, setLoadingPostagens] = useState(false);
+    const [postagens, setPostagens] = useState([]);
+    const user_id = Cookies.get('user_id');
+
+    useEffect(() => {
+        async function Profile() {
+          try {
+            const response = await axios.get(`http://127.0.0.1:8000/api/user/getUser/${user_id}`);
+            setProfile(response.data);
+            setLoading(false);
+          } catch (error) {
+            console.error(error);
+          }
+        }
+    
+        Profile();
+      }, []);
+
+      const fetchPostagens = async () => {
+        try {
+          const response = await axios.get('http://127.0.0.1:8000/api/post/getAllPostByUser/1');
+          setPostagens(response.data);
+          setLoadingPostagens(false);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+
+      useEffect(() => {
+        fetchPostagens();
+      }, []);
+
+      //http://127.0.0.1:8000/api/post/getAllPostByUser/1
+
     return(
         <>
             <div className="container">
@@ -11,7 +53,7 @@ export function Profile() {
                 />
 
                 <img
-                src="https://avatars.githubusercontent.com/u/88936386?v=4"
+                src={`http://127.0.0.1:8000/api/user/getImage/${user_id}`}
                 alt="Imagem do perfil"
                 className="img-fluid rounded-circle align-self-start"
                 style={{ maxWidth: "100px", marginTop: '-3.125rem', marginLeft: '2rem' }}
@@ -22,22 +64,22 @@ export function Profile() {
                 border: '1px solid var(--purple)', borderRadius: '10px', padding: '0.25rem', fontSize: '1.25rem' }}>edit</span>
               </Link>
 
+                {profile.map((profiles) => (
                 <div className="text-justify mt-4">
                     <p>
-                        <b style={{ fontSize: '1.5rem' }}>André Nery</b>
-                        <span> . </span>
-                        <span style={{ color: '#5b6b77' }}>@andrenery</span>
-                    </p>
-                    <p style={{ marginTop: '-1rem' }}>
-                        <span>
-                        Amante de livros de romance e ficção ciêntifica
-                        </span>
-                    </p>
-                    <p style={{ marginTop: '-0.6rem' }}>
-                        <span className="material-symbols-outlined" style={{ color: '#c2c2c2' }}>link</span>
-                        <a href="#" style={{ marginLeft: '0.5rem' }}>amazon.kindle/neryandre</a>
-                    </p>
+                            <b style={{ fontSize: '1.5rem' }}>{profiles.name} {profiles.last_name}</b>
+                        </p>
+                        <p style={{ marginTop: '-1rem' }}>
+                            <span>
+                            {profiles.bio}
+                            </span>
+                        </p>
+                        <p style={{ marginTop: '-0.6rem' }}>
+                            <span className="material-symbols-outlined" style={{ color: '#c2c2c2' }}>link</span>
+                            <a href="#" style={{ marginLeft: '0.5rem' }}>amazon.kindle/{profiles.name}</a>
+                        </p>
                 </div>
+                ))}
 
                 <div style={{ marginTop: '3rem' }}>
                     <b style={{ fontSize: '1.25rem' }}>Publicações</b>
