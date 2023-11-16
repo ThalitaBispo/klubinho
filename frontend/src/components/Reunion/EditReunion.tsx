@@ -68,16 +68,6 @@ export function EditReunion() {
         EditReuniao();
     }, []);
 
-    async function gravar(e) {
-        e.preventDefault(); // cancela o submit
-        try {
-            const response = await axios.put(`http://127.0.0.1:8000/api/veiculos/${id}`, editReuniao);
-            setStatus("Reunião Atualizada");
-        } catch (erro) {
-            setStatus(`Falha: ${erro}`);
-        }
-    }
-
     return (
         <div className="container">
             <b style={{ fontSize: "1.5rem" }}>Editar reunião</b>
@@ -87,7 +77,7 @@ export function EditReunion() {
                 
                     <div className="form-group mt-4">
                         <label>Título</label>
-                        <input type="text" className="form-control" placeholder="Título" required/>
+                        <input type="text" className="form-control" placeholder="Título" value={editReuniao.titulo || ''} required/>
                     </div>
 
                     <div className="form-group mt-4">
