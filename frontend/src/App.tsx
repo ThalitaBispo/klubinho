@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { RoutesLogin } from './components/Login/RoutesLogin';
 import { RoutesDashboard } from './components/Dashboard/RoutesDashboard';
-import Cookies from 'js-cookie'; // Certifique-se de ter a biblioteca js-cookie instalada
+import Cookies from 'js-cookie';
 
 import './global.module.css';
 
@@ -9,14 +9,16 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
 
   useEffect(() => {
-    // Verificar se há um token no cookie
     const token = Cookies.get('token');
+    const user_id = Cookies.get('user_id');
+    const club_id = Cookies.get('club_id');
 
-    // Definir o estado com base na presença do token
-    setIsLoggedIn(!!token);
+    // Verificar se há um token, user_id e club_id válidos
+    const isLoggedIn = !!token && !!user_id && club_id !== null && club_id !== undefined;
+
+    setIsLoggedIn(isLoggedIn);
   }, []);
 
-  // Aguarde até que a verificação seja concluída
   if (isLoggedIn === null) {
     return <div>Verificando...</div>;
   }
@@ -24,10 +26,8 @@ function App() {
   return (
     <>
       {isLoggedIn ? (
-        // Se o usuário estiver logado, exibir o painel de controle
         <RoutesDashboard />
       ) : (
-        // Se o usuário não estiver logado, exibir a tela de login
         <RoutesLogin />
       )}
     </>

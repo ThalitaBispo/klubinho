@@ -8,7 +8,7 @@ export function LoginCriarClube() {
 
     const [cadastro, setCadastro] = useState({
         name: '', // Valor padrão para 'name'
-        nick_club: '', // Valor padrão para 'last_name'
+        nick_club: '', // Valor padrão para 'nick_club'
     });
     const [status, setStatus] = useState('');
     const navigate = useNavigate();
@@ -87,7 +87,7 @@ export function LoginCriarClube() {
                             onChange={(e) => setCadastro({...cadastro, nick_club:e.target.value})}
                             required/>                        
                     </div>
-                    <p><a href='/entrarclube'>Buscar Clube Existente</a></p>
+                    <p><a href='/pesquisarclube'>Buscar Clube Existente</a></p>
                     
                     <div className={styles.centerButton}>
                         <button type="submit" className="btn btn-lg btn-block">Criar Clube</button>
