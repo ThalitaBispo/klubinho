@@ -29,7 +29,7 @@ export function Profile() {
 
       const fetchPostagens = async () => {
         try {
-          const response = await axios.get('http://127.0.0.1:8000/api/post/getAllPostByUser/1');
+          const response = await axios.get(`http://127.0.0.1:8000/api/post/getAllPostByUser/${user_id}`);
           setPostagens(response.data);
           setLoadingPostagens(false);
         } catch (error) {
