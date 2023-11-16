@@ -5,30 +5,6 @@ import axios from "axios";
 import Select from 'react-select';
 
 export function CreateReunion() {
-    const [selectedOptions, setSelectedOptions] = useState([]);
-    const options = [
-        { value: 'Option1', label: 'Option 1' },
-        { value: 'Option2', label: 'Option 2' },
-        { value: 'Option3', label: 'Option 3' },
-    ];
-
-    const handleSelectChange = (selectedValues) => {
-        setSelectedOptions(selectedValues || []);
-    };
-
-    const removeOption = (optionToRemove) => {
-        const updatedOptions = selectedOptions.filter((option) => option !== optionToRemove);
-        setSelectedOptions(updatedOptions);
-    };
-
-    const customMultiValue = (props) => (
-        <div className="custom-multi-value" style={{ marginRight: '8px', cursor: 'pointer', 
-        border: '1px solid', backgroundColor: 'var(--purple)', color: 'var(--white)', borderRadius: "10px", padding: "0.5rem" }}>
-        {props.children}
-        <span className="remove" onClick={() => removeOption(props.data)}>×</span>
-        </div>
-    );
-
     //salvar
     const [reunion, setReunion] = useState({});
     const [status, setStatus] = useState('');
@@ -70,6 +46,49 @@ export function CreateReunion() {
         alert(`Falha: ${error}`);
       }
     }
+
+    //visualizar participantes
+    const [integrantes, setIntegrantes] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        async function Profile() {
+          try {
+            const response = await axios.get(`http://127.0.0.1:8000/api/clubIntegrantes/getClubIntegrantesWithUser/2`);
+            setIntegrantes(response.data);
+            setLoading(false);
+          } catch (error) {
+            console.error(error);
+          }
+        }
+    
+        Profile();
+      }, []);
+
+    //select
+    const [selectedOptions, setSelectedOptions] = useState([]);
+    const options = integrantes.map((integrante) => ({
+        value: `${integrante.name} ${integrante.last_name}`,
+        label: `${integrante.name} ${integrante.last_name}`,
+      }));
+
+    const handleSelectChange = (selectedValues) => {
+        setSelectedOptions(selectedValues || []);
+    };
+
+    const removeOption = (optionToRemove) => {
+        const updatedOptions = selectedOptions.filter((option) => option !== optionToRemove);
+        setSelectedOptions(updatedOptions);
+    };
+
+    const customMultiValue = (props) => (
+        <div className="custom-multi-value" style={{ marginRight: '8px', cursor: 'pointer', 
+        border: '1px solid', backgroundColor: 'var(--purple)', color: 'var(--white)', borderRadius: "10px", padding: "0.5rem" }}>
+        {props.children}
+        <span className="remove" onClick={() => removeOption(props.data)}>×</span>
+        </div>
+    );
+
 
     return(
         <div className="container">

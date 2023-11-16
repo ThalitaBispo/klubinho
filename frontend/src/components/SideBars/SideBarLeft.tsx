@@ -15,24 +15,24 @@ export function SideBarRight() {
         // navigate('/');
       };
 
-    //imagem
-    const [imagem, setImagem] = useState({});
-    const [loadingImagem, setLoadingImagem] = useState(true);
-    const user_id = Cookies.get('userId');
+    //get
+    const [profile, setProfile] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const user_id = Cookies.get('user_id');
 
     useEffect(() => {
-        async function Imagem() {
-        try {
-            const response = await axios.get('http://127.0.0.1:8000/api/user/getImage/2');
-            setImagem(response.data);
-            setLoadingImagem(false);
-        } catch (error) {
+        async function Profile() {
+          try {
+            const response = await axios.get(`http://127.0.0.1:8000/api/user/getUser/${user_id}`);
+            setProfile(response.data);
+            setLoading(false);
+          } catch (error) {
             console.error(error);
+          }
         }
-        }
-
-        Imagem();
-    }, []);
+    
+        Profile();
+      }, []);
 
     return(
         <>
@@ -86,16 +86,18 @@ export function SideBarRight() {
                                     aria-expanded="false"
                                     >
                                         <img
-                                            src="http://127.0.0.1:8000/api/user/getImage/{id}"
+                                            src={`http://127.0.0.1:8000/api/user/getImage/${user_id}`}
                                             alt="Imagem do perfil"
                                             className="img-fluid rounded-circle align-self-start"
                                             style={{ maxWidth: "70px" }}
                                         />
-                                        
+            
+                                        {profile.map((profiles) => (
                                         <div className="mt-3" style={{ marginLeft: '1rem' }}>
-                                            <div className="d-block">André Nery</div>
-                                            <div className="d-block">Clube dos ++</div>
+                                            <div className="d-block">{profiles.name} {profiles.last_name}</div>
+                                            <div className="d-block">{profiles.club_name}</div>
                                         </div>
+                                        ))}
                                     </a>
                                     <div className="dropdown-menu" aria-labelledby="userDropdown">
                                         <a className="dropdown-item" href="/" onClick={handleLogout}>

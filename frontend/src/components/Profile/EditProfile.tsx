@@ -19,7 +19,7 @@ export function EditProfile() {
         try {
             const formData = new FormData();
             formData.append('imagem', foto.imagem);
-            await axios.post(`http://127.0.0.1:8000/api/upload/2`, formData);
+            await axios.post(`http://127.0.0.1:8000/api/upload/4`, formData);
             setStatus("Foto Atualizada");
         } catch (erro: unknown) {
             if (erro instanceof Error) {

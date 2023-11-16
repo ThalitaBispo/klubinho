@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 import styles from './Dashboard.module.css';
 
@@ -9,6 +10,7 @@ export function Dashboard() {
   const [loadingPostagens, setLoadingPostagens] = useState(false);
   const [text, setText] = useState('');
   const [postagens, setPostagens] = useState([]);
+  const user_id = Cookies.get('user_id');
 
   //get
   const fetchPostagens = async () => {
@@ -40,7 +42,7 @@ export function Dashboard() {
         'http://127.0.0.1:8000/api/post/create',
         {
           club_id: 1,
-          user_id: 1,
+          user_id: user_id,
           content: postagem.content,
         },
         config
@@ -89,17 +91,6 @@ export function Dashboard() {
               />
             </div>
             <div className="row">
-              <div className="col-sm mt-4">
-                <label htmlFor="selecao-arquivo">
-                  <span
-                    className="material-symbols-outlined"
-                    style={{ color: 'var(--purple)', cursor: 'pointer' }}
-                  >
-                    image
-                  </span>
-                </label>
-                <input id="selecao-arquivo" style={{ display: 'none' }} type="file" />
-              </div>
               <div className="col-sm-2 mt-4">
                 <a href="#">
                   <button type="submit" className={styles.buttonPurple}>
@@ -119,7 +110,7 @@ export function Dashboard() {
               <div className="d-flex mt-2">
                 <a href="#" className="nav-link d-flex flex-row mt-4">
                   <img
-                    src="https://avatars.githubusercontent.com/u/74025683?v=4"
+                    src={`http://127.0.0.1:8000/api/user/getImage/${post.user_id}`}
                     alt="Imagem do perfil"
                     className="img-fluid rounded-circle align-self-start"
                     style={{ maxWidth: '40px' }}
@@ -140,12 +131,6 @@ export function Dashboard() {
                 <span className="text-justify" style={{ fontSize: '0.85rem', marginLeft: '0.5rem' }}>
                   {post.content}
                 </span>
-                <img
-                  src="https://i.pinimg.com/564x/2b/54/f5/2b54f5b75ca5b428bf6ffc98443f9086.jpg"
-                  alt="Imagem do perfil"
-                  className="img-fluid align-self-start mt-3"
-                  style={{ borderRadius: '10px', objectFit: 'cover', cursor: 'pointer' }}
-                />
                 <div
                   style={{
                     display: 'flex',

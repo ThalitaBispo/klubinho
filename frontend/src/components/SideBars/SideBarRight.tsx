@@ -1,7 +1,29 @@
 //import styles from './SideBarRight.module.css'
 import styles from '../../global.module.css'
 
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
 export function SideBarLeft() {
+
+    //get
+    const [integrantes, setIntegrantes] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        async function Profile() {
+          try {
+            const response = await axios.get(`http://127.0.0.1:8000/api/clubIntegrantes/getClubIntegrantesWithUser/2`);
+            setIntegrantes(response.data);
+            setLoading(false);
+          } catch (error) {
+            console.error(error);
+          }
+        }
+    
+        Profile();
+      }, []);
+
     return(
         <>
             <div className="container col-md-8 mt-4">
@@ -45,53 +67,21 @@ export function SideBarLeft() {
                         <b style={{ fontSize: '1.25rem' }}> Integrantes </b>
                         <span style={{marginLeft: '10px'}}>(10)</span>
 
+                        {integrantes.map((integrante) => (
+
                         <div className='d-flex flex-row' style={{ marginTop: '1.25rem'}}>
                             <img
-                                src="https://avatars.githubusercontent.com/u/88936386?v=4"
+                                src={`http://127.0.0.1:8000/api/user/getImage/${integrante.user_id}`}
                                 alt="Imagem do perfil"
                                 className="img-fluid rounded-circle align-self-start"
                                 style={{ maxWidth: "40px"}}
                             />
                             <div className="mt-2" style={{marginLeft: '0.5rem'}}>
-                                <div className="d-block">André Nery</div>
+                                <div className="d-block">{integrante.name} {integrante.last_name}</div>
                             </div>
-                        </div>
-                        
-                        <div className='d-flex flex-row mt-4'>
-                            <img
-                                src="https://avatars.githubusercontent.com/u/22156239?v=4"
-                                alt="Imagem do perfil"
-                                className="img-fluid rounded-circle align-self-start"
-                                style={{ maxWidth: "40px"}}
-                            />
-                            <div className="mt-2" style={{marginLeft: '0.5rem'}}>
-                                <div className="d-block">Kauã Duarte</div>
-                            </div>
-                        </div>   
+                        </div>  
 
-                        <div className='d-flex flex-row mt-4'>
-                            <img
-                                src="https://avatars.githubusercontent.com/u/74025683?v=4"
-                                alt="Imagem do perfil"
-                                className="img-fluid rounded-circle align-self-start"
-                                style={{ maxWidth: "40px"}}
-                            />
-                            <div className="mt-2" style={{marginLeft: '0.5rem'}}>
-                                <div className="d-block">Alex Sander Meneses Santos</div>
-                            </div>
-                        </div>
-
-                        <div className='d-flex flex-row mt-4'>
-                            <img
-                                src="https://i.pinimg.com/564x/dd/3e/6c/dd3e6c0848e2e3e4512096bcbbe64964.jpg"
-                                alt="Imagem do perfil"
-                                className="img-fluid rounded-circle align-self-start"
-                                style={{ maxWidth: "40px"}}
-                            />
-                            <div className="mt-2" style={{marginLeft: '0.5rem'}}>
-                                <div className="d-block">Beyoncé</div>
-                            </div>
-                        </div>
+                        ))}
 
                     </div>
                     <div className="card-footer text-muted">
