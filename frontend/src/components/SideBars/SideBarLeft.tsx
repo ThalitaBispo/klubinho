@@ -12,6 +12,7 @@ export function SideBarRight() {
         // Remova os cookies quando o usuário faz logout
         Cookies.remove('user_id');
         Cookies.remove('token');
+        Cookies.remove('club_id');
         // navigate('/');
       };
 
