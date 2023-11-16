@@ -1,0 +1,9 @@
+
+.hoverEffect {
+    text-align: justify;
+    padding-right: 40px;
+}
+
+.hoverEffect:hover {
+    background-color: #f8f9fa;
+}

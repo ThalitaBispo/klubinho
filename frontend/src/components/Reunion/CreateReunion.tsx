@@ -10,8 +10,7 @@ export function CreateReunion() {
     const [reunion, setReunion] = useState({});
     const [status, setStatus] = useState('');
     const user_id = Cookies.get('user_id');
-    //const club_id = 2;
-    //const user_id = 4;
+    const club_id = Cookies.get('club_id');
   
     async function gravar(e) {
       e.preventDefault();
@@ -34,8 +33,8 @@ export function CreateReunion() {
             hora_reuniao: reunion.hora_reuniao,
             livro: reunion.livro,
             autor: reunion.autor,
-            club_id: 2,
-            user_id: reunion.user_id,
+            club_id: club_id,
+            user_id: user_id,
             participants: participantsArray,
             
           },
@@ -60,7 +59,7 @@ export function CreateReunion() {
     useEffect(() => {
         async function Profile() {
           try {
-            const response = await axios.get(`http://127.0.0.1:8000/api/clubIntegrantes/getClubIntegrantesWithUser/2`);
+            const response = await axios.get(`http://127.0.0.1:8000/api/clubIntegrantes/getClubIntegrantesWithUser/${club_id}`);
             setIntegrantes(response.data);
             setLoading(false);
           } catch (error) {

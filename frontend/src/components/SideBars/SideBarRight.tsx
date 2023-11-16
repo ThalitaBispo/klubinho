@@ -1,5 +1,6 @@
 //import styles from './SideBarRight.module.css'
 import styles from '../../global.module.css'
+import Cookies from 'js-cookie';
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -9,11 +10,13 @@ export function SideBarLeft() {
     //get
     const [integrantes, setIntegrantes] = useState([]);
     const [loading, setLoading] = useState(true);
+    const club_id = Cookies.get('club_id');
+
 
     useEffect(() => {
         async function Profile() {
           try {
-            const response = await axios.get(`http://127.0.0.1:8000/api/clubIntegrantes/getClubIntegrantesWithUser/2`);
+            const response = await axios.get(`http://127.0.0.1:8000/api/clubIntegrantes/getClubIntegrantesWithUser/${club_id}`);
             setIntegrantes(response.data);
             setLoading(false);
           } catch (error) {

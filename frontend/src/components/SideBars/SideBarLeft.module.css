@@ -17,3 +17,20 @@
   .userProfile {
     margin-top: 16rem;
   }
+
+  .sideBarLeft {
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  @media screen and (max-width: 767px) {
+    .userProfile {
+      margin-top: 1rem;
+    }
+    .sideBarLeft {
+      justify-content: left;
+      margin-left: 3rem;
+    }
+  }

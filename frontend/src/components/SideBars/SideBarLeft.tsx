@@ -1,6 +1,7 @@
 import { Link , useNavigate } from 'react-router-dom';
 import styles from './SideBarLeft.module.css';
 import Cookies from 'js-cookie';
+import logo from '../../avatar/logo.jpeg';
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -37,7 +38,7 @@ export function SideBarRight() {
 
     return(
         <>
-            <div className='container mx-auto d-flex justify-content-center align-items-center'>
+            <div className={`container ${styles.sideBarLeft}`}>
                 <nav className="navbar navbar-expand-md">
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
                         <span className="navbar-toggler-icon"></span>
@@ -86,19 +87,25 @@ export function SideBarRight() {
                                     aria-haspopup="true"
                                     aria-expanded="false"
                                     >
-                                        <img
-                                            src={`http://127.0.0.1:8000/api/user/getImage/${user_id}`}
-                                            alt="Imagem do perfil"
-                                            className="img-fluid rounded-circle align-self-start"
-                                            style={{ maxWidth: "70px" }}
-                                        />
-            
                                         {profile.map((profiles) => (
-                                        <div className="mt-3" key={profiles.id} style={{ marginLeft: '1rem' }}>
-                                            <div className="d-block">{profiles.name} {profiles.last_name}</div>
-                                            <div className="d-block">{profiles.club_name}</div>
-                                        </div>
-                                        ))}
+                                            <div key={profiles.id} className="d-flex" style={{ alignItems: 'center' }}>
+                                                <img
+                                                src={
+                                                    profiles.imagem
+                                                    ? `http://127.0.0.1:8000/api/user/getImage/${user_id}`
+                                                    : logo
+                                                }
+                                                alt="Imagem do perfil"
+                                                className="img-fluid rounded-circle align-self-start"
+                                                style={{ maxWidth: "70px" }}
+                                                />
+
+                                                <div className="mt-3" style={{ marginLeft: '1rem' }}>
+                                                <div className="d-block">{profiles.name} {profiles.last_name}</div>
+                                                <div className="d-block">{profiles.club_name}</div>
+                                                </div>
+                                            </div>
+                                            ))}
                                     </a>
                                     <div className="dropdown-menu" aria-labelledby="userDropdown">
                                         <a className="dropdown-item" href="/" onClick={handleLogout}>

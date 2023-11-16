@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import logo from '../../avatar/logo.jpeg';
 
 export function Profile() {
     
@@ -44,27 +45,32 @@ export function Profile() {
 
     return(
         <>
-            <div className="container">
-                <img 
-                src="https://i.pinimg.com/564x/7f/06/16/7f06166fd703e6549ae9baea4a5c7519.jpg"
-                alt="Imagem"
-                className="img-fluid mt-3"
-                style={{ width: "800px", height: '300px', objectFit: 'cover'}}
+            {profile.map((profiles) => (
+                <div key={profiles.id} className="container">
+                    <img 
+                    src="https://i.pinimg.com/564x/7f/06/16/7f06166fd703e6549ae9baea4a5c7519.jpg"
+                    alt="Imagem"
+                    className="img-fluid mt-3"
+                    style={{ width: "800px", height: '300px', objectFit: 'cover'}}
+                    />
+
+                    <img
+                    src={
+                        profiles.imagem
+                        ? `http://127.0.0.1:8000/api/user/getImage/${user_id}`
+                        : logo
+                    }
+                    alt="Imagem do perfil"
+                    className="img-fluid rounded-circle align-self-start"
+                    style={{ maxWidth: "100px", marginTop: '-3.125rem', marginLeft: '2rem' }}
                 />
 
-                <img
-                src={`http://127.0.0.1:8000/api/user/getImage/${user_id}`}
-                alt="Imagem do perfil"
-                className="img-fluid rounded-circle align-self-start"
-                style={{ maxWidth: "100px", marginTop: '-3.125rem', marginLeft: '2rem' }}
-              />
+                <Link to={"/editprofile"}>
+                    <span className="material-symbols-outlined mt-2" style={{ color: 'var(--purple)', float: 'right', 
+                    border: '1px solid var(--purple)', borderRadius: '10px', padding: '0.25rem', fontSize: '1.25rem' }}>edit</span>
+                </Link>
 
-              <Link to={"/editprofile"}>
-                <span className="material-symbols-outlined mt-2" style={{ color: 'var(--purple)', float: 'right', 
-                border: '1px solid var(--purple)', borderRadius: '10px', padding: '0.25rem', fontSize: '1.25rem' }}>edit</span>
-              </Link>
-
-                {profile.map((profiles) => (
+                
                 <div className="text-justify mt-4">
                     <p>
                             <b style={{ fontSize: '1.5rem' }}>{profiles.name} {profiles.last_name}</b>
@@ -79,7 +85,6 @@ export function Profile() {
                             <a href="#" style={{ marginLeft: '0.5rem' }}>amazon.kindle/{profiles.name}</a>
                         </p>
                 </div>
-                ))}
 
                 <div style={{ marginTop: '3rem' }}>
                     <b style={{ fontSize: '1.25rem' }}>Publicações</b>
@@ -217,6 +222,7 @@ export function Profile() {
 
 
             </div>
+            ))}
         </>
     )
 }

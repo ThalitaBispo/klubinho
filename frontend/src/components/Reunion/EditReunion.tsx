@@ -1,10 +1,29 @@
 import { Link } from "react-router-dom";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useParams } from 'react';
 import axios from "axios";
 
 import Select from 'react-select';
 
 export function EditReunion() {
+    
+    const { id } = useParams();
+    const [editveiculos, setEditVeiculos] = useState([]);
+    const [status, setStatus] = useState('');
+
+    useEffect(() => {
+        async function Veiculos() {
+            try {
+                const response = await axios.get(`http://127.0.0.1:8000/api/reuniao/getReuniao/${id}`);
+                setEditVeiculos(response.data);
+                //setLoading(false);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        Veiculos();
+    }, []);
+
     const [selectedOptions, setSelectedOptions] = useState([]);
     const options = [
         { value: 'Option1', label: 'Option 1' },
@@ -27,47 +46,18 @@ export function EditReunion() {
         {props.children}
         <span className="remove" onClick={() => removeOption(props.data)}>×</span>
         </div>
-    );
-    
-    //edit
-    //const { id } = useParams();
-    /*const [editveiculos, setEditVeiculos] = useState([]);
-    const [status, setStatus] = useState('');
-
-    useEffect(() => {
-        async function Veiculos() {
-            try {
-                const response = await axios.get(`http://127.0.0.1:8000/api/reuniao/getAllReuniaoByClub/1`);
-                setEditVeiculos(response.data);
-                //setLoading(false);
-            } catch (error) {
-                console.error(error);
-            }
-        }
-
-        Veiculos();
-    }, []);
-
-    async function gravar(e) {
-        e.preventDefault(); // cancela o submit
-        try {
-            const response = await axios.put(`http://127.0.0.1:8000/api/veiculos/${id}`, editveiculos);
-            setStatus("Reunião Atualizada");
-        } catch (erro) {
-            setStatus(`Falha: ${erro}`);
-        }     
-    }*/       
+    );     
 
     return (
         <div className="container">
             <b style={{ fontSize: "1.5rem" }}>Editar reunião</b>
 
-            {reunions.map((reunion) => (
+            
                 <form className="mt-4" style={{ marginBottom: "3rem" }}>
                 
-                    <div key={reunion.id} className="form-group mt-4">
+                    <div className="form-group mt-4">
                         <label>Título</label>
-                        <input type="text" className="form-control" placeholder="Título" value={reunion.titulo} required/>
+                        <input type="text" className="form-control" placeholder="Título" value={''} required/>
                     </div>
 
                     <div className="form-group mt-4">
@@ -78,14 +68,14 @@ export function EditReunion() {
                             rows={4} 
                             maxLength={255}
                             style={{ resize: 'none' }}
-                            value={reunion.descricao}
+                            value={''}
                             required
                         />
                     </div>
 
                     <div className="form-group mt-4">
                         <label>Link</label>
-                        <input type="text" className="form-control" placeholder="Link" value={reunion.link} required/>
+                        <input type="text" className="form-control" placeholder="Link" value={''} required/>
                     </div>
 
                     <div className="form-group mt-4">
@@ -106,11 +96,11 @@ export function EditReunion() {
                     <div className="row mt-4">
                         <div className="form-group col-md-6">
                             <label htmlFor="inputData">Data</label>
-                            <input type="date" className="form-control" id="inputHora" placeholder="Data" value={reunion.data_reuniao} required/>
+                            <input type="date" className="form-control" id="inputHora" placeholder="Data" value={''} required/>
                         </div>
                         <div className="form-group col-md-6">
                             <label htmlFor="inputHora">Hora</label>
-                            <input type="time" className="form-control" id="inputHora" placeholder="Hora" value={reunion.hora_reuniao} required/>
+                            <input type="time" className="form-control" id="inputHora" placeholder="Hora" value={''} required/>
                         </div>
                     </div>
 
@@ -130,11 +120,11 @@ export function EditReunion() {
                     <div className="row mt-4">
                         <div className="form-group col-md-6">
                             <label>Livro</label>
-                            <input type="text" className="form-control" placeholder="Livro" value={reunion.livro} />
+                            <input type="text" className="form-control" placeholder="Livro" value={''} />
                         </div>
                         <div className="form-group col-md-6">
                             <label>Autor</label>
-                            <input type="text" className="form-control" placeholder="Autor" value={reunion.autor} />
+                            <input type="text" className="form-control" placeholder="Autor" value={''} />
                         </div>
                     </div>
 
@@ -148,7 +138,7 @@ export function EditReunion() {
                         </Link>
                     </div>
                 </form>
-            ))}
+         
         </div>
         
     )

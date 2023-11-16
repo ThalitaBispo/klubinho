@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from "axios";
 import { AxiosError } from 'axios';
 import Cookies from 'js-cookie';
+import logo from '../../avatar/logo.jpeg';
 
 import styles from './EditProfile.module.css'
 

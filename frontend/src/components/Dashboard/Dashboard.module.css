@@ -22,3 +22,20 @@
     border: none;
     padding: 0.5rem;
 }
+
+.sideBarLeft {
+  position: sticky; 
+  top: 0; 
+  height: '100vh';
+}
+
+@media screen and (max-width: 767px) {
+  .sideBarLeft {
+    margin-top: 1rem;
+    margin-bottom: -1rem;
+    margin-left: -3rem;
+  }
+  .menu {
+    padding-left: 1rem;
+  }
+}

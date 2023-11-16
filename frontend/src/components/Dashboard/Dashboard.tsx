@@ -11,11 +11,12 @@ export function Dashboard() {
   const [text, setText] = useState('');
   const [postagens, setPostagens] = useState([]);
   const user_id = Cookies.get('user_id');
+  const club_id = Cookies.get('club_id');
 
   //get
   const fetchPostagens = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:8000/api/post/getAllPostByClub/1');
+      const response = await axios.get(`http://127.0.0.1:8000/api/post/getAllPostByClub/${club_id}`);
       setPostagens(response.data);
       setLoadingPostagens(false);
     } catch (error) {
@@ -41,7 +42,7 @@ export function Dashboard() {
       const response = await axios.post(
         'http://127.0.0.1:8000/api/post/create',
         {
-          club_id: 1,
+          club_id: club_id,
           user_id: user_id,
           content: postagem.content,
         },
@@ -120,8 +121,6 @@ export function Dashboard() {
                       <span>
                         {post.name} {post.last_name}
                       </span>
-                      <span> . </span>
-                      <span style={{ color: '#5b6b77' }}>15h</span>
                     </div>
                   </div>
                 </a>

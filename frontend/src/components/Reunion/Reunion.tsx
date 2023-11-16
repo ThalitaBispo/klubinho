@@ -1,16 +1,19 @@
 import { Link } from "react-router-dom";
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
+import Cookies from 'js-cookie';
+import styles from './Reunion.module.css';
 
 export function Reunion() {
 
     const [reuniao, setReuniao] = useState([]);
     const [loading, setLoading] = useState(true);
+    const club_id = Cookies.get('club_id');
 
     useEffect(() => {
         async function Reuniao() {
         try {
-            const response = await axios.get('http://127.0.0.1:8000/api/reuniao/getAllReuniaoByClub/2');
+            const response = await axios.get(`http://127.0.0.1:8000/api/reuniao/getAllReuniaoByClub/${club_id}`);
             setReuniao(response.data);
             setLoading(false);
         } catch (error) {
@@ -38,24 +41,18 @@ export function Reunion() {
 
                 {reuniao.map((reunioes) => (
 
-                    <ul className="list-group-flush" key={reunioes.id}>
-                        <li className="list-group-item">
-                            <div className='d-flex'>
-                                <Link to="/editreunion" className="nav-link d-flex flex-row mt-4">
-                                    <div className="col-md-6 mt-2">
-                                        <div className="mt-1">
-                                            <span className="d-block">{reunioes.titulo}</span>
-                                            <span style={{ color: '#5b6b77' }}>{reunioes.descricao}</span>
-                                        </div>
+                    <ul className={`list-group-flush mt-4 ${styles.hoverEffect}`} key={reunioes.id}>
+                        <Link to={`/editreunion/${reunioes.id}`} className="nav-link d-flex flex-row mt-4 mb-4">
+                            <li className="list-group-item mt-4 mb-4">
+                                <div className='d-flex'>
+                                    <div className="mt-1">
+                                        <span className="d-block">{reunioes.titulo}</span>
+                                        <span style={{ color: '#5b6b77' }}>{reunioes.descricao}</span>
                                     </div>
-                                    <div>
-                                        <button className="btn" style={{ margin: "1rem 0rem 1rem 18rem", backgroundColor: 'var(--purple)', color: "white" }}>Acessar</button>
-                                    </div>
-                                </Link>
-                            </div>
-                        </li>               
-
-                    </ul>
+                                </div>
+                            </li>     
+                        </Link>          
+                    </ul> 
 
                 ))}
 

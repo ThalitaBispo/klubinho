@@ -24,7 +24,7 @@ export function RoutesDashboard() {
                 <div className="container-fluid">
                     <div className="row">
                         
-                        <div className="col-md-3" style={{ position: 'sticky', top: 0, height: '100vh' }}>
+                        <div className={`col-md-3 ${styles.sideBarLeft}`}>
                             <SideBarRight />
                         </div>
                         
@@ -49,7 +49,7 @@ export function RoutesDashboard() {
                                             <Route path="/createenquete" element={<CreateEnquete />} />
                                             <Route path="/reunion" element={<Reunion />} />
                                             <Route path="/createreunion" element={<CreateReunion />} />
-                                            <Route path="/editreunion" element={<EditReunion />} />
+                                            <Route path="/editreunion/:id" element={<EditReunion />} />
                                             <Route path="/profile" element={<Profile />} />
                                             <Route path="/editprofile" element={<EditProfile />} />
                                         </Routes>
