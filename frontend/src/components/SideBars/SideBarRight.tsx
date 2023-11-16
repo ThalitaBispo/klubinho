@@ -69,7 +69,7 @@ export function SideBarLeft() {
 
                         {integrantes.map((integrante) => (
 
-                        <div className='d-flex flex-row' style={{ marginTop: '1.25rem'}}>
+                        <div className='d-flex flex-row' key={integrante.id} style={{ marginTop: '1.25rem'}}>
                             <img
                                 src={`http://127.0.0.1:8000/api/user/getImage/${integrante.user_id}`}
                                 alt="Imagem do perfil"

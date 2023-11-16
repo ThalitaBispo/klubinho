@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
+import Cookies from 'js-cookie';
 
 import Select from 'react-select';
 
@@ -8,8 +9,9 @@ export function CreateReunion() {
     //salvar
     const [reunion, setReunion] = useState({});
     const [status, setStatus] = useState('');
-    const club_id = 1;
-    const user_id = 1;
+    const user_id = Cookies.get('user_id');
+    //const club_id = 2;
+    //const user_id = 4;
   
     async function gravar(e) {
       e.preventDefault();
@@ -21,6 +23,7 @@ export function CreateReunion() {
       };
   
       try {
+        const participantsArray = selectedOptions.map(option => option.value); // Extrai os valores dos participantes
         const response = await axios.post(
           'http://127.0.0.1:8000/api/reuniao/create',
           {
@@ -31,8 +34,9 @@ export function CreateReunion() {
             hora_reuniao: reunion.hora_reuniao,
             livro: reunion.livro,
             autor: reunion.autor,
-            club_id: reunion.club_id,
+            club_id: 2,
             user_id: reunion.user_id,
+            participants: participantsArray,
             
           },
           config
@@ -41,9 +45,11 @@ export function CreateReunion() {
         setStatus('Reunião cadastrada com sucesso!');
         alert('Reunião cadastrada com sucesso!');
         setReunion({});
+        setSelectedOptions([]);
       } catch (error) {
         setStatus(`Falha: ${error}`);
         alert(`Falha: ${error}`);
+        console.log(error);
       }
     }
 
@@ -131,6 +137,7 @@ export function CreateReunion() {
                         isMulti
                         options={options}
                         value={selectedOptions}
+                        name="participants_name"
                         onChange={handleSelectChange}
                         components={{ MultiValue: customMultiValue }}
                         required

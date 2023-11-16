@@ -94,7 +94,7 @@ export function SideBarRight() {
                                         />
             
                                         {profile.map((profiles) => (
-                                        <div className="mt-3" style={{ marginLeft: '1rem' }}>
+                                        <div className="mt-3" key={profiles.id} style={{ marginLeft: '1rem' }}>
                                             <div className="d-block">{profiles.name} {profiles.last_name}</div>
                                             <div className="d-block">{profiles.club_name}</div>
                                         </div>
