@@ -3,59 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import Cookies from 'js-cookie';
 
-import Select from 'react-select';
-
 export function EditReunion() {
-    // Visualizar participantes
-    const [integrantes, setIntegrantes] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const club_id = Cookies.get('club_id');
-
-    useEffect(() => {
-        async function Profile() {
-            try {
-                const response = await axios.get(`http://127.0.0.1:8000/api/clubIntegrantes/getClubIntegrantesWithUser/${club_id}`);
-                setIntegrantes(response.data);
-                setLoading(false);
-            } catch (error) {
-                console.error(error);
-            }
-        }
-
-        Profile();
-    }, []);
-
-    // Select
-    const [selectedOptions, setSelectedOptions] = useState([]);
-    const options = integrantes.map((integrante) => ({
-        value: `${integrante.name} ${integrante.last_name}`,
-        label: `${integrante.name} ${integrante.last_name}`,
-    }));
-
-    const handleSelectChange = (selectedValues) => {
-        setSelectedOptions(selectedValues || []);
-    };
-
-    const removeOption = (optionToRemove) => {
-        const updatedOptions = selectedOptions.filter((option) => option !== optionToRemove);
-        setSelectedOptions(updatedOptions);
-    };
-
-    const customMultiValue = (props) => (
-        <div className="custom-multi-value" style={{
-            marginRight: '8px',
-            cursor: 'pointer',
-            border: '1px solid',
-            backgroundColor: 'var(--purple)',
-            color: 'var(--white)',
-            borderRadius: "10px",
-            padding: "0.5rem"
-        }}>
-            {props.children}
-            <span className="remove" onClick={() => removeOption(props.data)}>×</span>
-        </div>
-    );
-
     // Get
     const { id } = useParams();
     const [editReuniao, setEditReuniao] = useState({});
@@ -70,18 +18,34 @@ export function EditReunion() {
                 console.error(error);
             }
         }
-
         EditReuniao();
     }, []);
+
+    //update
+    async function gravar(e) {
+        e.preventDefault(); // cancela o submit
+        console.log("Dados a serem enviados:", { ...editReuniao });
+        try {
+            const response = await axios.post(`http://127.0.0.1:8000/api/reuniao/edit/${id}`, {
+                ...editReuniao,
+            });
+            setStatus("Reunião Atualizada");
+            alert("Reunião atualizada");
+        } catch (erro) {
+            setStatus(`Falha: ${erro}`);
+        }
+    }
+
 
     return (
         <div className="container">
             <b style={{ fontSize: "1.5rem" }}>Editar reunião</b>
 
-            <form className="mt-4" style={{ marginBottom: "3rem" }}>
+            <form onSubmit={gravar} className="mt-4" style={{ marginBottom: "3rem" }}>
                 <div className="form-group mt-4">
                     <label>Título</label>
-                    <input type="text" className="form-control" placeholder="Título" value={editReuniao.titulo || ''} required />
+                    <input type="text" className="form-control" placeholder="Título" value={editReuniao.titulo || ''} 
+                    onChange={(e) => setEditReuniao({ ...editReuniao, titulo: e.target.value })} required />
                 </div>
 
                 <div className="form-group mt-4">
@@ -93,54 +57,42 @@ export function EditReunion() {
                         maxLength={255}
                         style={{ resize: 'none' }}
                         value={editReuniao.descricao || ''}
+                        onChange={(e) => setEditReuniao({ ...editReuniao, descricao: e.target.value })}
                         required
                     />
                 </div>
 
                 <div className="form-group mt-4">
                     <label>Link</label>
-                    <input type="text" className="form-control" placeholder="Link" value={editReuniao.link || ''} required />
-                </div>
-
-                <div className="form-group mt-4">
-                    <div className="mt-2">
-                        <p>Participantes:</p>
-                    </div>
-
-                    <Select
-                        isMulti
-                        options={options}
-                        value={(editReuniao.participants_name || []).map((name) => ({
-                            value: name,
-                            label: name,
-                        })).concat(selectedOptions.filter(
-                            (option) => !editReuniao.participants_name.includes(option.value)
-                        ))}
-                        onChange={handleSelectChange}
-                        components={{ MultiValue: customMultiValue }}
-                        required
-                    />
+                    <input type="text" className="form-control" placeholder="Link" value={editReuniao.link || ''} 
+                    onChange={(e) => setEditReuniao({ ...editReuniao, link: e.target.value })} required />
                 </div>
 
                 <div className="row mt-4">
                     <div className="form-group col-md-6">
                         <label htmlFor="inputData">Data</label>
-                        <input type="date" className="form-control" id="inputHora" placeholder="Data" value={editReuniao.data_reuniao || ''} required />
+                        <input type="date" className="form-control" id="inputHora" placeholder="Data" value={editReuniao.data_reuniao || ''} 
+                        onChange={(e) => setEditReuniao({ ...editReuniao, data_reuniao: e.target.value })} required />
                     </div>
                     <div className="form-group col-md-6">
                         <label htmlFor="inputHora">Hora</label>
-                        <input type="time" className="form-control" id="inputHora" placeholder="Hora" value={editReuniao.hora_reuniao || ''} required />
+                        <input type="time" className="form-control" id="inputHora" placeholder="Hora" value={editReuniao.hora_reuniao || ''} 
+                        onChange={(e) => setEditReuniao({ ...editReuniao, hora_reuniao: e.target.value })} required />
                     </div>
                 </div>
 
                 <div className="row mt-4">
                     <div className="form-group col-md-6">
                         <label>Livro</label>
-                        <input type="text" className="form-control" value={editReuniao.livro || ''} placeholder="Livro" />
+                        <input type="text" className="form-control" value={editReuniao.livro || ''} 
+                        onChange={(e) => setEditReuniao({ ...editReuniao, livro: e.target.value })}
+                        placeholder="Livro" />
                     </div>
                     <div className="form-group col-md-6">
                         <label>Autor</label>
-                        <input type="text" className="form-control" value={editReuniao.autor|| ''} placeholder="Autor" />
+                        <input type="text" className="form-control" value={editReuniao.autor|| ''} 
+                        onChange={(e) => setEditReuniao({ ...editReuniao, autor: e.target.value })}
+                        placeholder="Autor" />
                     </div>
                 </div>
 
