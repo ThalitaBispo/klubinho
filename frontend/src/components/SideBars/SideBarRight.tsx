@@ -1,6 +1,7 @@
 //import styles from './SideBarRight.module.css'
 import styles from '../../global.module.css'
 import Cookies from 'js-cookie';
+import logo from '../../avatar/logo.jpeg';
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -74,7 +75,11 @@ export function SideBarLeft() {
 
                         <div className='d-flex flex-row' key={integrante.id} style={{ marginTop: '1.25rem'}}>
                             <img
-                                src={`http://127.0.0.1:8000/api/user/getImage/${integrante.user_id}`}
+                                src={
+                                    integrante.imagem
+                                    ? `http://127.0.0.1:8000/api/user/getImage/${integrante.user_id}`
+                                    : logo
+                                }
                                 alt="Imagem do perfil"
                                 className="img-fluid rounded-circle align-self-start"
                                 style={{ maxWidth: "40px"}}
