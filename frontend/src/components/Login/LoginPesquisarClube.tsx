@@ -62,7 +62,7 @@ export function LoginPesquisarClube() {
               Cookies.set('club_name', club_name, { expires: 7 });
           
               setStatus('clube encontrado');
-              alert('Clube encontrado com sucesso!');
+              // alert('Clube encontrado com sucesso!');
               setClube({});
           
               // Redireciona para a página desejada

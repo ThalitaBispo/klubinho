@@ -59,7 +59,7 @@ export function LoginEntrarClube() {
       console.log(response);
 
       setStatus('clube ingressado com sucesso');
-      alert('Clube ingressado com sucesso!');
+      alert('Clube ingressado com sucesso! Faça login com sua nova conta para acessá-lo!');
       Cookies.set('club_id', entrar.club_id, { expires: 7 });
       Cookies.remove('temp_club_id');
       // Redireciona para a página desejada
@@ -83,15 +83,19 @@ export function LoginEntrarClube() {
         Deseja entrar em <span className={styles.textDestaque}>{club_name}</span>?
       </p>
 
-      <p>
+      {/* <p>
         <a href='/bemvindo'>Voltar</a>
-      </p>
+      </p> */}
 
       <div className={styles.centerButton}>
         <button type="button" onClick={gravar} className="btn btn-lg btn-block">
           Entrar
         </button>
       </div>
+
+      <div className={styles.centerButton}>             
+            <button type="button" className="btn btn-lg btn-block" onClick={() => { window.location.href = `bemvindo`; } }>Voltar</button>
+        </div>
     </>
   );
 }

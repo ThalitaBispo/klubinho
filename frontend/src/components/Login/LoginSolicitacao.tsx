@@ -17,6 +17,7 @@ export function LoginSolicitacao() {
         <div className={styles.centerButton}>
             <button className="btn btn-lg btn-block" type='submit' onClick={() => { window.location.href = `/`; } }>Entrar</button>                       
         </div>
+        
         </>
     )
 }

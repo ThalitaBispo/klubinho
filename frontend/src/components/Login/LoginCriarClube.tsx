@@ -80,7 +80,7 @@ export function LoginCriarClube() {
                         <label htmlFor='endClube'>Endereço do Clube</label>
                         <input 
                             type='text' 
-                            id='endClubeInput'
+                            id='endClube'
                             placeholder='@klubinho'
                             value={cadastro.nick_club || ''}
                             className='form-control'

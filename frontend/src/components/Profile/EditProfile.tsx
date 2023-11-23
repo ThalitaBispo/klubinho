@@ -42,6 +42,7 @@ export function EditProfile() {
 
             setStatus("Perfil Atualizado");
             alert("Perfil atualizado com sucesso!!");
+            window.location.reload()
         } catch (erro) {
             setStatus(`Falha: ${erro}`);
         }
