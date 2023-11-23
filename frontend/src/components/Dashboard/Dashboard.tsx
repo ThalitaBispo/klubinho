@@ -5,8 +5,10 @@ import logo from '../../avatar/logo.jpeg';
 
 import styles from './Dashboard.module.css';
 
+import Hypher from 'hypher';
+import pt from 'hyphenation.pt';
+
 export function Dashboard() {
-  
   const [postagem, setPostagem] = useState({ content: '' });
   const [status, setStatus] = useState('');
   const [loadingPostagens, setLoadingPostagens] = useState(false);
@@ -59,7 +61,6 @@ export function Dashboard() {
       setText('');
 
       fetchPostagens();
-
     } catch (error) {
       console.error(error);
       setStatus(`Falha: ${error}`);
@@ -67,18 +68,33 @@ export function Dashboard() {
     }
   }
 
-  // Função para quebrar o texto em linhas de 56 caracteres
+  //função para quebrar linha
   const quebrarLinhas = (texto, limite) => {
+    const h = new Hypher(pt);
+
+    const palavras = texto.split(/\s+/);
     const linhas = [];
+    let linhaAtual = '';
 
-    for (let i = 0; i < texto.length; i += limite) {
-      linhas.push(texto.slice(i, i + limite));
-    }
+    palavras.forEach((palavra) => {
+      if (linhaAtual.length + palavra.length <= limite) {
+        linhaAtual += `${palavra} `;
+      } else {
+        linhas.push(linhaAtual.trim());
+        linhaAtual = `${palavra} `;
+      }
+    });
 
-    return linhas;
+    // Adiciona a última linha
+    linhas.push(linhaAtual.trim());
+
+    // Adiciona lógica de hyphenation
+    const linhasHyphenated = linhas.map((linha) => h.hyphenate(linha).join('\u00AD'));
+
+    return linhasHyphenated;
   };
 
-  //textarea
+  // Adicionei a função handleInputChange
   const handleInputChange = (e: any) => {
     setText(e.target.value);
     autoExpand(e.target);
@@ -94,20 +110,19 @@ export function Dashboard() {
       <div className="container">
         <form onSubmit={gravar}>
           <div className="row bg-light p-3">
-            
-              <textarea
-                className={`${styles.textoArea}`}
-                placeholder="No que você está pensando?"
-                rows={2}
-                maxLength={255}
-                name="content"
-                value={text}
-                onChange={(e) => {
-                  handleInputChange(e);
-                  setPostagem({ ...postagem, content: e.target.value });
-                }}
-              />
-        
+            {/* Adicionei o evento onChange na textarea */}
+            <textarea
+              className={`${styles.textoArea}`}
+              placeholder="No que você está pensando?"
+              rows={2}
+              maxLength={255}
+              name="content"
+              value={text}
+              onChange={(e) => {
+                handleInputChange(e);
+                setPostagem({ ...postagem, content: e.target.value });
+              }}
+            />
             <div className="row">
               <div className="col-sm-2 mt-4">
                 <button type="submit" className={styles.buttonPurple}>
@@ -125,9 +140,9 @@ export function Dashboard() {
             <div style={{ margin: '1rem' }} key={post.id}>
               <div className="d-flex mt-2">
                 <a href="#" className="nav-link d-flex flex-row mt-4">
-                <img
+                  <img
                     src={
-                        post.imagem
+                      post.imagem
                         ? `http://127.0.0.1:8000/api/user/getImage/${post.user_id}`
                         : logo
                     }
@@ -146,7 +161,7 @@ export function Dashboard() {
               </div>
 
               <div style={{ padding: '0 3rem' }}>
-                {quebrarLinhas(post.content, 65).map((linha, index) => (
+                {quebrarLinhas(post.content, 255).map((linha, index) => (
                   <p
                     key={index}
                     className="text-justify"
