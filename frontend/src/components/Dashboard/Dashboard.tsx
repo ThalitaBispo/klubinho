@@ -6,11 +6,15 @@ import logo from '../../avatar/logo.jpeg';
 import styles from './Dashboard.module.css';
 
 export function Dashboard() {
-  const [postagem, setPostagem] = useState({});
+  
+  const [postagem, setPostagem] = useState({ content: '' });
   const [status, setStatus] = useState('');
   const [loadingPostagens, setLoadingPostagens] = useState(false);
+
   const [text, setText] = useState('');
+
   const [postagens, setPostagens] = useState([]);
+
   const user_id = Cookies.get('user_id');
   const club_id = Cookies.get('club_id');
 
@@ -51,16 +55,28 @@ export function Dashboard() {
       );
 
       setStatus('Post cadastrado com sucesso!');
-      setPostagem({});
+      setPostagem({ content: '' });
       setText('');
 
       fetchPostagens();
 
     } catch (error) {
+      console.error(error);
       setStatus(`Falha: ${error}`);
       alert(`Falha: ${error}`);
     }
   }
+
+  // Função para quebrar o texto em linhas de 56 caracteres
+  const quebrarLinhas = (texto, limite) => {
+    const linhas = [];
+
+    for (let i = 0; i < texto.length; i += limite) {
+      linhas.push(texto.slice(i, i + limite));
+    }
+
+    return linhas;
+  };
 
   //textarea
   const handleInputChange = (e: any) => {
@@ -83,7 +99,7 @@ export function Dashboard() {
                 className={`${styles.textoArea}`}
                 placeholder="No que você está pensando?"
                 rows={2}
-                maxLength={300}
+                maxLength={255}
                 name="content"
                 value={text}
                 onChange={(e) => {
@@ -94,11 +110,9 @@ export function Dashboard() {
         
             <div className="row">
               <div className="col-sm-2 mt-4">
-                <a href="#">
-                  <button type="submit" className={styles.buttonPurple}>
-                    Postar
-                  </button>
-                </a>
+                <button type="submit" className={styles.buttonPurple}>
+                  Postar
+                </button>
               </div>
             </div>
           </div>
@@ -132,9 +146,15 @@ export function Dashboard() {
               </div>
 
               <div style={{ padding: '0 3rem' }}>
-                <span className="text-justify" style={{ fontSize: '0.85rem', marginLeft: '0.5rem' }}>
-                  {post.content}
-                </span>
+                {quebrarLinhas(post.content, 65).map((linha, index) => (
+                  <p
+                    key={index}
+                    className="text-justify"
+                    style={{ fontSize: '0.85rem', marginLeft: '0.5rem', marginBottom: '5px' }}
+                  >
+                    {linha}
+                  </p>
+                ))}
                 <div
                   style={{
                     display: 'flex',
