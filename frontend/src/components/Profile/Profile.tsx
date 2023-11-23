@@ -100,7 +100,11 @@ export function Profile() {
               <div className="d-flex mt-2">
                 <a href="#" className="nav-link d-flex flex-row mt-4">
                   <img
-                    src={`http://127.0.0.1:8000/api/user/getImage/${post.user_id}`}
+                    src={
+                        post.imagem
+                        ? `http://127.0.0.1:8000/api/user/getImage/${post.user_id}`
+                        : logo
+                    }
                     alt="Imagem do perfil"
                     className="img-fluid rounded-circle align-self-start"
                     style={{ maxWidth: '40px' }}
