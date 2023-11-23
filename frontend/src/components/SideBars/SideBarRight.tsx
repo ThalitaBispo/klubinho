@@ -9,6 +9,7 @@ import axios from 'axios';
 export function SideBarLeft() {
 
     //get
+    const [totalIntegrantes, setTotalIntegrantes] = useState(0);
     const [integrantes, setIntegrantes] = useState([]);
     const [loading, setLoading] = useState(true);
     const club_id = Cookies.get('club_id');
@@ -18,6 +19,11 @@ export function SideBarLeft() {
         async function Profile() {
           try {
             const response = await axios.get(`http://127.0.0.1:8000/api/clubIntegrantes/getClubIntegrantesWithUser/${club_id}`);
+
+            const resp = await axios.get(`http://127.0.0.1:8000/api/clubIntegrantes/getTotalIntegrantes/${club_id}`);
+                                setTotalIntegrantes(resp.data.number_of_integrantes);
+
+
             setIntegrantes(response.data);
             setLoading(false);
           } catch (error) {
@@ -69,7 +75,7 @@ export function SideBarLeft() {
                     <div className="card-body bg-light" style={{ fontSize: '0.9rem' }}>
 
                         <b style={{ fontSize: '1.25rem' }}> Integrantes </b>
-                        <span style={{marginLeft: '10px'}}>(10)</span>
+                        <span style={{ marginLeft: '10px' }}>({totalIntegrantes})</span>
 
                         {integrantes.map((integrante) => (
 

@@ -30,6 +30,13 @@
 }
 
 @media screen and (max-width: 767px) {
+  .textoArea {
+    background-color: #f8f9fa;
+    overflow: hidden; 
+    resize:none;
+    width: 20rem;
+    border: none;
+  }
   .sideBarLeft {
     margin-top: 1rem;
     margin-bottom: -1rem;

@@ -77,8 +77,8 @@ export function Dashboard() {
     <>
       <div className="container">
         <form onSubmit={gravar}>
-          <div className="p-3 bg-light">
-            <div className="col-md-6">
+          <div className="row bg-light p-3">
+            
               <textarea
                 className={`${styles.textoArea}`}
                 placeholder="No que você está pensando?"
@@ -91,7 +91,7 @@ export function Dashboard() {
                   setPostagem({ ...postagem, content: e.target.value });
                 }}
               />
-            </div>
+        
             <div className="row">
               <div className="col-sm-2 mt-4">
                 <a href="#">
