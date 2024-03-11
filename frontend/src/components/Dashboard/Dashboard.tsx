@@ -3,6 +3,8 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import logo from '../../avatar/logo.jpeg';
 
+import { FormEvent } from '../types';
+
 import styles from './Dashboard.module.css';
 
 import Hypher from 'hypher';
@@ -36,7 +38,7 @@ export function Dashboard() {
   }, []);
 
   //create
-  async function gravar(e: any) {
+  async function gravar(e: FormEvent) {
     e.preventDefault();
 
     const config = {
@@ -46,7 +48,7 @@ export function Dashboard() {
     };
 
     try {
-      const response = await axios.post(
+      await axios.post(
         'http://127.0.0.1:8000/api/post/create',
         {
           club_id: club_id,
@@ -68,8 +70,56 @@ export function Dashboard() {
     }
   }
 
+  //curtidas:
+  const [countLike, setCountLike] = useState(0);
+  const [likedPosts, setLikedPosts] = useState([]);
+
+  const countLikes = (postId) => {
+    if (!likedPosts.includes(postId)) {
+      setLikedPosts([...likedPosts, postId]);
+      setCountLike(countLike + 1);
+    } else {
+      const updatedLikedPosts = likedPosts.filter((id) => id !== postId);
+      setLikedPosts(updatedLikedPosts);
+      setCountLike(countLike - 1);
+    }
+  };
+
+  //comentarios
+  // Adicione um estado para controlar a visibilidade dos comentários e o texto do comentário
+  const [showComments, setShowComments] = useState(false);
+  const [commentText, setCommentText] = useState('');
+
+  // Função para alternar a visibilidade dos comentários
+  const toggleComments = () => {
+    setShowComments(!showComments);
+  };
+
+  // Função para lidar com a submissão de um novo comentário
+  const submitComment = async (postId) => {
+    try {
+      await axios.post(
+        'http://127.0.0.1:8000/api/comment/create',
+        {
+          post_id: postId,
+          user_id: user_id,
+          content: commentText,
+        },
+        config
+      );
+
+      // Lógica para recarregar os comentários após a submissão
+      fetchPostagens();
+      setCommentText('');
+    } catch (error) {
+      console.error(error);
+      setStatus(`Falha: ${error}`);
+      alert(`Falha: ${error}`);
+    }
+  };
+
   //função para quebrar linha
-  const quebrarLinhas = (texto, limite) => {
+  const quebrarLinhas = (texto: string, limite) => {
     const h = new Hypher(pt);
 
     const palavras = texto.split(/\s+/);
@@ -95,12 +145,12 @@ export function Dashboard() {
   };
 
   // Adicionei a função handleInputChange
-  const handleInputChange = (e: any) => {
+  const handleInputChange = (e: FormEvent) => {
     setText(e.target.value);
     autoExpand(e.target);
   };
 
-  const autoExpand = (textarea: any) => {
+  const autoExpand = (textarea) => {
     textarea.style.height = 'auto';
     textarea.style.height = textarea.scrollHeight + 'px';
   };
@@ -137,9 +187,9 @@ export function Dashboard() {
           <p>Carregando postagens...</p>
         ) : (
           postagens.map((post) => (
-            <div style={{ margin: '1rem' }} key={post.id}>
-              <div className="d-flex mt-2">
-                <a href="#" className="nav-link d-flex flex-row mt-4">
+            <div className={styles.customPost} key={post.id}>
+              <div className="d-flex">
+                <a href="#" className="nav-link d-flex flex-row">
                   <img
                     src={
                       post.imagem
@@ -164,8 +214,7 @@ export function Dashboard() {
                 {quebrarLinhas(post.content, 255).map((linha, index) => (
                   <p
                     key={index}
-                    className="text-justify"
-                    style={{ fontSize: '0.85rem', marginLeft: '0.5rem', marginBottom: '5px' }}
+                    className={`text-justify ${styles.breakLines}`}
                   >
                     {linha}
                   </p>
@@ -178,16 +227,82 @@ export function Dashboard() {
                     color: '#5b6b77',
                   }}
                 >
-                  <span className="material-symbols-outlined">favorite</span>
-                  <span style={{ marginLeft: '0.25rem' }}>12</span>
+                    <span
+                      className="material-symbols-outlined"
+                      onClick={() => countLikes(post.id)}
+                      style={{ cursor: 'pointer', color: likedPosts.includes(post.id) ? 'red' : 'inherit' }}
+                    >
+                      favorite
+                    </span>
+                    <span style={{ marginLeft: '0.25rem' }}>{countLike}</span>
+                
 
-                  <span className="material-symbols-outlined" style={{ marginLeft: '2rem' }}>
-                    forum
-                  </span>
-                  <span style={{ marginLeft: '0.25rem' }}>20</span>
-                </div>
+                    <span
+                      className="material-symbols-outlined"
+                      onClick={toggleComments}
+                      style={{ cursor: 'pointer', marginLeft: '1rem'}}
+                    >
+                      forum
+                    </span>
+
+                  </div>
+
+                  {showComments && (
+                    <div style={{ marginTop: '1rem' }}>
+                      {/* Comentário estático */}
+                      <div className={`d-flex ${styles.customComments}`}>
+                        <img
+                          src={logo}
+                          alt="Imagem do perfil"
+                          className="img-fluid rounded-circle align-self-start"
+                          style={{ maxWidth: '30px', marginRight: '1rem' }}
+                        />
+                        <p className='mt-1'>Comentário Estático</p>
+                      </div>
+
+                      <div className={`d-flex ${styles.customComments}`}>
+                        <img
+                          src={logo}
+                          alt="Imagem do perfil"
+                          className="img-fluid rounded-circle align-self-start"
+                          style={{ maxWidth: '30px', marginRight: '1rem' }}
+                        />
+                        <p className='mt-1'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent pulvinar ligula eget tellus molestie laoreet.</p>
+                      </div>
+
+                      <div className={`d-flex ${styles.customComments}`}>
+                        <img
+                          src={logo}
+                          alt="Imagem do perfil"
+                          className="img-fluid rounded-circle align-self-start"
+                          style={{ maxWidth: '30px', marginRight: '1rem' }}
+                        />
+                        <p className='mt-1'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent pulvinar ligula eget tellus molestie laoreet. Etiam egestas magna non diam aliquet varius. Phasellus a lacus auctor, vulputate eros efficitur, bibendum magna. Suspendisse vestibulum, velit.</p>
+                      </div>
+
+                      {/* Campo para o usuário fazer um comentário */}
+                      <div className="d-flex" style={{ padding: '1rem' }}>
+                        <img
+                          src={logo}
+                          alt="Imagem do perfil"
+                          className="img-fluid rounded-circle align-self-start"
+                          style={{ maxWidth: '30px', marginRight: '1rem' }}
+                        />
+                        <textarea
+                          className="form-control"
+                          rows={1}
+                          maxLength={255}
+                          style={{ resize: 'none' }}
+                          placeholder="Faça um comentário..."
+                          value={commentText}
+                          onChange={(e) => setCommentText(e.target.value)}
+                        />
+                        <button onClick={() => submitComment(post.id)}>Comentar</button>
+                      </div>
+                    </div>
+                  )}
+
               </div>
-              <hr style={{ borderTop: '1px solid gray', marginTop: '2rem' }} />
             </div>
           ))
         )}
