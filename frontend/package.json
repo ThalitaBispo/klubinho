@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "axios": "^1.6.1",
+    "axios": "^1.6.7",
     "hyphenation.pt": "^0.2.1",
     "hypher": "^0.2.5",
     "js-cookie": "^3.0.5",
