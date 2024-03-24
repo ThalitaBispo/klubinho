@@ -1,12 +1,18 @@
 import { Link } from "react-router-dom";
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from "axios";
 import Cookies from 'js-cookie';
 import styles from './Reunion.module.css';
 
+interface Reunion {
+    id: number;
+    titulo: string;
+    descricao: string;
+}
+
 export function Reunion() {
 
-    const [reuniao, setReuniao] = useState([]);
+    const [reuniao, setReuniao] = useState<Reunion[]>([]);
     const [loading, setLoading] = useState(true);
     const club_id = Cookies.get('club_id');
 
@@ -22,13 +28,13 @@ export function Reunion() {
         }
 
         Reuniao();
-    }, []);
+    }, [club_id]);
 
     return(
         <>
             <div className="container">
                 <Link className="nav-link" to={"/createreunion"}>
-                    <button className="btn" style={{ backgroundColor: 'var(--purple)', color: "white" }}>
+                    <button>
                         Criar Reunião
                     </button>
                 </Link>
@@ -41,9 +47,9 @@ export function Reunion() {
 
                 {reuniao.map((reunioes) => (
 
-                    <ul className={`list-group-flush mt-4 ${styles.hoverEffect}`} key={reunioes.id}>
+                    <ul className={`list-group-flush mt-4 ${styles.customReunion}`} key={reunioes.id}>
                         <Link to={`/editreunion/${reunioes.id}`} className="nav-link d-flex flex-row mt-4 mb-4">
-                            <li className="list-group-item mt-4 mb-4">
+                            <li className="list-group-item">
                                 <div className='d-flex'>
                                     <div className="mt-1">
                                         <span className="d-block">{reunioes.titulo}</span>
