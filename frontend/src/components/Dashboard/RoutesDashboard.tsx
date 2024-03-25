@@ -17,6 +17,8 @@ import { Reunion } from '../Reunion/Reunion';
 import { CreateReunion } from '../Reunion/CreateReunion';
 import { EditReunion } from '../Reunion/EditReunion';
 
+import { Livros } from '../Livros/Livros';
+
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import Cookies from 'js-cookie';
@@ -73,6 +75,7 @@ export function RoutesDashboard() {
                                             <Route path="/editreunion/:id" element={<EditReunion />} />
                                             <Route path="/profile" element={<Profile />} />
                                             <Route path="/editprofile" element={<EditProfile />} />
+                                            <Route path="/livros" element={<Livros />} />
                                         </Routes>
                                     </main>
                                 
