@@ -1,0 +1,59 @@
+.calendar {
+    border-radius: 5px;
+  }
+  
+  .calendar h2 {
+    text-align: center;
+    margin-top: 0;
+    font-weight: bold;
+  }
+  
+  .weekdays {
+    display: flex;
+  }
+  
+  .day {
+    flex: 1;
+    text-align: center;
+    padding: 5px;
+  }
+  
+  .days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    font-weight: bold;
+  }
+  
+  .day, .emptyDay {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 2px;
+    background-color: #fff;
+  }
+  
+  .empty-day {
+    background-color: transparent;
+  }
+
+  .Mounth {
+    color: var(--purple);
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    text-transform: capitalize;
+  }
+
+  .arrows{
+    cursor: pointer;
+    font-size: 2rem;
+    user-select: none;
+  }
+
+  .calendar button{
+    margin-top: 1rem;
+    margin-left: 0;
+  }
+
+  .formCalendar {
+    margin-top: 2rem;
+  }

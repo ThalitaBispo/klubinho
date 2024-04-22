@@ -1,51 +1,84 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, ChangeEvent } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import logo from '../../avatar/logo.jpeg';
-
-import { FormEvent } from '../types';
-
-import styles from './Dashboard.module.css';
-
 import Hypher from 'hypher';
 import pt from 'hyphenation.pt';
 
+import { FormEvent } from '../types';
+import styles from './Dashboard.module.css';
+
+interface Post {
+  id?: number;
+  name?: string;
+  last_name?: string;
+  content?: string;
+  commentText?: string;
+  liked?: boolean;
+}
+
+interface LikeCount {
+  [postId: number]: number;
+}
+
 export function Dashboard() {
-  const [postagem, setPostagem] = useState({ content: '' });
-  const [status, setStatus] = useState('');
-  const [loadingPostagens, setLoadingPostagens] = useState(false);
+  const [postagem, setPostagem] = useState<Post>({ content: '' });
+  const [postagens, setPostagens] = useState<Post[]>([]);
+  const [loadingPostagens, setLoadingPostagens] = useState<boolean>(false);
 
-  const [text, setText] = useState('');
+  const [status, setStatus] = useState<string>('');
+  const [text, setText] = useState<string>('');
 
-  const [postagens, setPostagens] = useState([]);
+  const [showComments, setShowComments] = useState<{ [postId: number]: boolean }>({});
+  const [commentText, setCommentText] = useState<string>('');
+  const [comments, setComments] = useState({});
+
+  const [likedPosts, setLikedPosts] = useState<{ post_id: number; liked: boolean }[]>([]);
+  const [likesCount, setLikesCount] = useState<LikeCount>({});
 
   const user_id = Cookies.get('user_id');
   const club_id = Cookies.get('club_id');
 
-  //get
-  const fetchPostagens = async () => {
-    try {
-      const response = await axios.get(`http://127.0.0.1:8000/api/post/getAllPostByClub/${club_id}`);
-      setPostagens(response.data);
-      setLoadingPostagens(false);
-    } catch (error) {
-      console.error(error);
-    }
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
   };
 
   useEffect(() => {
     fetchPostagens();
   }, []);
 
-  //create
+  const fetchPostagens = async () => {
+    try {
+      const response = await axios.get(`http://127.0.0.1:8000/api/post/getAllPostByClub/${club_id}`);
+      setPostagens(response.data);
+      setLoadingPostagens(false);
+
+      const likedPostsData = response.data.map((post) => ({ post_id: post.id, liked: post.liked }));
+      setLikedPosts(likedPostsData);
+
+      // Buscar os comentários para cada postagem
+      const postIdArray = response.data.map((post) => post.id);
+      const commentsArray = await Promise.all(postIdArray.map((postId) => fetchComments(postId)));
+      
+      // Associar os comentários às postagens
+      const commentsObject = {};
+      postIdArray.forEach((postId, index) => {
+        commentsObject[postId] = commentsArray[index];
+      });
+      setComments(commentsObject);
+
+      setLoadingPostagens(false);
+    } catch (error) {
+      console.error(error);
+    }
+
+   //countLikes();
+  };
+
   async function gravar(e: FormEvent) {
     e.preventDefault();
-
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
 
     try {
       await axios.post(
@@ -64,62 +97,117 @@ export function Dashboard() {
 
       fetchPostagens();
     } catch (error) {
-      console.error(error);
       setStatus(`Falha: ${error}`);
       alert(`Falha: ${error}`);
     }
   }
 
-  //curtidas:
-  const [countLike, setCountLike] = useState(0);
-  const [likedPosts, setLikedPosts] = useState([]);
+  //curtidas
+  const handleLike = async (postId: number) => {
+    try {
+      const index = likedPosts.findIndex((post) => post.post_id === postId);
+      let liked = false;
 
-  const countLikes = (postId) => {
-    if (!likedPosts.includes(postId)) {
-      setLikedPosts([...likedPosts, postId]);
-      setCountLike(countLike + 1);
-    } else {
-      const updatedLikedPosts = likedPosts.filter((id) => id !== postId);
-      setLikedPosts(updatedLikedPosts);
-      setCountLike(countLike - 1);
+      if (index !== -1) {
+        liked = !likedPosts[index].liked;
+        likedPosts[index].liked = liked;
+        setLikedPosts([...likedPosts]);
+      }
+
+      await axios.post(
+        `http://127.0.0.1:8000/api/like/create/${postId}`,
+        {
+          user_id: user_id,
+          post_id: postId,
+          liked: liked,
+        },
+        config
+      );
+    } catch (error) {
+      console.error(postId);
+      console.error(error);
+    }
+  };
+
+  // Adicione uma função para contar curtidas
+  const countLikes = async () => {
+    try {
+      const likesCounts = await Promise.all(postagens.map(async (post) => {
+        const response = await axios.get(`http://127.0.0.1:8000/api/like/countLikes/${post.id}`);
+        return { postId: post.id, likes: response.data };
+      }));
+
+      const likesCountObject = {};
+      likesCounts.forEach((likesCount) => {
+        likesCountObject[likesCount.postId] = likesCount.likes;
+      });
+      setLikesCount(likesCountObject);
+    } catch (error) {
+      console.error(error);
     }
   };
 
   //comentarios
-  // Adicione um estado para controlar a visibilidade dos comentários e o texto do comentário
-  const [showComments, setShowComments] = useState(false);
-  const [commentText, setCommentText] = useState('');
+  const gravarComment = async (e: FormEvent, postId: number) => {
+    e.preventDefault();
+    const post = postagens.find(post => post.id === postId);
+    if (!post) return;
 
-  // Função para alternar a visibilidade dos comentários
-  const toggleComments = () => {
-    setShowComments(!showComments);
-  };
-
-  // Função para lidar com a submissão de um novo comentário
-  const submitComment = async (postId) => {
     try {
       await axios.post(
         'http://127.0.0.1:8000/api/comment/create',
         {
-          post_id: postId,
           user_id: user_id,
-          content: commentText,
+          post_id: postId,
+          content: post.commentText, // Usar o texto do comentário correspondente à postagem
         },
         config
       );
 
-      // Lógica para recarregar os comentários após a submissão
-      fetchPostagens();
-      setCommentText('');
+      // Lógica para atualizar os comentários...
+      const updatedComments = await fetchComments(postId);
+
+      setComments(prevComments => ({
+        ...prevComments,
+        [postId]: updatedComments,
+      }));
+
+      // Limpar o texto do comentário após o envio
+      handleCommentChange(postId, '');
     } catch (error) {
+      setStatus(`Falha ao adicionar comentário: ${error}`);
       console.error(error);
-      setStatus(`Falha: ${error}`);
-      alert(`Falha: ${error}`);
     }
   };
 
-  //função para quebrar linha
-  const quebrarLinhas = (texto: string, limite) => {
+  const handleCommentChange = (postId?: number, value?: string) => {
+    setPostagens(postagens.map(post => {
+      if (post.id === postId) {
+        return { ...post, commentText: value };
+      }
+      return post;
+    }));
+  };
+
+  const fetchComments = async (postId?: number) => {
+    try {
+      const response = await axios.get(`http://127.0.0.1:8000/api/comment/getAllCommentsByPost/${postId}`);
+      return response.data;
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
+  };
+
+  const toggleComments = (postId?: number) => {
+    setShowComments((prevState) => ({
+      ...prevState,
+      [postId]: !prevState[postId],
+    }));
+  };
+
+  //textarea
+  const quebrarLinhas = (texto: string, limite: number) => {
     const h = new Hypher(pt);
 
     const palavras = texto.split(/\s+/);
@@ -135,22 +223,27 @@ export function Dashboard() {
       }
     });
 
-    // Adiciona a última linha
     linhas.push(linhaAtual.trim());
 
-    // Adiciona lógica de hyphenation
     const linhasHyphenated = linhas.map((linha) => h.hyphenate(linha).join('\u00AD'));
 
     return linhasHyphenated;
   };
 
-  // Adicionei a função handleInputChange
-  const handleInputChange = (e: FormEvent) => {
-    setText(e.target.value);
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    // Verificar se o target é um HTMLTextAreaElement
+  if (e.target instanceof HTMLTextAreaElement) {
+    // Atualizar apenas o estado correspondente ao textarea em que está sendo digitado
+    if (e.target.name === 'content') {
+      setText(e.target.value);
+    } else if (e.target.name === 'comment') {
+      setCommentText(e.target.value);
+    }
     autoExpand(e.target);
+  }
   };
 
-  const autoExpand = (textarea) => {
+  const autoExpand = (textarea: HTMLTextAreaElement) => {
     textarea.style.height = 'auto';
     textarea.style.height = textarea.scrollHeight + 'px';
   };
@@ -160,7 +253,6 @@ export function Dashboard() {
       <div className="container">
         <form onSubmit={gravar}>
           <div className="row bg-light p-3">
-            {/* Adicionei o evento onChange na textarea */}
             <textarea
               className={`${styles.textoArea}`}
               placeholder="No que você está pensando?"
@@ -227,81 +319,70 @@ export function Dashboard() {
                     color: '#5b6b77',
                   }}
                 >
-                    <span
-                      className="material-symbols-outlined"
-                      onClick={() => countLikes(post.id)}
-                      style={{ cursor: 'pointer', color: likedPosts.includes(post.id) ? 'red' : 'inherit' }}
-                    >
-                      favorite
-                    </span>
-                    <span style={{ marginLeft: '0.25rem' }}>{countLike}</span>
-                
+                  <span
+                    className="material-symbols-outlined"
+                    onClick={() => handleLike(post.id)}
+                    style={{
+                      cursor: 'pointer',
+                      color: likedPosts.find((item) => item.post_id === post.id && item.liked) ? 'red' : 'inherit',
+                    }}
+                  >
+                    favorite
+                  </span>
+                  <span style={{ marginLeft: '0.25rem' }}>{likesCount[post.id]}</span>
 
-                    <span
-                      className="material-symbols-outlined"
-                      onClick={toggleComments}
-                      style={{ cursor: 'pointer', marginLeft: '1rem'}}
-                    >
-                      forum
-                    </span>
+                  <span
+                    className="material-symbols-outlined"
+                    onClick={() => toggleComments(post.id)}
+                    style={{ cursor: 'pointer', marginLeft: '1rem' }}
+                  >
+                    forum
+                  </span>
+                </div>
 
-                  </div>
+                <div style={{ marginTop: '1rem' }}>
+                  {showComments[post.id] && (
+                    <>
+                      {comments[post.id] && comments[post.id].length > 0 ? (
+                        comments[post.id].map((comment) => (
+                          <div key={comment.id} className={`d-flex ${styles.customComments}`}>
+                            <img
+                              src={logo}
+                              alt="Imagem do perfil"
+                              className="img-fluid rounded-circle align-self-start"
+                              style={{ maxWidth: '30px', marginRight: '1rem' }}
+                            />
+                            <p className="mt-1">{comment.content}</p>
+                          </div>
+                        ))
+                      ) : (
+                        <p>Seja o(a) primeiro(a) a comentar esta postagem</p>
+                      )}
 
-                  {showComments && (
-                    <div style={{ marginTop: '1rem' }}>
-                      {/* Comentário estático */}
-                      <div className={`d-flex ${styles.customComments}`}>
-                        <img
-                          src={logo}
-                          alt="Imagem do perfil"
-                          className="img-fluid rounded-circle align-self-start"
-                          style={{ maxWidth: '30px', marginRight: '1rem' }}
-                        />
-                        <p className='mt-1'>Comentário Estático</p>
-                      </div>
-
-                      <div className={`d-flex ${styles.customComments}`}>
-                        <img
-                          src={logo}
-                          alt="Imagem do perfil"
-                          className="img-fluid rounded-circle align-self-start"
-                          style={{ maxWidth: '30px', marginRight: '1rem' }}
-                        />
-                        <p className='mt-1'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent pulvinar ligula eget tellus molestie laoreet.</p>
-                      </div>
-
-                      <div className={`d-flex ${styles.customComments}`}>
-                        <img
-                          src={logo}
-                          alt="Imagem do perfil"
-                          className="img-fluid rounded-circle align-self-start"
-                          style={{ maxWidth: '30px', marginRight: '1rem' }}
-                        />
-                        <p className='mt-1'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent pulvinar ligula eget tellus molestie laoreet. Etiam egestas magna non diam aliquet varius. Phasellus a lacus auctor, vulputate eros efficitur, bibendum magna. Suspendisse vestibulum, velit.</p>
-                      </div>
-
-                      {/* Campo para o usuário fazer um comentário */}
-                      <div className="d-flex" style={{ padding: '1rem' }}>
-                        <img
-                          src={logo}
-                          alt="Imagem do perfil"
-                          className="img-fluid rounded-circle align-self-start"
-                          style={{ maxWidth: '30px', marginRight: '1rem' }}
-                        />
-                        <textarea
-                          className="form-control"
-                          rows={1}
-                          maxLength={255}
-                          style={{ resize: 'none' }}
-                          placeholder="Faça um comentário..."
-                          value={commentText}
-                          onChange={(e) => setCommentText(e.target.value)}
-                        />
-                        <button onClick={() => submitComment(post.id)}>Comentar</button>
-                      </div>
-                    </div>
+                      <form onSubmit={(e) => gravarComment(e, post.id)}>
+                        <div className="d-flex" style={{ padding: '1rem' }}>
+                          <img
+                            src={logo}
+                            alt="Imagem do perfil"
+                            className="img-fluid rounded-circle align-self-start"
+                            style={{ maxWidth: '30px', marginRight: '1rem' }}
+                          />
+                          <textarea
+                            className="form-control"
+                            rows={1}
+                            maxLength={255}
+                            name="comment"
+                            style={{ resize: 'none' }}
+                            placeholder="Faça um comentário..."
+                            value={post.commentText || ''} // Usar o texto do comentário da postagem
+                            onChange={(e) => handleCommentChange(post.id, e.target.value)} // Atualizar o texto do comentário da postagem correta
+                          />
+                          <button type="submit">Comentar</button>
+                        </div>
+                      </form>
+                    </>
                   )}
-
+                </div>
               </div>
             </div>
           ))

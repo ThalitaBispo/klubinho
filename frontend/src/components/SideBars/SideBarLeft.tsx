@@ -68,6 +68,13 @@ export function SideBarRight() {
                                     <span className='p-2'>Reunião</span>
                                 </Link>
                             </li>
+
+                            <li className={`nav-item ${styles.menuItem}`}>
+                                <Link className='nav-link' to="/calendario">
+                                    <span className="material-symbols-outlined">calendar_month</span>
+                                    <span className='p-2'>Calendário</span>
+                                </Link>
+                            </li>
                             
                             <li className={`nav-item ${styles.menuItem}`}>
                                 <Link className='nav-link' to="/profile">
