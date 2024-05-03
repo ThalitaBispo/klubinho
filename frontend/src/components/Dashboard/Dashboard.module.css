@@ -50,6 +50,11 @@
   margin-bottom: 1rem;
 }
 
+.commentName {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
 @media screen and (max-width: 767px) {
   .textoArea {
     background-color: #f8f9fa;

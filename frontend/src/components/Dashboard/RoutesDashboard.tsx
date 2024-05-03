@@ -19,10 +19,12 @@ import { EditReunion } from '../Reunion/EditReunion';
 
 import { Livros } from '../Livros/Livros';
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from "axios";
 import Cookies from 'js-cookie';
 import { Calendario } from '../Agenda/Calendario';
+import { CreateCalendar } from '../Agenda/CreateCalendar';
+import { EditCalendar } from '../Agenda/EditCalendar';
 
 export function RoutesDashboard() {
 
@@ -78,6 +80,8 @@ export function RoutesDashboard() {
                                             <Route path="/editprofile" element={<EditProfile />} />
                                             <Route path="/livros" element={<Livros />} />
                                             <Route path="/calendario" element={<Calendario />} />
+                                            <Route path='/createcalendario' element={<CreateCalendar />} />
+                                            <Route path='/editcalendario' element={<EditCalendar />}/>
                                         </Routes>
                                     </main>
                                 

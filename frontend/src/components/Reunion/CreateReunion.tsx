@@ -26,13 +26,13 @@ interface Reunion {
 export function CreateReunion() {
     //salvar
     const [reunion, setReunion] = useState<Reunion>({});
-    const [status, setStatus] = useState<string>('');
+    const [, setStatus] = useState<string>('');
     
     const user_id = Cookies.get('user_id');
     const club_id = Cookies.get('club_id');
 
     const [integrantes, setIntegrantes] = useState<Integrante[]>([]);
-    const [loading, setLoading] = useState<boolean>(true);
+    const [, setLoading] = useState<boolean>(true);
 
     const [selectedOptions, setSelectedOptions] = useState<OptionType[]>([]);
   

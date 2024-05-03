@@ -12,7 +12,7 @@ export function RoutesLogin() {
     return(
         <>
             <div className={styles.container}>
-                <span className={styles.textLogo}>KLUBINHO</span>
+                <span className={styles.textLogo}>KLUBINHOS</span>
 
                 <div className={styles.login}>
                     <BrowserRouter>

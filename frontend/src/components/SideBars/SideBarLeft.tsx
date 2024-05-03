@@ -46,7 +46,7 @@ export function SideBarRight() {
                     
                     <div className="collapse navbar-collapse" id="navbarNav">
                         <ul className={`navbar-nav flex-column ${styles.menu}`}>
-                            <span  className={styles.logo}>KLUBINHO</span>
+                            <span  className={styles.logo}>KLUBINHOS</span>
 
                             <li className={`nav-item ${styles.menuItem}`}>
                                 <Link className='nav-link' to="/">

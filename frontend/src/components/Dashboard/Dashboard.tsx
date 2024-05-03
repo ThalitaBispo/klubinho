@@ -340,7 +340,7 @@ export function Dashboard() {
                   </span>
                 </div>
 
-                <div style={{ marginTop: '1rem' }}>
+                <div className="mt-4">
                   {showComments[post.id] && (
                     <>
                       {comments[post.id] && comments[post.id].length > 0 ? (
@@ -352,7 +352,10 @@ export function Dashboard() {
                               className="img-fluid rounded-circle align-self-start"
                               style={{ maxWidth: '30px', marginRight: '1rem' }}
                             />
-                            <p className="mt-1">{comment.content}</p>
+                            <div>
+                              <p className={` ${styles.commentName} `}>{comment.name} {comment.last_name}</p>
+                              <p className="mt-1">{comment.content}</p>
+                            </div>
                           </div>
                         ))
                       ) : (

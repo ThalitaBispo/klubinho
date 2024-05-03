@@ -8,12 +8,13 @@ interface Reunion {
     id: number;
     titulo: string;
     descricao: string;
+    data_reuniao: string;
 }
 
 export function Reunion() {
 
     const [reuniao, setReuniao] = useState<Reunion[]>([]);
-    const [loading, setLoading] = useState(true);
+    const [, setLoading] = useState(true);
     const club_id = Cookies.get('club_id');
 
     useEffect(() => {
@@ -50,8 +51,8 @@ export function Reunion() {
                     <ul className={`list-group-flush mt-4 ${styles.customReunion}`} key={reunioes.id}>
                         <Link to={`/editreunion/${reunioes.id}`} className="nav-link d-flex flex-row mt-4 mb-4">
                             <li className="list-group-item">
-                                <div className='d-flex'>
-                                    <div className="mt-1">
+                                <div className='row d-flex'>
+                                    <div className="col-md-8 mt-1">
                                         <span className="d-block">{reunioes.titulo}</span>
                                         <span style={{ color: '#5b6b77' }}>{reunioes.descricao}</span>
                                     </div>
