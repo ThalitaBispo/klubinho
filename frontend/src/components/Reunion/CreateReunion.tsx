@@ -119,8 +119,15 @@ export function CreateReunion() {
             <form className="mt-4" onSubmit={gravar}>
                 <div className="form-group mt-4">
                     <label>Título</label>
-                    <input type="text" className="form-control" name="titulo" placeholder="Título" value={reunion.titulo || ''}
-                            onChange={(e) => setReunion({ ...reunion, titulo: e.target.value })} required/>
+                    <input 
+                      type="text" 
+                      className="form-control" 
+                      name="titulo" 
+                      placeholder="Título" 
+                      value={reunion.titulo || ''}
+                      onChange={(e) => setReunion({ ...reunion, titulo: e.target.value })}
+                      maxLength={60} 
+                      required/>
                 </div>
                 
                 <div className="form-group mt-4">
@@ -178,6 +185,7 @@ export function CreateReunion() {
                           placeholder="Data" 
                           value={reunion.data_reuniao || ''}
                           onChange={(e) => setReunion({ ...reunion, data_reuniao: e.target.value })}
+                          required
                         />
                     </div>
                     <div className="form-group col-md-6">
@@ -205,6 +213,7 @@ export function CreateReunion() {
                           placeholder="Livro" 
                           value={reunion.livro || ''}
                           onChange={(e) => setReunion({ ...reunion, livro: e.target.value })}
+                          maxLength={60}
                         />
                     </div>
                     <div className="form-group col-md-6">
@@ -216,6 +225,7 @@ export function CreateReunion() {
                           placeholder="autor" 
                           value={reunion.autor || ''}
                           onChange={(e) => setReunion({ ...reunion, autor: e.target.value })}
+                          maxLength={60}
                         />
                     </div>
                 </div>

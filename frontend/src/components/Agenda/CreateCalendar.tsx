@@ -67,19 +67,19 @@ export function CreateCalendar() {
                         <label>Título</label>
                         <input type="text" className="form-control" name='titulo' placeholder="Título"
                         value={calendar.titulo || ''}
-                        onChange={(e) => setCalendar({ ...calendar, titulo: e.target.value })} />
+                        onChange={(e) => setCalendar({ ...calendar, titulo: e.target.value })} maxLength={60} required/>
                     </div>
                     <div className="form-group mt-4">
                         <label>Descrição</label>
                         <input type="text" className="form-control" name='descricao' placeholder="Descrição" 
                         value={calendar.descricao || ''}
-                        onChange={(e) => setCalendar({ ...calendar, descricao: e.target.value })}/>
+                        onChange={(e) => setCalendar({ ...calendar, descricao: e.target.value })} required/>
                     </div>
                     <div className="form-group mt-4">
                         <label>Data</label>
-                        <input type="date" className="form-control" name='data_evento' placeholder="Descrição" 
+                        <input type="date" className="form-control" name='data_evento' 
                         value={calendar.data_evento || ''}
-                        onChange={(e) => setCalendar({ ...calendar, data_evento: e.target.value })}/>
+                        onChange={(e) => setCalendar({ ...calendar, data_evento: e.target.value })} required/>
                     </div>
                     <div className="form-group mt-4">
                         <div className="row">
@@ -87,13 +87,13 @@ export function CreateCalendar() {
                                 <label>Começa</label>
                                 <input type="time" name='hora_evento' className="form-control" 
                                 value={calendar.hora_evento || ''}
-                                onChange={(e) => setCalendar({ ...calendar, hora_evento: e.target.value })}/>
+                                onChange={(e) => setCalendar({ ...calendar, hora_evento: e.target.value })} required/>
                             </div>
                             <div className="col">
                                 <label>Termina</label>
                                 <input type="time" name='fim_evento' className="form-control" 
                                 value={calendar.fim_evento || ''}
-                                onChange={(e) => setCalendar({ ...calendar, fim_evento: e.target.value })}/>
+                                onChange={(e) => setCalendar({ ...calendar, fim_evento: e.target.value })} required/>
                             </div>
                         </div>
                     </div>

@@ -103,7 +103,7 @@ export function Dashboard() {
   }
 
   //curtidas
-  const handleLike = async (postId: number) => {
+  /*const handleLike = async (postId: number) => {
     try {
       const index = likedPosts.findIndex((post) => post.post_id === postId);
       let liked = false;
@@ -127,10 +127,10 @@ export function Dashboard() {
       console.error(postId);
       console.error(error);
     }
-  };
+  };*/
 
   // Adicione uma função para contar curtidas
-  const countLikes = async () => {
+  /*const countLikes = async () => {
     try {
       const likesCounts = await Promise.all(postagens.map(async (post) => {
         const response = await axios.get(`http://127.0.0.1:8000/api/like/countLikes/${post.id}`);
@@ -145,7 +145,7 @@ export function Dashboard() {
     } catch (error) {
       console.error(error);
     }
-  };
+  };*/
 
   //comentarios
   const gravarComment = async (e: FormEvent, postId: number) => {
@@ -319,7 +319,7 @@ export function Dashboard() {
                     color: '#5b6b77',
                   }}
                 >
-                  <span
+                  {/*<span
                     className="material-symbols-outlined"
                     onClick={() => handleLike(post.id)}
                     style={{
@@ -329,7 +329,7 @@ export function Dashboard() {
                   >
                     favorite
                   </span>
-                  <span style={{ marginLeft: '0.25rem' }}>{likesCount[post.id]}</span>
+                  <span style={{ marginLeft: '0.25rem' }}>{likesCount[post.id]}</span>*/}
 
                   <span
                     className="material-symbols-outlined"

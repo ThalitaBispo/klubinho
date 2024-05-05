@@ -20,7 +20,7 @@ export function EditReunion() {
     // Get
     const { id } = useParams();
     const [editReuniao, setEditReuniao] = useState<Reunion>({});
-    const [status, setStatus] = useState('');
+    const [, setStatus] = useState('');
 
     useEffect(() => {
         async function EditReuniao() {
@@ -36,10 +36,10 @@ export function EditReunion() {
 
     //update
     async function gravar(e: FormEvent) {
-        e.preventDefault(); // cancela o submit
+        e.preventDefault();
         console.log("Dados a serem enviados:", { ...editReuniao });
         try {
-            await axios.post(`http://127.0.0.1:8000/api/reuniao/edit/${id}`, {
+            await axios.post(`http://127.0.0.1:8000/api/reuniao/edt/${id}`, {
                 ...editReuniao,
             });
             setStatus("Reunião Atualizada");
@@ -61,7 +61,8 @@ export function EditReunion() {
                         className="form-control" 
                         placeholder="Título" 
                         value={editReuniao.titulo || ''} 
-                        onChange={(e) => setEditReuniao({ ...editReuniao, titulo: e.target.value })} 
+                        onChange={(e) => setEditReuniao({ ...editReuniao, titulo: e.target.value })}
+                        maxLength={60}
                         required 
                     />
                 </div>
@@ -128,6 +129,7 @@ export function EditReunion() {
                             value={editReuniao.livro || ''} 
                             onChange={(e) => setEditReuniao({ ...editReuniao, livro: e.target.value })}
                             placeholder="Livro" 
+                            maxLength={60}
                         />
                     </div>
                     <div className="form-group col-md-6">
@@ -138,6 +140,7 @@ export function EditReunion() {
                             value={editReuniao.autor|| ''} 
                             onChange={(e) => setEditReuniao({ ...editReuniao, autor: e.target.value })}
                             placeholder="Autor" 
+                            maxLength={60}
                         />
                     </div>
                 </div>
