@@ -42,8 +42,9 @@ export function EditReunion() {
             await axios.post(`http://127.0.0.1:8000/api/reuniao/edt/${id}`, {
                 ...editReuniao,
             });
-            setStatus("Reunião Atualizada");
-            alert("Reunião atualizada");
+            //setStatus("Reunião Atualizada");
+            //alert("Reunião atualizada");
+            window.location.reload(); // Recarrega a página após a atualização
         } catch (erro) {
             setStatus(`Falha: ${erro}`);
         }

@@ -1,49 +1,13 @@
-/*.container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;  
-} */
 
-.search input {
-    background-color: var(--gray-80);
-    width: 24rem;
-    border-radius: 20px;
-    padding: 0.75rem 0.75rem 0.75rem 2.5rem;
-    border: none;
-
-    margin-top: 1rem;
-
+.customCalendario {
+    border: 1px solid #e2e2e2;
+    border-radius: 5px;
+    margin: 2px;
+    text-align: center;
+    cursor: pointer;
 }
 
-.search span {
-    position: absolute;
-    font-size: 1rem;
-    margin-top: 1.5rem;
-    margin-left: 0.5rem;
-    color: var(--gray-100);
-}
-
-.blockSideBarLeft {
-    background-color: var(--gray-80);
-    width: 24rem;
-    border-radius: 20px;
-    padding: 0.75rem 0.75rem 0.75rem 2.5rem;
-
-    font-size: 1rem;
-    margin-top: 2rem;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.blockSideBarLeft span:first-child {
-    border-bottom: 1px solid var(--gray-100);
-    padding-bottom: 1rem;
-}
-
-.blockSideBarLeft span:last-child {
-    padding-top: 1rem;
-    color: var(--purple);
+.customCalendario:hover {
+    background-color: var(--purple);
+    color: white;
 }
