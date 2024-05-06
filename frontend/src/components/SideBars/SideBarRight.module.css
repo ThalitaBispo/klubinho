@@ -11,3 +11,7 @@
     background-color: var(--purple);
     color: white;
 }
+
+.fontPurple {
+    color: var(--purple);
+}

@@ -72,7 +72,7 @@ export function SideBarLeft() {
         <>
             <div className="container col-md-10 mt-4">
                 <div className="card bg-light" style={{ borderRadius: '20px', border: 'none', padding: '20px' }}>
-                    <div className="card-body" style={{ fontSize: '0.9rem' }}>
+                    <div className="card-body bg-light" style={{ fontSize: '0.9rem' }}>
                         <div className="d-flex justify-content-between align-items-center mb-3">
                             <b style={{ fontSize: '1.25rem' }}>{capitalizedMonth}</b>
                             <div>
@@ -82,7 +82,73 @@ export function SideBarLeft() {
                         </div>
                         {renderCalendar()}
                     </div>
-                    <div className="card-footer text-muted">
+
+                    <div className="row">
+                        <span className='mb-2'>Calendário</span>
+
+                        <div className="col-md-2">
+                            <div className="card-body text-center" style={{padding: '0.5rem'}}>
+                                <h5 className="card-title" style={{ fontSize: "1rem" }}>SEG</h5>
+                                <b className="card-text" style={{ fontSize: "1.2rem" }}>6</b>
+                            </div>
+                        </div>
+                        <div className="col-md-10">
+                            <div className="bg-white p-1">
+                                <div className="card-body" style={{borderLeft: '2px solid var(--purple)', padding: '0.5rem', margin: '0 0 0 0.5rem'}}>
+                                    <h5 className="card-title text-dark mb-0" style={{ fontSize: "1rem" }}>Reunião do livro</h5>
+                                    <p className="card-text text-muted mt-0" style={{ fontSize: "0.8rem" }}>09h00 - 10h00</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="col-md-2">
+                            <div className="card-body text-center" style={{padding: '0.5rem'}}>
+                                <h5 className="card-title" style={{ fontSize: "1rem" }}>SEG</h5>
+                                <b className="card-text" style={{ fontSize: "1.2rem" }}>6</b>
+                            </div>
+                        </div>
+                        <div className="col-md-10">
+                            <div className="bg-white p-1">
+                                <div className="card-body" style={{borderLeft: '2px solid var(--purple)', padding: '0.5rem', margin: '0 0 0 0.5rem'}}>
+                                    <h5 className="card-title text-dark mb-0" style={{ fontSize: "1rem" }}>Reunião do livro</h5>
+                                    <p className="card-text text-muted mt-0" style={{ fontSize: "0.8rem" }}>09h00 - 10h00</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="col-md-2">
+                            <div className="card-body text-center" style={{padding: '0.5rem'}}>
+                                <h5 className="card-title" style={{ fontSize: "1rem" }}>TER</h5>
+                                <b className="card-text" style={{ fontSize: "1.2rem" }}>7</b>
+                            </div>
+                        </div>
+                        <div className="col-md-10">
+                            <div className="bg-white p-1">
+                                <div className="card-body" style={{borderLeft: '2px solid var(--purple)', padding: '0.5rem', margin: '0 0 0 0.5rem'}}>
+                                    <h5 className="card-title text-dark mb-0" style={{ fontSize: "1rem" }}>Reunião do livro</h5>
+                                    <p className="card-text text-muted mt-0" style={{ fontSize: "0.8rem" }}>09h00 - 10h00</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="col-md-2">
+                            <div className="card-body text-center" style={{padding: '0.5rem'}}>
+                                <h5 className="card-title" style={{ fontSize: "1rem" }}>QUA</h5>
+                                <b className="card-text" style={{ fontSize: "1.2rem" }}>8</b>
+                            </div>
+                        </div>
+                        <div className="col-md-10">
+                            <div className="bg-white p-1">
+                                <div className="card-body" style={{borderLeft: '2px solid var(--purple)', padding: '0.5rem', margin: '0 0 0 0.5rem'}}>
+                                    <h5 className="card-title text-dark mb-0" style={{ fontSize: "1rem" }}>Reunião do livro</h5>
+                                    <p className="card-text text-muted mt-0" style={{ fontSize: "0.8rem" }}>09h00 - 10h00</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div className="card-footer text-muted bg-light">
                         <a href="#" className={`nav-link ${styles.fontPurple}`}>Acessar agenda</a>
                     </div>
                 </div>
