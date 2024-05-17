@@ -15,3 +15,13 @@
 .fontPurple {
     color: var(--purple);
 }
+
+.buttonCalendar {
+    border: 1px solid var(--purple);
+    color: var(--purple);
+}
+
+.buttonCalendar:hover {
+    background-color: var(--purple);
+    color: white;
+}

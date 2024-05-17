@@ -13,7 +13,7 @@ export function LoginForm() {
         phone_number: '', // Valor padrão para 'phone_number'
         password: '', // Valor padrão para 'password'
     });
-    const [status, setStatus] = useState('');
+    const [, setStatus] = useState('');
     const navigate = useNavigate();
 
     async function gravar(e) {

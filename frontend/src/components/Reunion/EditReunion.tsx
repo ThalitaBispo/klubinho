@@ -1,12 +1,9 @@
-import { Link, useParams } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import axios from "axios";
-
-import './Reunion.module.css';
-
 import { FormEvent } from '../types';
 
-  interface Reunion {
+interface Reunion {
     titulo?: string;
     descricao?: string;
     link?: string;
@@ -14,16 +11,17 @@ import { FormEvent } from '../types';
     hora_reuniao?: string;
     livro?: string;
     autor?: string;
-  }
+}
 
 export function EditReunion() {
-    // Get
+    const navigate = useNavigate();
+    const location = useLocation();
     const { id } = useParams();
     const [editReuniao, setEditReuniao] = useState<Reunion>({});
     const [, setStatus] = useState('');
 
     useEffect(() => {
-        async function EditReuniao() {
+        async function fetchReuniao() {
             try {
                 const response = await axios.get(`http://127.0.0.1:8000/api/reuniao/getReuniao/${id}`);
                 setEditReuniao(response.data.reuniao);
@@ -31,10 +29,9 @@ export function EditReunion() {
                 console.error(error);
             }
         }
-        EditReuniao();
+        fetchReuniao();
     }, [id]);
 
-    //update
     async function gravar(e: FormEvent) {
         e.preventDefault();
         console.log("Dados a serem enviados:", { ...editReuniao });
@@ -42,11 +39,9 @@ export function EditReunion() {
             await axios.post(`http://127.0.0.1:8000/api/reuniao/edt/${id}`, {
                 ...editReuniao,
             });
-            //setStatus("Reunião Atualizada");
-            //alert("Reunião atualizada");
-            window.location.reload(); // Recarrega a página após a atualização
-        } catch (erro) {
-            setStatus(`Falha: ${erro}`);
+            navigate(-1); // Navega de volta para a página anterior
+        } catch (error) {
+            setStatus(`Falha: ${error}`);
         }
     }
 
@@ -150,12 +145,9 @@ export function EditReunion() {
                     <button type="submit" className="mt-4"> 
                         Salvar 
                     </button>
-
-                    <Link to={"/reunion"}>
-                        <button type="button" className="mt-4">
-                            Voltar
-                        </button>
-                    </Link>
+                    <button type="button" onClick={() => navigate(-1)} className="mt-4">
+                        Voltar
+                    </button>
                 </div>
             </form>
         </div>

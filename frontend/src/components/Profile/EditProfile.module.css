@@ -15,19 +15,32 @@
     padding: 0.5rem;
 }
 
-.cameraIconProfile {
-    position: relative;
-    text-align: center;
-    top: -5.5rem;
-    left: -5.8rem;
-    color: var(--white);
-}
-
 .cameraIconProfile span {
+    visibility: hidden;
     cursor: pointer;
-    border: 1px solid;
-    border-radius: 100px;
-    color: var(--white);
+    color: transparent;
     background-color: dark;
     padding: 0.5rem;
+    transform: translate(-170%, -120%);
+}
+
+.cameraIconProfile img {
+    max-width: 100px;
+    margin-top: -7.125rem;
+    margin-left: 2rem;
+    cursor: pointer;
+    border: 2px solid var(--white);
+}
+
+.cameraIconProfile img:hover {
+    filter: brightness(0) opacity(1);
+}
+
+.cameraIconProfile img:hover + span {
+    visibility: visible;
+    cursor: pointer;
+    color: white;
+    background-color: dark;
+    padding: 0.5rem;
+    transform: translate(-170%, -120%);
 }

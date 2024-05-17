@@ -131,13 +131,9 @@ export function Profile() {
                     color: '#5b6b77',
                   }}
                 >
-                  <span className="material-symbols-outlined">favorite</span>
-                  <span style={{ marginLeft: '0.25rem' }}>12</span>
-
                   <span className="material-symbols-outlined" style={{ marginLeft: '2rem' }}>
                     forum
                   </span>
-                  <span style={{ marginLeft: '0.25rem' }}>20</span>
                 </div>
               </div>
               <hr style={{ borderTop: '1px solid gray', marginTop: '2rem' }} />

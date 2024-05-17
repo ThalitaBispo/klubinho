@@ -14,6 +14,7 @@ export function SideBarRight() {
         Cookies.remove('user_id');
         Cookies.remove('token');
         Cookies.remove('club_id');
+        Cookies.remove('role');
         // navigate('/');
       };
 

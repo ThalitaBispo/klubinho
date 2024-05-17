@@ -1,5 +1,6 @@
 import { useState, useEffect, ChangeEvent } from 'react';
 import axios from 'axios';
+import axiosRetry from 'axios-retry';
 import Cookies from 'js-cookie';
 import logo from '../../avatar/logo.jpeg';
 import Hypher from 'hypher';
@@ -17,27 +18,28 @@ interface Post {
   liked?: boolean;
 }
 
-interface LikeCount {
+/*interface LikeCount {
   [postId: number]: number;
-}
+}*/
 
 export function Dashboard() {
   const [postagem, setPostagem] = useState<Post>({ content: '' });
   const [postagens, setPostagens] = useState<Post[]>([]);
   const [loadingPostagens, setLoadingPostagens] = useState<boolean>(false);
 
-  const [status, setStatus] = useState<string>('');
+  const [, setStatus] = useState<string>('');
   const [text, setText] = useState<string>('');
 
   const [showComments, setShowComments] = useState<{ [postId: number]: boolean }>({});
-  const [commentText, setCommentText] = useState<string>('');
+  const [, setCommentText] = useState<string>('');
   const [comments, setComments] = useState({});
 
-  const [likedPosts, setLikedPosts] = useState<{ post_id: number; liked: boolean }[]>([]);
-  const [likesCount, setLikesCount] = useState<LikeCount>({});
+  const [, setLikedPosts] = useState<{ post_id: number; liked: boolean }[]>([]);
+  //const [likesCount, setLikesCount] = useState<LikeCount>({});
 
   const user_id = Cookies.get('user_id');
   const club_id = Cookies.get('club_id');
+  const role = Cookies.get('role');
 
   const config = {
     headers: {
@@ -48,6 +50,11 @@ export function Dashboard() {
   useEffect(() => {
     fetchPostagens();
   }, []);
+
+  axiosRetry(axios, {
+    retries: 3, // Número máximo de tentativas de reenvio
+    retryCondition: (error) => axiosRetry.isNetworkOrIdempotentRequestError(error) || error.response.status === 429, // Condição para reenviar a requisição
+  });
 
   const fetchPostagens = async () => {
     try {
@@ -96,6 +103,7 @@ export function Dashboard() {
       setText('');
 
       fetchPostagens();
+      setTimeout(fetchPostagens, 1000);
     } catch (error) {
       setStatus(`Falha: ${error}`);
       alert(`Falha: ${error}`);
