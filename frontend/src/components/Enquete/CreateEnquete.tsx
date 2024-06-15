@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 export function CreateEnquete() {
@@ -27,24 +27,24 @@ export function CreateEnquete() {
       <form className="mt-4" style={{ marginBottom: "3rem" }}>
         <div className="form-group mt-4">
           <label>Título</label>
-          <input type="text" className="form-control" placeholder="Título" value={"Livro da semana"}/>
+          <input type="text" className="form-control" placeholder="Título" maxLength={60} />
         </div>
 
         <div className="form-group mt-4 mb-4">
           <label>Descrição</label>
-          <input type="text" className="form-control" placeholder="Descrição" value={""}/>
+          <input type="text" className="form-control" placeholder="Descrição" maxLength={255}/>
         </div>
 
         <span style={{ fontSize: "1.25rem" }}>Opções da enquete</span>
 
         <div className="form-group mt-4">
           <label>Título</label>
-          <input type="text" className="form-control" placeholder="Título" value={""}/>
+          <input type="text" className="form-control" placeholder="Título" maxLength={60}/>
         </div>
 
         <div className="form-group mt-4">
           <label>Descrição</label>
-          <input type="text" className="form-control" placeholder="Descrição" value={""}/>
+          <input type="text" className="form-control" placeholder="Descrição" maxLength={255}/>
         </div>
 
         <div className={`col-md-4`} style={{ backgroundColor: 'var(--purple)', borderRadius: '5px', color: '#fff', cursor: 'pointer', marginTop: '1rem',
@@ -56,10 +56,10 @@ export function CreateEnquete() {
         {additionalInputs.map((input, index) => (
           <div key={input.id} className="form-group mt-4">
             <label htmlFor={`input${input.id}`}>Título</label>
-            <input type="text" className="form-control" id={`input${input.id}`} name={`input${input.id}`} placeholder="Título" value={""}/>
+            <input type="text" className="form-control" id={`input${input.id}`} name={`input${input.id}`} placeholder="Título" maxLength={60}/>
             
             <label htmlFor={`input${input.id + 1}`} className="form-group mt-4">Descrição</label>
-            <input type="text" className="form-control" id={`input${input.id + 1}`} name={`input${input.id + 1}`} placeholder="Descrição" value={""}/>
+            <input type="text" className="form-control" id={`input${input.id + 1}`} name={`input${input.id + 1}`} placeholder="Descrição" maxLength={255}/>
             
             <div className={`col-md-4`} style={{ backgroundColor: 'var(--purple)', borderRadius: '5px', color: '#fff', cursor: 'pointer', marginTop: '1rem',
                                                   padding: '0.25rem 1rem' }}>

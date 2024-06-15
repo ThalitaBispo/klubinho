@@ -53,6 +53,7 @@
 .commentName {
   font-weight: bold;
   font-size: 0.9rem;
+  margin-left: 1rem;
 }
 
 @media screen and (max-width: 767px) {

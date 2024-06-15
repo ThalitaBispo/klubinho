@@ -2,89 +2,110 @@ import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import Cookies from 'js-cookie';
 import logo from '../../avatar/logo.jpeg';
-import styles from './EditProfile.module.css';
+import styles from './Profile.module.css';
 import { Link } from 'react-router-dom';
 
 export function EditProfile() {
-    const [editProfile, setEditProfile] = useState([]);
+    const [editProfile, setEditProfile] = useState({});
     const [status, setStatus] = useState('');
-    const [selectedImagePreview, setSelectedImagePreview] = useState('');
+    const [selectedImagePreview, setSelectedImagePreview] = useState(logo);
+    const [bannerImagePreview, setBannerImagePreview] = useState('');
+    const [selectedImage, setSelectedImage] = useState(null);
     const user_id = Cookies.get('user_id');
 
     useEffect(() => {
         async function fetchEditProfile() {
             try {
                 const response = await axios.get(`http://localhost:8000/api/user/getUser/${user_id}`);
-                setEditProfile(response.data[0]);
+                const user = response.data[0];
+                setEditProfile(user);
+                setBannerImagePreview(user.banner ? `http://127.0.0.1:8000/api/user/getBanner/${user_id}` : '');
+                setSelectedImagePreview(user.imagem ? `http://127.0.0.1:8000/api/user/getImage/${user_id}` : logo);
             } catch (error) {
-                console.error(error);
+                console.error('Erro ao buscar dados do usuário:', error);
             }
         }
 
         fetchEditProfile();
-    }, []);
+    }, [user_id]);
 
-    async function gravar(e) {
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setSelectedImage(file);
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setSelectedImagePreview(reader.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    const handleBannerImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setBannerImagePreview(reader.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    const gravar = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(`http://127.0.0.1:8000/api/user/update/${user_id}`, editProfile);
+            await axios.post(`http://127.0.0.1:8000/api/user/update/${user_id}`, editProfile);
 
-            // Atualize a imagem separadamente
-            const formData = new FormData();
-            formData.append('imagem', selectedImage); // Use a imagem selecionada aqui
+            if (selectedImage) {
+                const formData = new FormData();
+                formData.append('imagem', selectedImage);
+                await axios.post(`http://127.0.0.1:8000/api/upload/${user_id}`, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                });
+            }
 
-            await axios.post(`http://127.0.0.1:8000/api/upload/${user_id}`, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            });
+            if (bannerImagePreview && bannerImagePreview !== editProfile.banner) {
+                const bannerFormData = new FormData();
+                bannerFormData.append('banner', bannerImagePreview);
+                await axios.post(`http://127.0.0.1:8000/api/upload/banner/${user_id}`, bannerFormData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                });
+            }
 
             setStatus("Perfil Atualizado");
             alert("Perfil atualizado com sucesso!!");
-            window.location.reload()
+            window.location.reload();
         } catch (erro) {
+            console.error('Erro ao atualizar o perfil:', erro);
             setStatus(`Falha: ${erro}`);
         }
-    }
-
-    function handleImageChange(e) {
-        const file = e.target.files[0]; // Obtenha o arquivo selecionado
-        const reader = new FileReader(); // Crie um leitor de arquivo
-    
-        reader.onloadend = () => {
-            // Quando a leitura do arquivo estiver completa, atualize o estado com a URL da imagem
-            setSelectedImagePreview(reader.result);
-        };
-    
-        // Leia o conteúdo do arquivo como uma URL de dados
-        if (file) {
-            reader.readAsDataURL(file);
-        }
-    }
-    
+    };
 
     return (
         <>
             <div className="container">
                 <form onSubmit={gravar} style={{ marginBottom: "3rem" }}>
-                    <img 
-                        src="https://i.pinimg.com/564x/7f/06/16/7f06166fd703e6549ae9baea4a5c7519.jpg"
-                        alt="Imagem"
-                        className="img-fluid mt-3"
-                        style={{ width: "800px", height: '300px', objectFit: 'cover'}}
-                    />
-                    
-                    <div className={`col-md-6 ${styles.cameraIcon}`}>
-                        <label htmlFor="selecao-foto">
-                            <span className="material-symbols-outlined">photo_camera</span>
-                            <input 
-                                id='selecao-foto' 
-                                style={{ display: 'none' }} 
-                                type='file' 
+                    <div className='mb-4'>
+                        <label htmlFor="selecao-banner" style={{ cursor: 'pointer' }}>
+                            <img 
+                                src={bannerImagePreview || "https://i.pinimg.com/564x/7f/06/16/7f06166fd703e6549ae9baea4a5c7519.jpg"}
+                                alt="Banner"
+                                className={styles['banner-image']}
                             />
                         </label>
+                        <input 
+                            id='selecao-banner' 
+                            style={{ display: 'none' }} 
+                            type='file' 
+                            onChange={handleBannerImageChange} 
+                        />
                     </div>
-
+                    
                     <div className={`col-md-6 ${styles.cameraIconProfile}`}>
                         <label htmlFor="selecao-arquivo">
                             <input 
@@ -95,10 +116,9 @@ export function EditProfile() {
                                 onChange={handleImageChange} 
                             />
                             <img
-                                src={selectedImagePreview ? selectedImagePreview : 
-                                    (editProfile.imagem ? `http://127.0.0.1:8000/api/user/getImage/${user_id}` : logo)}
+                                src={selectedImagePreview || logo}
                                 alt="Imagem do perfil"
-                                className="img-fluid rounded-circle align-self-start"
+                                className={`img-fluid rounded-circle align-self-start ${styles.customImage}`}
                             />
                             <span className="material-symbols-outlined">photo_camera</span>
                         </label>
@@ -150,7 +170,7 @@ export function EditProfile() {
                                 type="date" 
                                 className="form-control" 
                                 id="inputNascimento" 
-                                placeholder="Dasta de nascimento" 
+                                placeholder="Data de nascimento" 
                                 value={editProfile.birthday_date || ''}
                                 onChange={(e) => setEditProfile({ ...editProfile, birthday_date: e.target.value })}
                             />

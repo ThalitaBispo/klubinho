@@ -298,7 +298,7 @@ export function Dashboard() {
                     }
                     alt="Imagem do perfil"
                     className="img-fluid rounded-circle align-self-start"
-                    style={{ maxWidth: '40px' }}
+                    style={{ width: '3rem', height: '3rem' }}
                   />
                   <div className="mt-2" style={{ marginLeft: '1rem' }}>
                     <div>
@@ -355,13 +355,17 @@ export function Dashboard() {
                         comments[post.id].map((comment) => (
                           <div key={comment.id} className={`d-flex ${styles.customComments}`}>
                             <img
-                              src={logo}
+                              src={
+                                post.imagem
+                                  ? `http://127.0.0.1:8000/api/user/getImage/${user_id}`
+                                  : logo
+                              }
                               alt="Imagem do perfil"
                               className="img-fluid rounded-circle align-self-start"
-                              style={{ maxWidth: '30px', marginRight: '1rem' }}
+                              style={{ width: '2.5rem', height: '2.5rem' }}
                             />
                             <div>
-                              <p className={` ${styles.commentName} `}>{comment.name} {comment.last_name}</p>
+                              <p className={` mt-2 ${styles.commentName} `}>{comment.name} {comment.last_name}</p>
                               <p className="mt-1">{comment.content}</p>
                             </div>
                           </div>
@@ -373,17 +377,21 @@ export function Dashboard() {
                       <form onSubmit={(e) => gravarComment(e, post.id)}>
                         <div className="d-flex" style={{ padding: '1rem' }}>
                           <img
-                            src={logo}
+                            src={
+                              post.imagem
+                                ? `http://127.0.0.1:8000/api/user/getImage/${user_id}`
+                                : logo
+                            }
                             alt="Imagem do perfil"
                             className="img-fluid rounded-circle align-self-start"
-                            style={{ maxWidth: '30px', marginRight: '1rem' }}
+                            style={{ width: '3rem', height: '3rem' }}
                           />
                           <textarea
                             className="form-control"
                             rows={1}
                             maxLength={255}
                             name="comment"
-                            style={{ resize: 'none' }}
+                            style={{ resize: 'none', marginLeft: '1rem' }}
                             placeholder="Faça um comentário..."
                             value={post.commentText || ''} // Usar o texto do comentário da postagem
                             onChange={(e) => handleCommentChange(post.id, e.target.value)} // Atualizar o texto do comentário da postagem correta

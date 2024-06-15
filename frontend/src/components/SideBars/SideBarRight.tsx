@@ -15,9 +15,11 @@ interface Integrante {
 interface Calendario {
     id: number;
     titulo: string;
-    data_evento: string;
-    hora_evento: string;
-    fim_evento: string;
+    data_evento?: string;
+    data_reuniao?: string;
+    hora_evento?: string;
+    fim_evento?: string;
+    hora_reuniao?: string;
 }
 
 export function SideBarLeft() {
@@ -46,7 +48,7 @@ export function SideBarLeft() {
             }
         }
         fetchData();
-    }, []);
+    }, [club_id]);
 
     useEffect(() => {
         async function fetchCalendario() {
@@ -64,7 +66,7 @@ export function SideBarLeft() {
         if (club_id) {
             fetchCalendario();
         }
-    }, []);
+    }, [club_id]);
 
     function handleDateClick(day: Date) {
         if (selectedDate && day.toDateString() === selectedDate.toDateString()) {
@@ -73,8 +75,8 @@ export function SideBarLeft() {
         } else {
             setSelectedDate(day);
             const filtered = calendario.filter(evento => {
-                const eventDate = new Date(evento.data_evento);
-                return eventDate.getDay() === (day.getDay()-1);
+                const eventDate = new Date(evento.data_evento || evento.data_reuniao);
+                return eventDate.toDateString() === (day.toDateString());
             });
             setFilteredCalendario(filtered);
         }
@@ -82,12 +84,12 @@ export function SideBarLeft() {
 
     function renderCalendar() {
         const daysOfWeek = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
-        const sundayOfThisWeek = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + (0 - currentDate.getDay()));
+        const sundayOfThisWeek = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() - currentDate.getDay());
         const calendar = [];
 
         for (let i = 0; i < 7; i++) {
             const day = new Date(sundayOfThisWeek.getFullYear(), sundayOfThisWeek.getMonth(), sundayOfThisWeek.getDate() + i);
-            const dayOfWeek = daysOfWeek[i];
+            const dayOfWeek = daysOfWeek[day.getDay()];
             const isSelected = selectedDate && day.toDateString() === selectedDate.toDateString();
             calendar.push(
                 <div
@@ -150,11 +152,11 @@ export function SideBarLeft() {
                                 <div className="row">
                                     <div className="col-md-2">
                                         <div className="card-body text-center" style={{ padding: '0.5rem' }}>
-                                            <h5 className="card-title" style={{ fontSize: "1rem" }}>
-                                                {new Date(new Date(evento.data_evento).getTime() + (24 * 60 * 60 * 1000)).toLocaleDateString('pt-BR', { weekday: 'short' }).replace('.', '').toUpperCase()}
+                                            <h5 className="card-title" style={{ fontSize: "0.90rem" }}>
+                                                {new Date(new Date(evento.data_evento || evento.data_reuniao).getTime() + (24 * 60 * 60 * 1000)).toLocaleDateString('pt-BR', { weekday: 'short' }).replace('.', '').toUpperCase()}
                                             </h5>
                                             <b className="card-text" style={{ fontSize: "1.2rem" }}>
-                                                {new Date(evento.data_evento).getUTCDate()}
+                                                {new Date(evento.data_evento || evento.data_reuniao).getUTCDate()}
                                             </b>
                                         </div>
                                     </div>
@@ -162,7 +164,9 @@ export function SideBarLeft() {
                                         <div className="bg-white p-1">
                                             <div className="card-body" style={{ borderLeft: '2px solid var(--purple)', padding: '0.5rem', margin: '0 0 0 0.5rem' }}>
                                                 <h5 className="card-title text-dark mb-0" style={{ fontSize: "1rem" }}>{evento.titulo}</h5>
-                                                <p className="card-text text-muted mt-0" style={{ fontSize: "0.8rem" }}>{evento.hora_evento} - {evento.fim_evento}</p>
+                                                <p className="card-text text-muted mt-0" style={{ fontSize: "0.8rem" }}>
+                                                    {evento.hora_evento || evento.hora_reuniao} - {evento.fim_evento || ""}
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
@@ -192,7 +196,7 @@ export function SideBarLeft() {
                                     }
                                     alt="Imagem do perfil"
                                     className="img-fluid rounded-circle align-self-start"
-                                    style={{ maxWidth: "40px" }}
+                                    style={{ width: '3rem', height: '3rem' }}
                                 />
                                 <div className="mt-2" style={{ marginLeft: '0.5rem' }}>
                                     <div className="d-block">{integrante.name} {integrante.last_name}</div>

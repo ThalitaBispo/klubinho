@@ -44,3 +44,28 @@
     padding: 0.5rem;
     transform: translate(-170%, -120%);
 }
+
+.customComments {
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+  }
+  
+  .commentName {
+    font-weight: bold;
+    font-size: 0.9rem;
+  }
+
+.banner-image {
+    width: 46rem;
+    height: 18.75rem;
+    object-fit: fill;
+}
+
+.customImage {
+    cursor: pointer;
+    width: 32rem;
+    height: 6.25rem;
+    object-fit: fill;
+}
