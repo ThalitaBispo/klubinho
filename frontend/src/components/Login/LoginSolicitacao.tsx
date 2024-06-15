@@ -6,7 +6,6 @@ export function LoginSolicitacao() {
         <div className={styles.welcome}>
                     <p>
                         <span>Bem-vindo(a) </span>
-                        <span className={styles.textDestaque}>Usuário</span>
                     </p>
 
                 </div>

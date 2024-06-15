@@ -28,7 +28,7 @@ export function LoginWelcome() {
     return(
         <>
 
-        <p className={styles.textLogin}>Seja bem-vindo(a) <span className={styles.textDestaque}>{usuario.user_name}</span> ao <span className={styles.textDestaque}>Klubinho</span></p>
+        <p className={styles.textLogin}>Seja bem-vindo(a) <span className={styles.textDestaque}>{usuario.user_name}</span> ao <span className={styles.textDestaque}>Klubinhos</span></p>
 
         <div className={styles.centerButton}>             
             <button type="button" className="btn btn-lg btn-block" onClick={() => { window.location.href = `criarclube`; } }>Criar Clube</button>

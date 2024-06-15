@@ -141,7 +141,6 @@ export function CreateReunion() {
                         style={{ resize: 'none' }}
                         value={reunion.descricao || ''}
                         onChange={(e) => setReunion({ ...reunion, descricao: e.target.value })}
-                        required
                     />
                 </div>
 
@@ -153,8 +152,7 @@ export function CreateReunion() {
                       name="link" 
                       placeholder="Link" 
                       value={reunion.link || ''}
-                      onChange={(e) => setReunion({ ...reunion, link: e.target.value })} 
-                      required
+                      onChange={(e) => setReunion({ ...reunion, link: e.target.value })}
                     />
                 </div>
 
@@ -170,7 +168,6 @@ export function CreateReunion() {
                         name="participants_name"
                         onChange={handleSelectChange}
                         components={{ MultiValue: customMultiValue }}
-                        required
                     />              
                 </div>
 

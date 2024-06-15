@@ -57,7 +57,6 @@ export function LoginCriarClube() {
             <div className={styles.welcome}>
                     <p>
                         <span>Bem-vindo(a) </span>
-                        <span className={styles.textDestaque} >Usuário</span>
                     </p>
 
                 </div>
@@ -81,7 +80,7 @@ export function LoginCriarClube() {
                         <input 
                             type='text' 
                             id='endClube'
-                            placeholder='@klubinho'
+                            placeholder='meuklubinho'
                             value={cadastro.nick_club || ''}
                             className='form-control'
                             onChange={(e) => setCadastro({...cadastro, nick_club:e.target.value})}

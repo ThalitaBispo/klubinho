@@ -73,7 +73,6 @@ export function EditReunion() {
                         style={{ resize: 'none' }}
                         value={editReuniao.descricao || ''}
                         onChange={(e) => setEditReuniao({ ...editReuniao, descricao: e.target.value })}
-                        required
                     />
                 </div>
 
@@ -85,7 +84,6 @@ export function EditReunion() {
                         placeholder="Link" 
                         value={editReuniao.link || ''} 
                         onChange={(e) => setEditReuniao({ ...editReuniao, link: e.target.value })} 
-                        required 
                     />
                 </div>
 

@@ -69,7 +69,7 @@ export function Login() {
       <div className={styles.conteudo}>
         <p className={styles.message}>
           <span>Bem-vindo(a) ao </span>
-          <span className={styles.textDestaque}>Klubinho</span>
+          <span className={styles.textDestaque}>Klubinhos</span>
         </p>
 
         <p>
