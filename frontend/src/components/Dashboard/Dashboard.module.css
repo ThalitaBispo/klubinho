@@ -53,6 +53,7 @@
 .commentName {
   font-weight: bold;
   font-size: 0.9rem;
+  margin-left: 1rem;
 }
 
 @media screen and (max-width: 767px) {
@@ -71,4 +72,41 @@
   .menu {
     padding-left: 1rem;
   }
+}
+
+/*notificações*/
+.notification-dropdown {
+  position: absolute;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 9999; /* Ajuste conforme necessário */
+}
+
+.notification-content {
+  padding: 10px;
+}
+
+.notification-content ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.notification-content li {
+  margin-bottom: 5px;
+}
+
+.close-button {
+  width: 100%;
+  padding: 5px 10px;
+  background-color: #f0f0f0;
+  border: none;
+  border-top: 1px solid #ccc;
+  border-radius: 0 0 5px 5px;
+  cursor: pointer;
+}
+
+.close-button:hover {
+  background-color: #e0e0e0;
 }

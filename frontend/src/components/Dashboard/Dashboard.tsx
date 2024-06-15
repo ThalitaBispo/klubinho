@@ -1,5 +1,6 @@
 import { useState, useEffect, ChangeEvent } from 'react';
 import axios from 'axios';
+import axiosRetry from 'axios-retry';
 import Cookies from 'js-cookie';
 import logo from '../../avatar/logo.jpeg';
 import Hypher from 'hypher';
@@ -17,27 +18,28 @@ interface Post {
   liked?: boolean;
 }
 
-interface LikeCount {
+/*interface LikeCount {
   [postId: number]: number;
-}
+}*/
 
 export function Dashboard() {
   const [postagem, setPostagem] = useState<Post>({ content: '' });
   const [postagens, setPostagens] = useState<Post[]>([]);
   const [loadingPostagens, setLoadingPostagens] = useState<boolean>(false);
 
-  const [status, setStatus] = useState<string>('');
+  const [, setStatus] = useState<string>('');
   const [text, setText] = useState<string>('');
 
   const [showComments, setShowComments] = useState<{ [postId: number]: boolean }>({});
-  const [commentText, setCommentText] = useState<string>('');
+  const [, setCommentText] = useState<string>('');
   const [comments, setComments] = useState({});
 
-  const [likedPosts, setLikedPosts] = useState<{ post_id: number; liked: boolean }[]>([]);
-  const [likesCount, setLikesCount] = useState<LikeCount>({});
+  const [, setLikedPosts] = useState<{ post_id: number; liked: boolean }[]>([]);
+  //const [likesCount, setLikesCount] = useState<LikeCount>({});
 
   const user_id = Cookies.get('user_id');
   const club_id = Cookies.get('club_id');
+  const role = Cookies.get('role');
 
   const config = {
     headers: {
@@ -48,6 +50,11 @@ export function Dashboard() {
   useEffect(() => {
     fetchPostagens();
   }, []);
+
+  axiosRetry(axios, {
+    retries: 3, // Número máximo de tentativas de reenvio
+    retryCondition: (error) => axiosRetry.isNetworkOrIdempotentRequestError(error) || error.response.status === 429, // Condição para reenviar a requisição
+  });
 
   const fetchPostagens = async () => {
     try {
@@ -96,6 +103,7 @@ export function Dashboard() {
       setText('');
 
       fetchPostagens();
+      setTimeout(fetchPostagens, 1000);
     } catch (error) {
       setStatus(`Falha: ${error}`);
       alert(`Falha: ${error}`);
@@ -290,7 +298,7 @@ export function Dashboard() {
                     }
                     alt="Imagem do perfil"
                     className="img-fluid rounded-circle align-self-start"
-                    style={{ maxWidth: '40px' }}
+                    style={{ width: '3rem', height: '3rem' }}
                   />
                   <div className="mt-2" style={{ marginLeft: '1rem' }}>
                     <div>
@@ -347,13 +355,17 @@ export function Dashboard() {
                         comments[post.id].map((comment) => (
                           <div key={comment.id} className={`d-flex ${styles.customComments}`}>
                             <img
-                              src={logo}
+                              src={
+                                post.imagem
+                                  ? `http://127.0.0.1:8000/api/user/getImage/${user_id}`
+                                  : logo
+                              }
                               alt="Imagem do perfil"
                               className="img-fluid rounded-circle align-self-start"
-                              style={{ maxWidth: '30px', marginRight: '1rem' }}
+                              style={{ width: '2.5rem', height: '2.5rem' }}
                             />
                             <div>
-                              <p className={` ${styles.commentName} `}>{comment.name} {comment.last_name}</p>
+                              <p className={` mt-2 ${styles.commentName} `}>{comment.name} {comment.last_name}</p>
                               <p className="mt-1">{comment.content}</p>
                             </div>
                           </div>
@@ -365,17 +377,21 @@ export function Dashboard() {
                       <form onSubmit={(e) => gravarComment(e, post.id)}>
                         <div className="d-flex" style={{ padding: '1rem' }}>
                           <img
-                            src={logo}
+                            src={
+                              post.imagem
+                                ? `http://127.0.0.1:8000/api/user/getImage/${user_id}`
+                                : logo
+                            }
                             alt="Imagem do perfil"
                             className="img-fluid rounded-circle align-self-start"
-                            style={{ maxWidth: '30px', marginRight: '1rem' }}
+                            style={{ width: '3rem', height: '3rem' }}
                           />
                           <textarea
                             className="form-control"
                             rows={1}
                             maxLength={255}
                             name="comment"
-                            style={{ resize: 'none' }}
+                            style={{ resize: 'none', marginLeft: '1rem' }}
                             placeholder="Faça um comentário..."
                             value={post.commentText || ''} // Usar o texto do comentário da postagem
                             onChange={(e) => handleCommentChange(post.id, e.target.value)} // Atualizar o texto do comentário da postagem correta

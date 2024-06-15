@@ -1,0 +1,71 @@
+
+.cameraIcon{
+    position: relative;
+    text-align: center;
+    top: -10rem;
+    right: -10rem;
+}
+
+.cameraIcon span {
+    cursor: pointer;
+    border: 1px solid;
+    border-radius: 100px;
+    color: var(--white);
+    background-color: dark;
+    padding: 0.5rem;
+}
+
+.cameraIconProfile span {
+    visibility: hidden;
+    cursor: pointer;
+    color: transparent;
+    background-color: dark;
+    padding: 0.5rem;
+    transform: translate(-170%, -120%);
+}
+
+.cameraIconProfile img {
+    max-width: 100px;
+    margin-top: -7.125rem;
+    margin-left: 2rem;
+    cursor: pointer;
+    border: 2px solid var(--white);
+}
+
+.cameraIconProfile img:hover {
+    filter: brightness(0) opacity(1);
+}
+
+.cameraIconProfile img:hover + span {
+    visibility: visible;
+    cursor: pointer;
+    color: white;
+    background-color: dark;
+    padding: 0.5rem;
+    transform: translate(-170%, -120%);
+}
+
+.customComments {
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+  }
+  
+  .commentName {
+    font-weight: bold;
+    font-size: 0.9rem;
+  }
+
+.banner-image {
+    width: 46rem;
+    height: 18.75rem;
+    object-fit: fill;
+}
+
+.customImage {
+    cursor: pointer;
+    width: 32rem;
+    height: 6.25rem;
+    object-fit: fill;
+}

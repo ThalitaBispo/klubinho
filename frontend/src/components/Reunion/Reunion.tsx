@@ -61,7 +61,7 @@ export function Reunion() {
                     </button>
                 </Link>
 
-                <div className="row mt-4">
+                <div className="row mt-4 mb-4">
                     <div className="col-md-8 mt-4" style={{ fontSize: '1.5rem' }}>
                         <b className="mt-4">Reunião</b>
                     </div>

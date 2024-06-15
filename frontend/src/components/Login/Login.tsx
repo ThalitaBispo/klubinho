@@ -10,7 +10,7 @@ export function Login() {
     email: '',
     password: ''
   });
-  const [status, setStatus] = useState('');
+  const [, setStatus] = useState('');
 
   async function gravar(e) {
     e.preventDefault();
@@ -31,13 +31,16 @@ export function Login() {
         config
       );
 
-      const { token, user, club_id } = response.data;
+      const { token, user, club_id, role } = response.data;
 
       // Armazene o token no cookie
       Cookies.set('token', token, { expires: 7 });
 
       // Armazene o id do usuário no cookie
       Cookies.set('user_id', user.id, { expires: 7 });
+
+      // Armazene o papel do usuário no cookie
+      Cookies.set('role', role, { expires: 7 });
 
       // Armazene o id do clube no cookie, se club_id não for nulo
       if (club_id !== null && club_id !== undefined) {

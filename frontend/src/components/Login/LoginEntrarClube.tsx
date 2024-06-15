@@ -28,7 +28,7 @@ export function LoginEntrarClube() {
 
   const club_name = Cookies.get('club_name');
 
-  const [status, setStatus] = useState('');
+  const [, setStatus] = useState('');
 
   async function gravar(e) {
     e.preventDefault();

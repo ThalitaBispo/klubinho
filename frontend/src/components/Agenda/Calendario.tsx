@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from "axios";
+import axiosRetry from 'axios-retry';
 import Cookies from 'js-cookie';
 import ptBR from 'date-fns/locale/pt-BR';
 import { format, addDays } from 'date-fns';
@@ -35,9 +36,15 @@ export function Calendario() {
       }
     }
 
-    fetchEvents();
-  }, [club_id]);
-  
+    const delay = 200; // 5 seconds delay
+    const timer = setTimeout(() => {
+      fetchEvents();
+    }, delay);
+
+    return () => clearTimeout(timer); // Clear timeout on unmount
+
+  }, [club_id]); // Ensure useEffect runs only when club_id changes
+
   // Organize os eventos por data
   const eventsByDate = {};
   events.forEach(event => {
@@ -49,12 +56,12 @@ export function Calendario() {
   });
 
   // Função para formatar a descrição com quebra de linha a cada 60 caracteres
-  const formatarDescricao = (descricao: string) => {
+  const formatarDescricao = (descricao) => {
     if (descricao.length > 60) {
         return descricao.match(/.{1,60}/g).join('\n');
     }
     return descricao;
-};
+  };
 
   return (
     <div className="container mb-4">
@@ -84,19 +91,17 @@ export function Calendario() {
 
             <ul className={`list-group`}>
               {eventsByDate[date].map(event => (
-                <li key={event.id} className={`list-group-item mt-4 ${styles.customEvent}`}>
-                  {event.tipo === 'reuniao' ? (
-                    <span className="material-symbols-outlined" style={{ color: '#5b6b77' }}>connect_without_contact</span> // Ícone para reunião
-                  ) : (
-                    <span className="material-symbols-outlined" style={{ color: '#5b6b77' }}>today</span> // Ícone para evento comum
-                  )}
-                  <div className='d-flex'>
-                    <div className="mt-1">
-                      <span className="d-block">{event.titulo}</span>
-                      <span style={{ color: '#5b6b77' }}>{formatarDescricao(event.descricao)}</span>
+                <Link className='nav-link' to={event.tipo === 'reuniao' ? `/editreunion/${event.id}` : `/editcalendario/${event.id}`}>
+                  <li className={`list-group-item mt-4 ${styles.customEvent}`}>
+                    <span className="material-symbols-outlined" style={{ color: '#5b6b77' }}>{event.tipo === 'reuniao' ? 'connect_without_contact' : 'today'}</span>
+                    <div className='d-flex'>
+                      <div className="mt-1">
+                        <span className="d-block">{event.titulo}</span>
+                        <span style={{ color: '#5b6b77' }}>{formatarDescricao(event.descricao)}</span>
+                      </div>
                     </div>
-                  </div>
-                </li>   
+                  </li>   
+                </Link>
               ))}
             </ul> 
           </div>

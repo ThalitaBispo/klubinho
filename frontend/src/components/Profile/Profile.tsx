@@ -1,17 +1,25 @@
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import logo from '../../avatar/logo.jpeg';
+import styles from './Profile.module.css';
 
 export function Profile() {
     
     const [profile, setProfile] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [postagem, setPostagem] = useState({});
+    const [, setLoading] = useState(true);
     const [loadingPostagens, setLoadingPostagens] = useState(false);
     const [postagens, setPostagens] = useState([]);
+    const [showComments, setShowComments] = useState({});
+    const [comments, setComments] = useState({});
+    const [commentText, setCommentText] = useState('');
     const user_id = Cookies.get('user_id');
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    };
 
     useEffect(() => {
         async function Profile() {
@@ -25,13 +33,22 @@ export function Profile() {
         }
     
         Profile();
-      }, []);
+      }, [user_id]);
 
       const fetchPostagens = async () => {
         try {
           const response = await axios.get(`http://127.0.0.1:8000/api/post/getAllPostByUser/${user_id}`);
           setPostagens(response.data);
           setLoadingPostagens(false);
+
+          const postIdArray = response.data.map((post) => post.id);
+          const commentsArray = await Promise.all(postIdArray.map((postId) => fetchComments(postId)));
+          
+          const commentsObject = {};
+          postIdArray.forEach((postId, index) => {
+            commentsObject[postId] = commentsArray[index];
+          });
+          setComments(commentsObject);
         } catch (error) {
           console.error(error);
         }
@@ -39,11 +56,55 @@ export function Profile() {
 
       useEffect(() => {
         fetchPostagens();
-      }, []);
+      }, [user_id]);
 
-      //http://127.0.0.1:8000/api/post/getAllPostByUser/1
+      const fetchComments = async (postId) => {
+        try {
+          const response = await axios.get(`http://127.0.0.1:8000/api/comment/getAllCommentsByPost/${postId}`);
+          return response.data;
+        } catch (error) {
+          console.error(error);
+          return [];
+        }
+      };
 
-    return(
+      const gravarComment = async (e, postId) => {
+        e.preventDefault();
+        const post = postagens.find(post => post.id === postId);
+        if (!post) return;
+
+        try {
+          await axios.post(
+            'http://127.0.0.1:8000/api/comment/create',
+            {
+              user_id: user_id,
+              post_id: postId,
+              content: commentText,
+            },
+            config
+          );
+
+          const updatedComments = await fetchComments(postId);
+
+          setComments(prevComments => ({
+            ...prevComments,
+            [postId]: updatedComments,
+          }));
+
+          setCommentText('');
+        } catch (error) {
+          console.error(error);
+        }
+      };
+
+      const toggleComments = (postId) => {
+        setShowComments((prevState) => ({
+          ...prevState,
+          [postId]: !prevState[postId],
+        }));
+      };
+
+      return (
         <>
             {profile.map((profiles) => (
                 <div key={profiles.id} className="container">
@@ -131,21 +192,64 @@ export function Profile() {
                     color: '#5b6b77',
                   }}
                 >
-                  <span className="material-symbols-outlined">favorite</span>
-                  <span style={{ marginLeft: '0.25rem' }}>12</span>
-
-                  <span className="material-symbols-outlined" style={{ marginLeft: '2rem' }}>
+                  <span className="material-symbols-outlined" style={{ marginLeft: '1rem', cursor: 'pointer' }} onClick={() => toggleComments(post.id)}>
                     forum
                   </span>
-                  <span style={{ marginLeft: '0.25rem' }}>20</span>
+                </div>
+
+                <div className="mt-4">
+                  {showComments[post.id] && (
+                    <>
+                      {comments[post.id] && comments[post.id].length > 0 ? (
+                        comments[post.id].map((comment) => (
+                          <div key={comment.id} className={`d-flex ${styles.customComments}`}>
+                            <img
+                              src={logo}
+                              alt="Imagem do perfil"
+                              className="img-fluid rounded-circle align-self-start"
+                              style={{ maxWidth: '30px', marginRight: '1rem' }}
+                            />
+                            <div>
+                              <p className={`${styles.commentName}`}>{comment.name} {comment.last_name}</p>
+                              <p className="mt-1">{comment.content}</p>
+                            </div>
+                          </div>
+                        ))
+                      ) : (
+                        <p>Seja o(a) primeiro(a) a comentar esta postagem</p>
+                      )}
+
+                      <form onSubmit={(e) => gravarComment(e, post.id)}>
+                        <div className="d-flex" style={{ padding: '1rem' }}>
+                          <img
+                            src={logo}
+                            alt="Imagem do perfil"
+                            className="img-fluid rounded-circle align-self-start"
+                            style={{ maxWidth: '30px', marginRight: '1rem' }}
+                          />
+                          <textarea
+                            className="form-control"
+                            rows={1}
+                            maxLength={255}
+                            name="comment"
+                            style={{ resize: 'none' }}
+                            placeholder="Faça um comentário..."
+                            value={commentText}
+                            onChange={(e) => setCommentText(e.target.value)}
+                          />
+                          <button type="submit">Comentar</button>
+                        </div>
+                      </form>
+                    </>
+                  )}
                 </div>
               </div>
               <hr style={{ borderTop: '1px solid gray', marginTop: '2rem' }} />
             </div>
           ))
         )}
-            </div>
+                </div>
             ))}
         </>
-    )
-}
+      );
+    }

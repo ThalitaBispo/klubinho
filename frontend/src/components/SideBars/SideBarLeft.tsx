@@ -14,6 +14,7 @@ export function SideBarRight() {
         Cookies.remove('user_id');
         Cookies.remove('token');
         Cookies.remove('club_id');
+        Cookies.remove('role');
         // navigate('/');
       };
 
@@ -104,7 +105,7 @@ export function SideBarRight() {
                                                 }
                                                 alt="Imagem do perfil"
                                                 className="img-fluid rounded-circle align-self-start"
-                                                style={{ maxWidth: "70px" }}
+                                                style={{ width: '4rem', height: '4rem' }}
                                                 />
 
                                                 <div className="mt-3" style={{ marginLeft: '1rem' }}>
