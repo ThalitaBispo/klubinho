@@ -50,35 +50,35 @@ export function SideBarRight() {
                             <span  className={styles.logo}>KLUBINHOS</span>
 
                             <li className={`nav-item ${styles.menuItem}`}>
-                                <Link className='nav-link' to="/">
+                                <Link className='nav-link d-flex align-items-center'  to="/">
                                     <span className="material-symbols-outlined">home</span>
                                     <span className='p-2'>Home</span>
                                 </Link>
                             </li>
 
                             <li className={`nav-item ${styles.menuItem}`}>
-                                <Link className='nav-link' to="/listenquete">
+                                <Link className='nav-link d-flex align-items-center' to="/listenquete">
                                     <span className="material-symbols-outlined">voting_chip</span>
                                     <span className='p-2'>Enquete</span>
                                 </Link>
                             </li>
                             
                             <li className={`nav-item ${styles.menuItem}`}>
-                                <Link className='nav-link' to="/reunion">
+                                <Link className='nav-link d-flex align-items-center'  to="/reunion">
                                     <span className="material-symbols-outlined">article</span>
                                     <span className='p-2'>Reunião</span>
                                 </Link>
                             </li>
 
                             <li className={`nav-item ${styles.menuItem}`}>
-                                <Link className='nav-link' to="/calendario">
+                                <Link className='nav-link d-flex align-items-center' to="/calendario">
                                     <span className="material-symbols-outlined">calendar_month</span>
                                     <span className='p-2'>Calendário</span>
                                 </Link>
                             </li>
                             
                             <li className={`nav-item ${styles.menuItem}`}>
-                                <Link className='nav-link' to="/profile">
+                                <Link className='nav-link d-flex align-items-center' to="/profile">
                                     <span className="material-symbols-outlined">person</span>
                                     <span className='p-2'>Perfil</span>
                                 </Link>
