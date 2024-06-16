@@ -62,7 +62,7 @@ export function RoutesDashboard() {
             <BrowserRouter>
                 <div className="container-fluid">
                     <div className="row">
-                        <div className={`col-md-3 ${styles.sideBarLeft}`} style={{ position: 'sticky', top: 0, height: '100vh' }}>
+                        <div className={`col-md-3 ${styles.sideBarLeft}`}>
                             <SideBarRight />
                         </div>
                         <div className="col-md-5" style={{ maxHeight: '50%', overflowY: 'auto' }}>

@@ -1,36 +1,37 @@
-  .logo {
-    color: var(--purple);
-    font-size: 2rem;
-    font-weight: 600;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-  }
-  
-  .menuItem span:first-child {
-    font-size: 2.15rem;
-  }
-
-  .menuItem span:last-child {
-    font-size: 1.25rem;
-  }
-
-  .userProfile {
-    margin-top: 16rem;
-  }
-
-  .sideBarLeft {
-    margin: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  @media screen and (max-width: 767px) {
-    .userProfile {
+    .logo {
+      color: var(--purple);
+      font-size: 2rem;
+      font-weight: 600;
       margin-top: 1rem;
+      margin-bottom: 1rem;;
     }
+    
+    .menuItem span:first-child {
+      font-size: 2.15rem;
+    }
+
+    .menuItem span:last-child {
+      font-size: 1.25rem;
+    }
+
+    .userProfile {
+      margin-top: 16rem;
+    }
+
     .sideBarLeft {
-      justify-content: left;
-      margin-left: 3rem;
+      margin: auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
-  }
+
+    @media screen and (max-width: 767px) {
+      .userProfile {
+        margin-top: 1rem;
+      }
+      .sideBarLeft {
+        justify-content: left;
+        margin-left: 3rem;
+        position: sticky;
+      }
+    }
