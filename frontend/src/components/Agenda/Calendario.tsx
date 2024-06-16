@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import axios from "axios";
-import axiosRetry from 'axios-retry';
 import Cookies from 'js-cookie';
 import ptBR from 'date-fns/locale/pt-BR';
 import { format, addDays } from 'date-fns';
@@ -16,16 +15,34 @@ export function Calendario() {
   useEffect(() => {
     async function fetchEvents() {
       try {
-        const responseReuniao = await axios.get(`http://127.0.0.1:8000/api/reuniao/getAllReuniaoByClub/${club_id}`);
-        const responseCalendar = await axios.get(`http://127.0.0.1:8000/api/calendar/getAllEventsByClub/${club_id}`);
+        // Utilize a data atual para buscar eventos
+        const currentDate = new Date();
+        const formattedDate = format(currentDate, 'yyyy-MM-dd');
 
-        const reuniaoEvents = responseReuniao.data.map(reuniao => ({
-          ...reuniao,
+        const responseEvents = await axios.get(`http://127.0.0.1:8000/api/eventos/${club_id}?data_evento=${formattedDate}`);
+        const responseReunioes = await axios.get(`http://127.0.0.1:8000/api/reuniao/getAllReuniaoByClub/${club_id}`);
+
+        // Mapeia eventos
+        const eventos = responseEvents.data.map(evento => ({
+          id: evento.id,
+          titulo: evento.titulo,
+          descricao: evento.descricao,
+          data_evento: evento.data_evento,
+          hora_evento: evento.hora_evento,
+          tipo: 'evento' // Adicionando o tipo de evento
+        }));
+
+        // Mapeia reuniões
+        const reunioes = responseReunioes.data.map(reuniao => ({
+          id: reuniao.id,
+          titulo: reuniao.titulo,
+          descricao: reuniao.descricao,
           data_evento: reuniao.data_reuniao, // Convertendo o campo data_reuniao para o mesmo formato que os eventos do calendário
+          hora_evento: reuniao.hora_reuniao,
           tipo: 'reuniao' // Adicionando o tipo de evento
         }));
 
-        const allEvents = [...responseCalendar.data, ...reuniaoEvents];
+        const allEvents = [...eventos, ...reunioes];
         // Ordenar eventos por data crescente
         allEvents.sort((a, b) => new Date(a.data_evento) - new Date(b.data_evento));
         setEvents(allEvents);
@@ -36,7 +53,7 @@ export function Calendario() {
       }
     }
 
-    const delay = 200; // 5 seconds delay
+    const delay = 200; // 200 milliseconds delay
     const timer = setTimeout(() => {
       fetchEvents();
     }, delay);
@@ -48,17 +65,26 @@ export function Calendario() {
   // Organize os eventos por data
   const eventsByDate = {};
   events.forEach(event => {
-    const eventDate = format(addDays(new Date(event.data_evento), 1), "dd 'de' MMMM 'de' yyyy", { locale: ptBR });
-    if (!eventsByDate[eventDate]) {
-      eventsByDate[eventDate] = [];
+    try {
+      const eventDate = new Date(event.data_evento);
+      if (isNaN(eventDate)) {
+        console.error(`Invalid date for event: ${event.data_evento}`);
+        return;
+      }
+      const formattedDate = format(addDays(eventDate, 1), "dd 'de' MMMM 'de' yyyy", { locale: ptBR });
+      if (!eventsByDate[formattedDate]) {
+        eventsByDate[formattedDate] = [];
+      }
+      eventsByDate[formattedDate].push(event);
+    } catch (e) {
+      console.error(`Error formatting date for event: ${event.data_evento}`, e);
     }
-    eventsByDate[eventDate].push(event);
   });
 
   // Função para formatar a descrição com quebra de linha a cada 60 caracteres
   const formatarDescricao = (descricao) => {
     if (descricao.length > 60) {
-        return descricao.match(/.{1,60}/g).join('\n');
+      return descricao.match(/.{1,60}/g).join('\n');
     }
     return descricao;
   };
@@ -91,7 +117,7 @@ export function Calendario() {
 
             <ul className={`list-group`}>
               {eventsByDate[date].map(event => (
-                <Link className='nav-link' to={event.tipo === 'reuniao' ? `/editreunion/${event.id}` : `/editcalendario/${event.id}`}>
+                <Link key={event.id} className='nav-link' to={event.tipo === 'reuniao' ? `/editreunion/${event.id}` : `/editcalendario/${event.id}`}>
                   <li className={`list-group-item mt-4 ${styles.customEvent}`}>
                     <span className="material-symbols-outlined" style={{ color: '#5b6b77' }}>{event.tipo === 'reuniao' ? 'connect_without_contact' : 'today'}</span>
                     <div className='d-flex'>
