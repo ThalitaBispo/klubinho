@@ -15,34 +15,33 @@ export function Calendario() {
   useEffect(() => {
     async function fetchEvents() {
       try {
-        // Utilize a data atual para buscar eventos
         const currentDate = new Date();
         const formattedDate = format(currentDate, 'yyyy-MM-dd');
 
-        const responseEvents = await axios.get(`http://127.0.0.1:8000/api/eventos/${club_id}?data_evento=${formattedDate}`);
-        const responseReunioes = await axios.get(`http://127.0.0.1:8000/api/reuniao/getAllReuniaoByClub/${club_id}`);
+        const response = await axios.get(`http://127.0.0.1:8000/api/eventos/${club_id}?data_evento=${formattedDate}`);
 
-        // Mapeia eventos
-        const eventos = responseEvents.data.map(evento => ({
-          id: evento.id,
-          titulo: evento.titulo,
-          descricao: evento.descricao,
-          data_evento: evento.data_evento,
-          hora_evento: evento.hora_evento,
-          tipo: 'evento' // Adicionando o tipo de evento
-        }));
+        const allEvents = response.data.map(event => {
+          if (event.data_reuniao) {
+            return {
+              id: event.id,
+              titulo: event.titulo,
+              descricao: event.descricao,
+              data_evento: event.data_reuniao, // Convertendo o campo data_reuniao para o mesmo formato que os eventos do calendário
+              hora_evento: event.hora_reuniao,
+              tipo: 'reuniao' // Adicionando o tipo de evento
+            };
+          } else {
+            return {
+              id: event.id,
+              titulo: event.titulo,
+              descricao: event.descricao,
+              data_evento: event.data_evento,
+              hora_evento: event.hora_evento,
+              tipo: 'evento' // Adicionando o tipo de evento
+            };
+          }
+        });
 
-        // Mapeia reuniões
-        const reunioes = responseReunioes.data.map(reuniao => ({
-          id: reuniao.id,
-          titulo: reuniao.titulo,
-          descricao: reuniao.descricao,
-          data_evento: reuniao.data_reuniao, // Convertendo o campo data_reuniao para o mesmo formato que os eventos do calendário
-          hora_evento: reuniao.hora_reuniao,
-          tipo: 'reuniao' // Adicionando o tipo de evento
-        }));
-
-        const allEvents = [...eventos, ...reunioes];
         // Ordenar eventos por data crescente
         allEvents.sort((a, b) => new Date(a.data_evento) - new Date(b.data_evento));
         setEvents(allEvents);
