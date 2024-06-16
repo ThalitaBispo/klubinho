@@ -95,7 +95,7 @@ export function RoutesDashboard() {
                                 </Routes>
                             </main>
                         </div>
-                        <div className="col-md-4" style={{ position: 'sticky', top: 0, height: '100vh' }}>
+                        <div className="col-md-4" style={{ position: 'sticky', top: 0 }}>
                             <SideBarLeft />
                         </div>
                     </div>
