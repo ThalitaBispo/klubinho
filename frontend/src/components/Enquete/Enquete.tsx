@@ -10,11 +10,12 @@ export function Enquete() {
     const [userVoted, setUserVoted] = useState(false); // Estado para rastrear se o usuário já votou
     const club_id = Cookies.get('club_id');
     const user_id = Cookies.get('user_id'); // Supondo que você tenha um ID de usuário nos cookies
+    const last_enquete_id = Cookies.get('last_enquete_id');
 
     useEffect(() => {
         async function fetchEnquete() {
             try {
-                const response = await axios.get(`http://127.0.0.1:8000/api/enquete/getAllEnquetesByClub/${club_id}`);
+                const response = await axios.get(`http://127.0.0.1:8000/api/enquete/getOpcoes/${last_enquete_id}`);
                 const enquetesData = response.data;
                 setEnquete(enquetesData);
                 
@@ -60,7 +61,7 @@ export function Enquete() {
                         <div className="col-md-4 mt-4" key={enquetes.id}>
                             <div className="card" style={{ width: '14rem' }}>
                                 <div className="card-body">
-                                    <h5 className="card-title" style={{ fontSize: '1rem' }}>{enquetes.title}</h5>
+                                    <h5 className="card-title" style={{ fontSize: '1rem' }}>{enquetes.titulo}</h5>
                                     <p className="card-text text-truncate" style={{ fontSize: '0.9rem' }}>{enquetes.description}</p>
                                     <button 
                                         style={{ 
@@ -102,7 +103,7 @@ export function Enquete() {
                     <div className="d-flex mt-2 mb-2 align-items-center">
                         <div className={`col-md-6 d-flex flex-column ${styles.customTitle}`}>
                             <span>{enquetes.title}</span>
-                            <span style={{ color: '#5b6b77' }}>@kauaduarte</span>
+                            <span style={{ color: '#5b6b77' }}>{enquetes.titulo}</span>
                         </div>
 
                         <div className={`col d-flex justify-content-center align-items-center ${styles.customTitle}`}>

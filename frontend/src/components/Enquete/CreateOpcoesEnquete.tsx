@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 import axios from "axios";
 
 export function AdicionarOpcoesEnquete() {
-  const [options, setOptions] = useState([{ title: '', description: '' }]);
+  const [options, setOptions] = useState([{ titulo: '', description: '' }]);
   const [lastEnqueteId, setLastEnqueteId] = useState(null);
   const navigate = useNavigate(); // Agora useNavigate está definido corretamente
   const club_id = Cookies.get('club_id');
@@ -31,7 +31,7 @@ export function AdicionarOpcoesEnquete() {
   }, [club_id]);
 
   const handleAddOption = () => {
-    setOptions([...options, { title: '', description: '' }]);
+    setOptions([...options, { titulo: '', description: '' }]);
   };
 
   const handleRemoveOption = (index) => {
@@ -56,7 +56,7 @@ export function AdicionarOpcoesEnquete() {
           },
           body: JSON.stringify({
             enquete_id: enqueteId,
-            title: option.title,
+            titulo: option.titulo,
             description: option.description,
           }),
         });
@@ -90,10 +90,10 @@ export function AdicionarOpcoesEnquete() {
               className="form-control"
               placeholder="Título"
               maxLength={60}
-              value={option.title}
+              value={option.titulo}
               onChange={(e) => {
                 const updatedOptions = [...options];
-                updatedOptions[index].title = e.target.value;
+                updatedOptions[index].titulo = e.target.value;
                 setOptions(updatedOptions);
               }}
             />

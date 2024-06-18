@@ -309,7 +309,7 @@ export function Dashboard() {
                   </div>
                 </a>
                 <div className="position-relative ml-auto">
-                  <span className="material-symbols-outlined position-absolute" style={{ top: '0', right: '0', left: '28rem', cursor: 'pointer' }}>
+                  <span className="material-symbols-outlined position-absolute" style={{ top: '0', right: '0', left: '20rem', cursor: 'pointer' }}>
                     more_horiz
                   </span>
                 </div>
@@ -362,7 +362,7 @@ export function Dashboard() {
                               <p className="mt-1">{comment.content}</p>
                             </div>
                             <div className="position-relative ml-auto">
-                              <span className="material-symbols-outlined position-absolute" style={{ top: '0', right: '0', left: '22rem', cursor: 'pointer' }}>
+                              <span className="material-symbols-outlined position-absolute" style={{ top: '0', right: '0', left: '20rem', cursor: 'pointer' }}>
                                 more_horiz
                               </span>
                             </div>
