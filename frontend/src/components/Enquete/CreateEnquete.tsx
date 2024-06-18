@@ -1,62 +1,79 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom"; // Importe useNavigate
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Cookies from 'js-cookie';
+import axios from "axios";
 
-export function CreateEnquete() {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const user_id = Cookies.get('user_id');
-  const club_id = Cookies.get('club_id');
-  const navigate = useNavigate(); // Use useNavigate para obter a função de navegação
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-  
-    try {
-      // Chamada API para criar a enquete
-      const enqueteResponse = await fetch('http://127.0.0.1:8000/api/enquete/create', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({ user_id: user_id, club_id: club_id, title, description }),
-});
-
-if (!enqueteResponse.ok) {
-  throw new Error('Falha ao criar enquete');
+interface Enquete {
+  title?: string;
+  description?: string;
+  id?: number;
 }
 
-const enqueteData = await enqueteResponse.json();
-const enqueteId = enqueteData.id;
+export function CreateEnquete() {
+  const [enquete, setEnquete] = useState<Enquete>({});
+  const [, setStatus] = useState<string>('');
 
-// Armazenar o ID da enquete em um cookie
-Cookies.set('enquete_id', enqueteId, { expires: 7 });
+  const user_id = Cookies.get('user_id');
+  const club_id = Cookies.get('club_id');
+  const navigate = useNavigate();
 
-console.log('Enquete criada com ID:', enqueteId);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setEnquete(prevEnquete => ({
+      ...prevEnquete,
+      [name]: value,
+    }));
+  };
 
-// Redirecionar para a tela de adicionar opções de enquete
-navigate(`/adicionar-enquete`);
+  async function gravar(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    try {
+      const response = await axios.post(
+        'http://127.0.0.1:8000/api/enquete/create',
+        {
+          title: enquete.title,
+          description: enquete.description,
+          club_id: club_id,
+          user_id: user_id,
+        },
+        config
+      );
+
+      console.log('Response data:', response.data); // Adicione esta linha para depuração
+
+      setStatus('Enquete cadastrada com sucesso!');
+      setEnquete({});
+      navigate('/adicionar-enquete'); // Navegue para a nova página
 
     } catch (error) {
-      console.error('Erro:', error);
-      alert('Falha ao criar enquete. Verifique o console para mais detalhes.');
+      setStatus(`Falha: ${error.message}`);
+      alert(`Falha: ${error.message}`);
+      console.log(error);
     }
-  };
+  }
 
   return (
     <div className="container">
       <span style={{ fontSize: "1.5rem" }}>Criar enquete</span>
 
-      <form className="mt-4" style={{ marginBottom: "3rem" }} onSubmit={handleSubmit}>
+      <form className="mt-4" style={{ marginBottom: "3rem" }} onSubmit={gravar}>
         <div className="form-group mt-4">
           <label>Título</label>
           <input
             type="text"
             className="form-control"
             placeholder="Título"
+            name="title"
             maxLength={60}
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            value={enquete.title || ''}
+            onChange={handleChange}
           />
         </div>
 
@@ -67,8 +84,9 @@ navigate(`/adicionar-enquete`);
             className="form-control"
             placeholder="Descrição"
             maxLength={255}
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            name="description"
+            value={enquete.description || ''}
+            onChange={handleChange}
           />
         </div>
 
