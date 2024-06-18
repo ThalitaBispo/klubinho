@@ -1,22 +1,45 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom"; // Importe useNavigate
+import Cookies from 'js-cookie';
 
 export function CreateEnquete() {
-  const [additionalInputs, setAdditionalInputs] = useState([]);
-  const [showRemoveButton, setShowRemoveButton] = useState(false);
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const user_id = Cookies.get('user_id');
+  const club_id = Cookies.get('club_id');
+  const navigate = useNavigate(); // Use useNavigate para obter a função de navegação
 
-  const handleAddInputs = () => {
-    const newInput = { id: Date.now() };
-    setAdditionalInputs([...additionalInputs, newInput]);
-    setShowRemoveButton(true);
-  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  
+    try {
+      // Chamada API para criar a enquete
+      const enqueteResponse = await fetch('http://127.0.0.1:8000/api/enquete/create', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({ user_id: user_id, club_id: club_id, title, description }),
+});
 
-  const handleRemoveLastInputs = () => {
-    const updatedInputs = [...additionalInputs];
-    updatedInputs.splice(-1); // Remove os dois últimos blocos adicionados
-    setAdditionalInputs(updatedInputs);
-    if (updatedInputs.length === 0) {
-      setShowRemoveButton(false);
+if (!enqueteResponse.ok) {
+  throw new Error('Falha ao criar enquete');
+}
+
+const enqueteData = await enqueteResponse.json();
+const enqueteId = enqueteData.id;
+
+// Armazenar o ID da enquete em um cookie
+Cookies.set('enquete_id', enqueteId, { expires: 7 });
+
+console.log('Enquete criada com ID:', enqueteId);
+
+// Redirecionar para a tela de adicionar opções de enquete
+navigate(`/adicionar-enquete`);
+
+    } catch (error) {
+      console.error('Erro:', error);
+      alert('Falha ao criar enquete. Verifique o console para mais detalhes.');
     }
   };
 
@@ -24,65 +47,35 @@ export function CreateEnquete() {
     <div className="container">
       <span style={{ fontSize: "1.5rem" }}>Criar enquete</span>
 
-      <form className="mt-4" style={{ marginBottom: "3rem" }}>
+      <form className="mt-4" style={{ marginBottom: "3rem" }} onSubmit={handleSubmit}>
         <div className="form-group mt-4">
           <label>Título</label>
-          <input type="text" className="form-control" placeholder="Título" maxLength={60} />
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Título"
+            maxLength={60}
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
         </div>
 
         <div className="form-group mt-4 mb-4">
           <label>Descrição</label>
-          <input type="text" className="form-control" placeholder="Descrição" maxLength={255}/>
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Descrição"
+            maxLength={255}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
         </div>
 
-        <span style={{ fontSize: "1.25rem" }}>Opções da enquete</span>
-
-        <div className="form-group mt-4">
-          <label>Título</label>
-          <input type="text" className="form-control" placeholder="Título" maxLength={60}/>
-        </div>
-
-        <div className="form-group mt-4">
-          <label>Descrição</label>
-          <input type="text" className="form-control" placeholder="Descrição" maxLength={255}/>
-        </div>
-
-        <div className={`col-md-4`} style={{ backgroundColor: 'var(--purple)', borderRadius: '5px', color: '#fff', cursor: 'pointer', marginTop: '1rem',
-          padding: '0.25rem 1rem' }}>
-            <label htmlFor="selecao-arquivo">Selecione uma imagem</label>
-            <input id='selecao-arquivo' style={{ display: 'none' }} type='file' />
-        </div>
-
-        {additionalInputs.map((input, index) => (
-          <div key={input.id} className="form-group mt-4">
-            <label htmlFor={`input${input.id}`}>Título</label>
-            <input type="text" className="form-control" id={`input${input.id}`} name={`input${input.id}`} placeholder="Título" maxLength={60}/>
-            
-            <label htmlFor={`input${input.id + 1}`} className="form-group mt-4">Descrição</label>
-            <input type="text" className="form-control" id={`input${input.id + 1}`} name={`input${input.id + 1}`} placeholder="Descrição" maxLength={255}/>
-            
-            <div className={`col-md-4`} style={{ backgroundColor: 'var(--purple)', borderRadius: '5px', color: '#fff', cursor: 'pointer', marginTop: '1rem',
-                                                  padding: '0.25rem 1rem' }}>
-              <label htmlFor="selecao-arquivo">Selecione uma imagem</label>
-              <input id='selecao-arquivo' style={{ display: 'none' }} type='file' />
-          </div>
-          
-          </div>
-        ))}
-
-        <button type="button" className="btn mt-4" style={{ backgroundColor: "var(--purple)", color: "var(--white)", marginRight: '1rem' }}
-          onClick={handleAddInputs}> Adicionar opção </button>
-
-        {showRemoveButton && (
-          <button type="button" className="btn btn-danger mt-4" onClick={handleRemoveLastInputs} style={{ marginRight: '1rem' }}> Remover opção </button>
-        )}
-
-        <button type="submit" className="btn mt-4" style={{ backgroundColor: "var(--purple)", color: "var(--white)" }}> Salvar </button>
+        <button type="submit" className="btn mt-4" style={{ backgroundColor: "var(--purple)", color: "var(--white)" }}>Salvar</button>
 
         <Link to={"/listenquete"}>
-          <button type="button" className="btn mt-4" style={{ backgroundColor: 'var(--purple)', color: 'var(--white', marginLeft: "1rem" }}>
-            Voltar
-          </button>
+          <button type="button" className="btn mt-4" style={{ backgroundColor: 'var(--purple)', color: 'var(--white)', marginLeft: "1rem" }}>Cancelar</button>
         </Link>
       </form>
     </div>

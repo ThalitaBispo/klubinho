@@ -8,6 +8,7 @@ import { Dashboard } from './Dashboard';
 import styles from './Dashboard.module.css';
 import { Enquete } from '../Enquete/Enquete';
 import { CreateEnquete } from '../Enquete/CreateEnquete';
+import { AdicionarOpcoesEnquete } from '../Enquete/CreateOpcoesEnquete';
 import { Profile } from '../Profile/Profile';
 import { EditProfile } from '../Profile/EditProfile';
 import { ListEnquete } from '../Enquete/ListEnquete';
@@ -92,6 +93,7 @@ export function RoutesDashboard() {
                                     <Route path="/calendario" element={<Calendario />} />
                                     <Route path='/createcalendario' element={<CreateCalendar />} />
                                     <Route path='/editcalendario/:id' element={<EditCalendar />} />
+                                    <Route path='/adicionar-enquete' element={<AdicionarOpcoesEnquete />} />
                                 </Routes>
                             </main>
                         </div>
