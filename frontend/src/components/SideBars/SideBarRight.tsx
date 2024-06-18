@@ -75,8 +75,9 @@ export function SideBarLeft() {
         } else {
             setSelectedDate(day);
             const filtered = calendario.filter(evento => {
-                const eventDate = new Date(evento.data_evento || evento.data_reuniao);
-                return eventDate.toDateString() === (day.toDateString());
+                const eventDate = new Date(evento.data_evento || evento.data_reuniao || '');
+                eventDate.setDate(eventDate.getDate() + 1); // Adiciona 1 dia à data do evento para comparação
+                return eventDate.toDateString() === day.toDateString();
             });
             setFilteredCalendario(filtered);
         }
@@ -153,10 +154,10 @@ export function SideBarLeft() {
                                     <div className="col-md-2">
                                         <div className="card-body text-center" style={{ padding: '0.5rem' }}>
                                             <h5 className="card-title" style={{ fontSize: "0.90rem" }}>
-                                                {new Date(new Date(evento.data_evento || evento.data_reuniao).getTime() + (24 * 60 * 60 * 1000)).toLocaleDateString('pt-BR', { weekday: 'short' }).replace('.', '').toUpperCase()}
+                                                {new Date(new Date(evento.data_evento || evento.data_reuniao || '').getTime() + (24 * 60 * 60 * 1000)).toLocaleDateString('pt-BR', { weekday: 'short' }).replace('.', '').toUpperCase()}
                                             </h5>
                                             <b className="card-text" style={{ fontSize: "1.2rem" }}>
-                                                {new Date(evento.data_evento || evento.data_reuniao).getUTCDate()}
+                                                {new Date(new Date(evento.data_evento || evento.data_reuniao || '').getTime()).getUTCDate()}
                                             </b>
                                         </div>
                                     </div>

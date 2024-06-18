@@ -10,7 +10,7 @@ import { format, addDays } from 'date-fns';
 interface Reunion {
     id: number;
     titulo: string;
-    descricao: string;
+    descricao: string | null;
     data_reuniao: string;
 }
 
@@ -35,7 +35,7 @@ export function Reunion() {
     }, [club_id]);
 
     // Organize as reuniões por data
-    const reunioesPorData = {};
+    const reunioesPorData: { [key: string]: Reunion[] } = {};
     reuniao.forEach(reunioes => {
         const dataReuniao = format(addDays(new Date(reunioes.data_reuniao), 1), "dd 'de' MMMM 'de' yyyy", { locale: ptBR });
         if (!reunioesPorData[dataReuniao]) {
@@ -45,9 +45,10 @@ export function Reunion() {
     });
 
     // Função para formatar a descrição com quebra de linha a cada 60 caracteres
-    const formatarDescricao = (descricao: string) => {
+    const formatarDescricao = (descricao: string | null) => {
+        if (!descricao) return '';
         if (descricao.length > 60) {
-            return descricao.match(/.{1,60}/g).join('\n');
+            return descricao.match(/.{1,60}/g)?.join('\n') || descricao;
         }
         return descricao;
     };

@@ -15,6 +15,43 @@
     
 }
 
-.customTitle {
-  
+
+.card {
+    width: 14rem;
+    cursor: pointer;
+    margin-top: 1rem;
 }
+
+.card-body {
+    font-size: 1rem;
+}
+
+.card-text {
+    font-size: 0.9rem;
+}
+
+.vote-button {
+    margin-left: -0.5rem;
+    padding: 0.25rem 1rem;
+}
+
+.vote-message {
+    margin-top: 0.5rem;
+    font-size: 1rem;
+    color: green;
+}
+
+.customVotos {
+    margin-top: 1rem;
+}
+
+.customTitle {
+    font-weight: bold;
+    color: #5b6b77;
+}
+
+.card-img {
+    width: 80px;
+    height: 120px;
+}
+
