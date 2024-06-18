@@ -82,12 +82,12 @@ export function Calendario() {
 
   // Função para formatar a descrição com quebra de linha a cada 60 caracteres
   const formatarDescricao = (descricao) => {
-    if (descricao.length > 60) {
+    if (typeof descricao === 'string' && descricao.length > 60) {
       return descricao.match(/.{1,60}/g).join('\n');
     }
     return descricao;
   };
-
+  
   return (
     <div className="container mb-4">
       <div className="form-group">
