@@ -79,7 +79,7 @@ export function Reunion() {
 
                             {reunioesPorData[data].map((reunioes) => (
                                 <Link to={`/editreunion/${reunioes.id}`} className={`nav-link list-group-flush mt-4 ${styles.customReunion}`} key={reunioes.id}>
-                                    <div className="d-flex flex-row mt-4 mb-4">
+                                    <div className="d-flex flex-row mt-4 mb-4 align-items-center position-relative">
                                         <div className="list-group-item">
                                             <span className="material-symbols-outlined" style={{ color: '#5b6b77' }}>connect_without_contact</span>
                                             <div className="row d-flex">
@@ -88,7 +88,8 @@ export function Reunion() {
                                                     <span style={{ color: '#5b6b77' }}>{formatarDescricao(reunioes.descricao)}</span>
                                                 </div>
                                             </div>
-                                        </div>            
+                                        </div>  
+                                        <span className="material-symbols-outlined position-absolute" style={{ color: '#5b6b77', top: '10px', right: '10px' }}>more_horiz</span>          
                                     </div> 
                                 </Link> 
                             ))}

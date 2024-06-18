@@ -58,14 +58,15 @@ export function ListEnquete() {
 
             {enquete.map((enquetes) => (
                 <Link to="/enquete" key={enquetes.id} className={`nav-link list-group-flush ${styles.customEnquete}`}>
-                    <div className="d-flex flex-row mt-4 mb-4">
-                        <div className="list-group-item">
+                    <div className="d-flex flex-row mt-4 mb-4 align-items-center position-relative">
+                        <div className="list-group-item w-100">
                             <span className="material-symbols-outlined" style={{ color: '#5b6b77' }}>ballot</span>
                             <div className="mt-1">
                                 <span className="d-block">{enquetes.title}</span>
                                 <span className="d-block" style={{ color: '#5b6b77' }}>{formatarDescricao(enquetes.description)}</span>
                             </div>
                         </div>
+                        <span className="material-symbols-outlined position-absolute" style={{ color: '#5b6b77', top: '10px', right: '10px' }}>more_horiz</span>
                     </div>
                 </Link>
             ))}

@@ -87,7 +87,7 @@ export function Calendario() {
     }
     return descricao;
   };
-  
+ 
   return (
     <div className="container mb-4">
       <div className="form-group">
@@ -115,19 +115,23 @@ export function Calendario() {
             </div>
 
             <ul className={`list-group`}>
-              {eventsByDate[date].map(event => (
-                <Link key={event.id} className='nav-link' to={event.tipo === 'reuniao' ? `/editreunion/${event.id}` : `/editcalendario/${event.id}`}>
-                  <li className={`list-group-item mt-4 ${styles.customEvent}`}>
-                    <span className="material-symbols-outlined" style={{ color: '#5b6b77' }}>{event.tipo === 'reuniao' ? 'connect_without_contact' : 'today'}</span>
-                    <div className='d-flex'>
-                      <div className="mt-1">
-                        <span className="d-block">{event.titulo}</span>
-                        <span style={{ color: '#5b6b77' }}>{formatarDescricao(event.descricao)}</span>
-                      </div>
-                    </div>
-                  </li>   
-                </Link>
+             {eventsByDate[date].map(event => (
+                  <Link key={event.id} className='nav-link' to={event.tipo === 'reuniao' ? `/editreunion/${event.id}` : `/editcalendario/${event.id}`}>
+                      <li className={`list-group-item mt-4 ${styles.customEvent} position-relative`}>
+                          <span className="material-symbols-outlined" style={{ color: '#5b6b77' }}>
+                              {event.tipo === 'reuniao' ? 'connect_without_contact' : 'today'}
+                          </span>
+                          <div className='d-flex'>
+                              <div className="mt-1">
+                                  <span className="d-block">{event.titulo}</span>
+                                  <span style={{ color: '#5b6b77' }}>{formatarDescricao(event.descricao)}</span>
+                              </div>
+                          </div>
+                          <span className="material-symbols-outlined position-absolute" style={{ color: '#5b6b77', top: '20px', right: '50px' }}>more_horiz</span>
+                      </li>
+                  </Link>
               ))}
+
             </ul> 
           </div>
         ))

@@ -308,6 +308,11 @@ export function Dashboard() {
                     </div>
                   </div>
                 </a>
+                <div className="position-relative ml-auto">
+                  <span className="material-symbols-outlined position-absolute" style={{ top: '0', right: '0', left: '28rem', cursor: 'pointer' }}>
+                    more_horiz
+                  </span>
+                </div>
               </div>
 
               <div style={{ padding: '0 3rem' }}>
@@ -327,18 +332,6 @@ export function Dashboard() {
                     color: '#5b6b77',
                   }}
                 >
-                  {/*<span
-                    className="material-symbols-outlined"
-                    onClick={() => handleLike(post.id)}
-                    style={{
-                      cursor: 'pointer',
-                      color: likedPosts.find((item) => item.post_id === post.id && item.liked) ? 'red' : 'inherit',
-                    }}
-                  >
-                    favorite
-                  </span>
-                  <span style={{ marginLeft: '0.25rem' }}>{likesCount[post.id]}</span>*/}
-
                   <span
                     className="material-symbols-outlined"
                     onClick={() => toggleComments(post.id)}
@@ -356,8 +349,8 @@ export function Dashboard() {
                           <div key={comment.id} className={`d-flex ${styles.customComments}`}>
                             <img
                               src={
-                                post.imagem
-                                  ? `http://127.0.0.1:8000/api/user/getImage/${user_id}`
+                                comment.imagem
+                                  ? `http://127.0.0.1:8000/api/user/getImage/${comment.user_id}`
                                   : logo
                               }
                               alt="Imagem do perfil"
@@ -365,8 +358,13 @@ export function Dashboard() {
                               style={{ width: '2.5rem', height: '2.5rem' }}
                             />
                             <div>
-                              <p className={` mt-2 ${styles.commentName} `}>{comment.name} {comment.last_name}</p>
+                              <p className={`mt-2 ${styles.commentName}`}>{comment.name} {comment.last_name}</p>
                               <p className="mt-1">{comment.content}</p>
+                            </div>
+                            <div className="position-relative ml-auto">
+                              <span className="material-symbols-outlined position-absolute" style={{ top: '0', right: '0', left: '22rem', cursor: 'pointer' }}>
+                                more_horiz
+                              </span>
                             </div>
                           </div>
                         ))
@@ -393,8 +391,8 @@ export function Dashboard() {
                             name="comment"
                             style={{ resize: 'none', marginLeft: '1rem' }}
                             placeholder="Faça um comentário..."
-                            value={post.commentText || ''} // Usar o texto do comentário da postagem
-                            onChange={(e) => handleCommentChange(post.id, e.target.value)} // Atualizar o texto do comentário da postagem correta
+                            value={post.commentText || ''}
+                            onChange={(e) => handleCommentChange(post.id, e.target.value)}
                           />
                           <button type="submit">Comentar</button>
                         </div>
@@ -410,3 +408,4 @@ export function Dashboard() {
     </>
   );
 }
+
